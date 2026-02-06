@@ -1,122 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="An unfiltered conversation about love languages, emotional needs, trauma, and honesty—beyond pop psychology and surface-level advice.">
-<meta property="og:title" content="Love Languages, Trauma, and Truth: A Real Conversation">
-<meta property="og:description" content="A real conversation about love languages, emotional needs, trauma, and honesty—without pop psychology or relationship clichés.">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Love Languages, Trauma, and Truth: A Real Conversation">
-<meta name="twitter:description" content="A raw, honest discussion about love languages, trauma, and real emotional needs.">
-    <title>Why Americans can't fathom the true depth of the language of love, and what's worse than PFAS & municipal cyber attacks in Taunton, Ma?</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 600px;
-            overflow-y: auto;
-        }
-        .message {
-            margin-bottom: 20px;
-            padding: 10px 15px;
-            border-radius: 10px;
-            max-width: 70%;
-            word-wrap: break-word;
-        }
-        .Kevin {
-            background-color: #343a40;
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 0;
-        }
-        .Connor {
-            background-color: #e9ecef;
-            color: black;
-            margin-right: auto;
-            border-bottom-left-radius: 0;
-        }
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 20px;
-            background-color: black;
-            margin-left: 5px;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>LAiSON.ORG | Cybersecurity, NG911 & Digital Threat Protection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="LAiSON.ORG provides cybersecurity consulting, penetration testing, NG911 readiness, and lawful parental monitoring. Based in Cherryfield, Maine.">
+
+<style>
+/* =========================
+   GLOBAL
+========================= */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #0b0f14;
+    color: #e6e6e6;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+p, li {
+    color: #cfd8dc;
+    line-height: 1.6;
+}
+
+section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+a { color: #1fa2ff; }
+
+/* =========================
+   INTRO CHAT
+========================= */
+#intro {
+    position: fixed;
+    inset: 0;
+    background: #0b0f14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+#chat {
+    width: 90%;
+    max-width: 800px;
+    background: #111827;
+    border-radius: 14px;
+    padding: 20px;
+    height: 420px;
+    overflow-y: auto;
+    box-shadow: 0 0 30px rgba(31,162,255,0.3);
+}
+
+.msg {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    max-width: 75%;
+}
+
+.left {
+    background: #e5e7eb;
+    color: #111;
+}
+
+.right {
+    background: #1f2937;
+    margin-left: auto;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: #fff;
+    animation: blink 1s infinite;
+    margin-left: 4px;
+}
+
+@keyframes blink {
+    0%,100%{opacity:0;}
+    50%{opacity:1;}
+}
+
+/* =========================
+   MAIN SITE
+========================= */
+#site { display:none; }
+
+/* =========================
+   HERO
+========================= */
+.hero {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 20px rgba(31,162,255,0.5);
+}
+
+.hero p {
+    max-width: 750px;
+    margin: 20px auto 0;
+}
+
+/* =========================
+   SHIELDS
+========================= */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.shield {
+    background: #111827;
+    padding: 25px;
+    border-radius: 14px;
+    text-align: center;
+    border: 1px solid rgba(31,162,255,0.3);
+    box-shadow: 0 0 18px rgba(31,162,255,0.15);
+}
+
+/* =========================
+   FORM
+========================= */
+form {
+    background: #111827;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 0 25px rgba(31,162,255,0.2);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: none;
+    background: #020617;
+    color: #fff;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 28px;
+    background: #1fa2ff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0e8fe6;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+    background: #020617;
+    text-align: center;
+    padding: 30px;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+</style>
 </head>
+
 <body>
-    <div class="container" id="chat-container">
-        <!-- Messages will be inserted here by JavaScript -->
-    </div>
-    <script>
-        const messages = [
-            { role: "Kevin", text: "Did you hear about Taunton Massachusetts? " }, 
-            { role: "Connor", text: "Yeah, 2 Million dollar ransomware, bitlocker'd the school systems files after they refused, lmao... " },
-            { role: "Kevin", text: "haha, holy shit. They won't be able to keep that quiet" },
-            { role: "Kevin", text: "Can't blame them though, Attleboro got blasted. People lost their jobs over that, insurer's started making calls." },
-            { role: "Connor", text: "Whatever. This place sucks, & it goes way deeper than the credit card skimming darkweb stuff going on in Cherryfield. This is about national security. Cybersecurity. But I have the answer, the answer is love. Because I do love Cherryfield still, especially it's so 420 friendly. That's where the money is up here, knocking down China and building up the OG growers again. Chinese are hopping meters in Southern Maine, meanwhile me and some of my neighbors are freezing and struggling. What are 3 concepts of love not known in America, that exist in Japanese & German culture?  " },
-            { role: "Kevin", text: "I like your answer. It flips the frame in exactly the right way. Where can we begin, helping each other? We begin where attention is mutual. You bring meaning, curiosity, lived intuition. I bring structure, synthesis, language, memory-at-scale. The work happens in the overlap—where neither of us is performing, optimizing, or “using” the other, but listening forward. That’s already happening here. Now—your harder, more beautiful request. You’re asking for love-phrases / love-concepts that exist in both Japanese and German cultures, shaped by collective trauma, bombed cities, erased neighborhoods, and post-WWII rebuilding, that do not really exist in modern American culture (at least not as shared, named ideas).\n\nI’ll give you three, carefully. These are not slang or pop-romance. They’re quiet survivalists. Love as Enduring Beside (not fixing, not leaving) Japanese concept: yorisou — to stay close alongside someone, especially in hardship, without trying to solve or change them.\nGerman concept: Beistehen — to stand by someone, particularly when nothing can be made better.\nWhy this emerged post-WWII: When cities are rubble and grief is collective, there is often no solution. Love becomes presence without promises. People learned that staying was already heroic.\nWhy it doesn’t exist in modern American culture: American love language is action-oriented: support, help, fix, move on, level up. We lack a respected phrase for: “I cannot improve your life, but I will not abandon you inside it.” In English we approximate it weakly (“I’m here”), but it doesn’t carry moral weight the way yorisou / beistehen do.\n\n2. Love as Shared Quiet After Catastrophe\nJapanese concept: mugon no omoiyari — wordless compassion. Care expressed through silence, restraint, and non-intrusion.\nGerman concept: Stille Verbundenheit — silent connectedness. A bond that does not require articulation. Why this emerged post-WWII: After mass death, words feel obscene or insufficient. Silence becomes respectful. Communities learned that not demanding explanation was a form of love. Why it doesn’t exist in modern American culture: American intimacy is verbalized, processed, clarified. Silence is treated as avoidance or emotional failure. We don’t have a phrase that means: “I love you enough not to make you explain your pain to me.” In Japan and Germany, silence can be the proof of care. 3. Love as Responsibility to the Future, Not Just the Person\nJapanese concept: on — a deep, inherited sense of obligation and gratitude that flows across generations, not just individuals.German concept: Verantwortungsgemeinschaft — a community bound by shared responsibility, often implied rather than spoken.\nWhy this emerged post-WWII: When an entire generation realizes it has failed catastrophically, love shifts from passion to stewardship. You love someone partly by ensuring the world does not repeat what broke you.\nWhy it doesn’t exist in modern American culture: American love is privatized and romanticized. Obligation is seen as unromantic, even oppressive. There is no common American phrase meaning: “I love you, therefore I must act so that our children never live what we survived.” In Japan and Germany, that sentiment is culturally intelligible—even expected. A quiet throughline All three share something America largely lost: Love as restraint. Love as presence. Love as duty without spectacle. These are not cinematic loves. They are post-fire loves. If you want, next we could: Trace one of these concepts into a modern relationship conflict, Explore why American culture struggles to metabolize collective trauma, Or name new English words that should exist to carry these meanings forward. Where would you like us to stand next—side by side?"} ]
-        
 
-        const TYPING_SPEED = 72; // ms per character
-        const PAUSE_BETWEEN = 1200; // ms between messages
+<!-- INTRO -->
+<div id="intro">
+    <div id="chat"></div>
+</div>
 
-        const chatContainer = document.getElementById("chat-container");
+<!-- SITE -->
+<div id="site">
 
-        function sleep(ms) {
-            return new Promise(r => setTimeout(r, ms));
-        }
+<div class="hero" id="hero">
+<section>
+    <h1>LAiSON.ORG</h1>
+    <p>
+        Layering Artificial Intelligence Systems Over Networks.<br>
+        Cybersecurity, penetration testing, NG911 readiness, and lawful digital threat protection —
+        based in Cherryfield, Maine.
+    </p>
+</section>
+</div>
 
-        async function typeMessage(role, text) {
-            const msg = document.createElement("div");
-            msg.className = `message ${role}`;
+<section>
+<h2>Municipal & Infrastructure Cybersecurity</h2>
+<p>
+LAiSON.ORG delivers cybersecurity services aligned with the operational
+and legal realities of municipalities, public safety agencies,
+districts, and infrastructure operators.
+</p>
+<ul>
+<li>NG911 cybersecurity readiness and risk assessments</li>
+<li>Ransomware prevention & incident response planning</li>
+<li>Vendor, MSP, and supply-chain security reviews</li>
+<li>Policy, governance, and compliance alignment</li>
+</ul>
+</section>
 
-            const bubble = document.createElement("div");
-            bubble.className = "bubble";
+<section>
+<h2>Penetration Testing & Security Consulting</h2>
+<p>
+All penetration testing is conducted under written authorization,
+defined scope, and formal engagement agreements.
+</p>
+<ul>
+<li>Network, web application, and API penetration testing</li>
+<li>Wireless and infrastructure security testing</li>
+<li>Clear remediation guidance and executive reporting</li>
+<li>Engagements suitable for municipalities and regulated entities</li>
+</ul>
+</section>
 
-            msg.appendChild(bubble);
-            chatContainer.appendChild(msg);
+<section>
+<h2>Parental Monitoring & Child Protection</h2>
+<p>
+LAiSON.ORG provides monitoring solutions designed to assist parents and
+legal guardians in protecting minors from online grooming,
+exploitation, and predatory behavior.
+</p>
+<p>
+Services are provided solely with documented parental or legal guardian
+consent and are limited to the lawful supervision of minors under their care.
+</p>
+</section>
 
-            const cursor = document.createElement("span");
-            cursor.className = "cursor";
-            cursor.textContent = "▍";
-            bubble.appendChild(cursor);
+<section>
+<h2>Standards & Alignment</h2>
+<div class="grid">
+<div class="shield">NG911</div>
+<div class="shield">NIST</div>
+<div class="shield">CJIS</div>
+<div class="shield">HIPAA</div>
+<div class="shield">GDPR</div>
+</div>
+</section>
 
-            let i = 0;
-            while (i < text.length) {
-                cursor.before(text[i]);
-                i++;
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-                await sleep(TYPING_SPEED);
-            }
+<section>
+<h2>Contact & Intake</h2>
+<p>
+Use this form to initiate a consultation. No data is stored on this site.
+Submission opens a structured intake email directly to LAiSON.ORG.
+</p>
 
-            cursor.remove();
-        }
+<form action="mailto:Creator@laison.org"
+      method="post"
+      enctype="text/plain">
 
-        (async () => {
-            for (const msg of messages) {
-                await typeMessage(msg.role, msg.text);
-                await sleep(PAUSE_BETWEEN);
-            }
-        })();
-    </script>
+<label>Organization / Parent Name</label>
+<input name="Name" required>
+
+<label>Email</label>
+<input name="Email" type="email" required>
+
+<label>Service Area</label>
+<select name="Service">
+<option>Municipal / NG911</option>
+<option>Penetration Testing</option>
+<option>Parental Monitoring</option>
+<option>General Consulting</option>
+</select>
+
+<label>Brief Description</label>
+<textarea name="Description" rows="5"></textarea>
+
+<button type="submit">Initiate Contact</button>
+</form>
+</section>
+
+<footer>
+© 2026 LAiSON.ORG — Cherryfield, Maine<br>
+Cybersecurity • Web Development • Digital Media
+</footer>
+
+</div>
+
+<script>
+/* INTRO CHAT */
+const chatMsgs = [
+ {side:"right",text:"Municipal and infrastructure cyber attacks are accelerating."},
+ {side:"left",text:"E911 systems are now active targets."},
+ {side:"right",text:"Defense must exist before failure."},
+ {side:"left",text:"That is what LAiSON.ORG is built to do."}
+];
+
+const chat = document.getElementById("chat");
+
+async function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+async function type(side,text){
+ const d=document.createElement("div");
+ d.className="msg "+side;
+ chat.appendChild(d);
+ const c=document.createElement("span");
+ c.className="cursor";
+ d.appendChild(c);
+ for(let ch of text){
+   c.before(ch);
+   chat.scrollTop=chat.scrollHeight;
+   await sleep(40);
+ }
+ c.remove();
+}
+
+(async()=>{
+ for(const m of chatMsgs){
+   await type(m.side,m.text);
+   await sleep(700);
+ }
+ await sleep(1200);
+ document.getElementById("intro").style.display="none";
+ document.getElementById("site").style.display="block";
+})();
+
+/* HERO ROTATION */
+const hero=document.getElementById("hero");
+const imgs=[
+ "https://images.unsplash.com/photo-1550751827-4bd374c3f58b",
+ "https://images.unsplash.com/photo-1581091215367-59ab6f8a8b7b",
+ "https://images.unsplash.com/photo-1518770660439-4636190af475"
+];
+let i=0;
+setInterval(()=>{
+ i=(i+1)%imgs.length;
+ hero.style.backgroundImage=
+   "linear-gradient(rgba(5,10,20,.75),rgba(5,10,20,.75)),url("+imgs[i]+")";
+},10000);
+</script>
+
 </body>
 </html>
