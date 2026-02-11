@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mathews</title>
+
   <style>
     html, body {
       margin: 0;
@@ -13,30 +14,81 @@
       overflow: hidden;
     }
 
-    /* Center the vertical Short nicely */
-    .wrapper {
+    /* Video wrapper */
+    #videoWrapper {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
     }
 
-    iframe {
+    #player {
       aspect-ratio: 9 / 16;
       height: 100%;
       max-height: 100%;
       max-width: 100%;
-      border: 0;
+    }
+
+    /* Gallery wrapper (hidden initially) */
+    #galleryWrapper {
+      display: none;
+      height: 100%;
+      background: black;
+      padding: 10px;
+      box-sizing: border-box;
     }
   </style>
 </head>
+
 <body>
-  <div class="wrapper">
-    <iframe
-      src="https://www.youtube-nocookie.com/embed/mgUj7IRlhDk"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+
+  <!-- VIDEO -->
+  <div id="videoWrapper">
+    <div id="player"></div>
   </div>
+
+  <!-- GALLERY -->
+  <div id="galleryWrapper">
+    <script
+      type="text/javascript"
+      src="https://files.fm/gallery_module/v1/js/?hash=46u3jxbha3&view=horizontal&order_by=date_created&order_dir=desc"
+      id="files_fm_upload_script_tag_46u3jxbha3"
+      referrerpolicy="origin-when-cross-origin">
+    </script>
+  </div>
+
+  <!-- YouTube IFrame API -->
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: 'mgUj7IRlhDk',
+        playerVars: {
+          playsinline: 1,
+          rel: 0,
+          modestbranding: 1
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Hide video
+        document.getElementById('videoWrapper').style.display = 'none';
+
+        // Show gallery
+        document.getElementById('galleryWrapper').style.display = 'block';
+      }
+    }
+  </script>
+
 </body>
 </html>
