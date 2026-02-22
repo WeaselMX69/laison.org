@@ -4,8 +4,34 @@
 <meta charset="UTF-8">
 <title>LAiSON.ORG | Cybersecurity, NG911 & Digital Threat Protection</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="description" content="LAiSON.ORG provides cybersecurity consulting, penetration testing, NG911 readiness, and lawful parental monitoring. Based in Cherryfield, Maine.">
+
+<!-- Facebook Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '799841549291503'); // YOUR PIXEL ID
+  fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=799841549291503&ev=PageView&noscript=1"/>
+</noscript>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XMHLG8T23J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XMHLG8T23J'); // Replace with your GA ID
+</script>
 
 <style>
 /* =========================
@@ -190,19 +216,31 @@ footer {
     color: #9ca3af;
     font-size: 0.9rem;
 }
+
+/* Cookie Banner */
+#cookieBanner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    z-index: 9999;
+}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
+<!-- INTRO CHAT -->
 <div id="intro">
     <div id="chat"></div>
 </div>
 
 <!-- SITE -->
 <div id="site">
-
 <div class="hero" id="hero">
 <section>
     <h1>LAiSON.ORG</h1>
@@ -257,6 +295,36 @@ consent and are limited to the lawful supervision of minors under their care.
 </section>
 
 <section>
+  <h2>Support the Machias Community Fundraiser</h2>
+  <p>
+    Help us empower the Machias community by supporting local youth programs, including Brazilian Jiu-Jitsu (BJJ) classes, dog agility training, and other initiatives that build confidence, discipline, and resilience. Your donation will directly impact the lives of kids and families in our area.
+    <br><br>
+    <strong>Note:</strong> LAiSON.ORG is not a 501(c)(3) organization. Donations are <strong>not tax-deductible</strong> at this time.
+  </p>
+
+  <!-- Donation Form -->
+  <form action="https://payments.zoho.com/paymentPage" method="post" target="_blank">
+    <input type="hidden" name="merchantId" value="889975802"> <!-- Replace with your Merchant ID -->
+    <input type="hidden" name="itemName" value="Machias Community Fundraiser Donation">
+    <label for="amount">Donation Amount ($):</label>
+    <select name="amount" id="amount" required>
+      <option value="33.00">33</option>
+      <option value="55.50" selected>55.50</option>
+      <option value="100.00">100</option>
+      <option value="250.00">250</option>
+      <option value="333.00">333</option>
+      <option value="500.00">500</option>
+    </select>
+    <input type="hidden" name="currency" value="USD">
+    <input type="hidden" name="returnUrl" value="https://laison.org/thank-you"> <!-- Replace with your thank-you page URL -->
+    <button type="submit" style="background: #1fa2ff; color: white; border: none; padding: 12px 28px; border-radius: 6px; font-size: 1rem; cursor: pointer; margin-top: 10px;">
+      Donate Now
+    </button>
+  </form>
+</section>
+
+
+<section>
 <h2>Standards & Alignment</h2>
 <div class="grid">
 <div class="shield">NG911</div>
@@ -290,6 +358,7 @@ Submission opens a structured intake email directly to LAiSON.ORG.
 <option>Penetration Testing</option>
 <option>Parental Monitoring</option>
 <option>General Consulting</option>
+<option>BJJ Fundraiser Donation</option>
 </select>
 
 <label>Brief Description</label>
@@ -306,8 +375,38 @@ Cybersecurity • Web Development • Digital Media
 
 </div>
 
+<!-- Cookie Banner -->
+<div id="cookieBanner">
+  <p style="margin: 0; font-size: 14px;">
+    This site uses cookies and tracking for analytics and fundraising.
+    By using this site, you consent to our use of cookies.
+  </p>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';"
+          style="background: #1fa2ff; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">
+    Accept
+  </button>
+</div>
+
+<!-- Visitor Data Collection -->
 <script>
-/* INTRO CHAT */
+  // Collect and store visitor data
+  const visitorData = {
+    userAgent: navigator.userAgent,
+    referrer: document.referrer,
+    language: navigator.language,
+    screen: `${window.screen.width}x${window.screen.height}`,
+    timestamp: new Date().toISOString()
+  };
+  localStorage.setItem('visitorData', JSON.stringify(visitorData));
+  console.log("Visitor data collected:", visitorData);
+</script>
+
+<!-- Facebook SDK -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0&appId=628943219527407&autoLogAppEvents=1" nonce="abc123"></script>
+
+<!-- INTRO CHAT SCRIPT -->
+<script>
 const chatMsgs = [
  {side:"right",text:"Municipal and infrastructure cyber attacks are accelerating."},
  {side:"left",text:"E911 systems are now active targets."},
