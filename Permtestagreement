@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Permission to Test & Security Assessment Authorization Agreement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            line-height: 1.5;
+            font-size: 12pt;
+            color: #111;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        h1 {
+            font-size: 18pt;
+            margin-bottom: 5px;
+        }
+        h2 {
+            font-size: 14pt;
+            margin-top: 30px;
+        }
+        p {
+            margin: 8px 0;
+        }
+        ul {
+            margin: 8px 0 8px 25px;
+        }
+        .signature-section {
+            margin-top: 50px;
+        }
+        .signature-line {
+            margin-top: 40px;
+        }
+        .signature-line div {
+            margin-bottom: 25px;
+        }
+        .small {
+            font-size: 10pt;
+        }
+        .boxed {
+            border: 1px solid #000;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Permission to Test & Security Assessment Authorization Agreement</h1>
+
+<p><strong>Effective Date:</strong> _____________________</p>
+
+<p>This Permission to Test & Security Assessment Authorization Agreement (“Agreement”) is entered into by and between:</p>
+
+<p><strong>Authorizing Entity:</strong> ___________________________________________<br>
+Address: ___________________________________________<br>
+Representative Name & Title: ___________________________________________</p>
+
+<p>and</p>
+
+<p><strong>Security Assessor:</strong> ___________________________________________<br>
+Address: ___________________________________________</p>
+
+<h2>1. Purpose</h2>
+<p>
+The Authorizing Entity grants express written permission to the Security Assessor to conduct
+security testing and vulnerability assessments against the systems identified below.
+This authorization is intended to provide lawful consent for activities that may otherwise
+be restricted under applicable state or federal computer access laws.
+</p>
+
+<h2>2. Scope of Authorized Systems</h2>
+<div class="boxed">
+    <p>Domains: ___________________________________________</p>
+    <p>IP Address Ranges: ___________________________________________</p>
+    <p>Applications: ___________________________________________</p>
+    <p>Cloud Environments: ___________________________________________</p>
+    <p>Other Assets: ___________________________________________</p>
+</div>
+
+<h2>3. Authorized Testing Activities</h2>
+<ul>
+    <li>Vulnerability scanning</li>
+    <li>Configuration review</li>
+    <li>Authentication and access control testing</li>
+    <li>Network service enumeration</li>
+    <li>Web application testing</li>
+    <li>Controlled exploitation of confirmed vulnerabilities</li>
+</ul>
+
+<p>
+All testing shall be conducted in good faith, limited strictly to the systems listed above,
+and in a manner designed to minimize operational disruption.
+</p>
+
+<h2>4. Prohibited Activities</h2>
+<ul>
+    <li>Intentional denial-of-service attacks</li>
+    <li>Data destruction</li>
+    <li>Testing outside the defined scope</li>
+    <li>Accessing third-party systems not explicitly authorized</li>
+</ul>
+
+<h2>5. Legal Authorization</h2>
+<p>
+The Authorizing Entity affirms that it owns or has lawful authority over the systems
+identified in Section 2 and grants explicit consent for the Security Assessor
+to access and test those systems solely within the defined scope.
+</p>
+
+<p>
+This Agreement is intended to serve as documented authorization under applicable
+computer access statutes and shall remain in effect until revoked in writing.
+</p>
+
+<h2>6. Confidentiality</h2>
+<p>
+Any findings, vulnerabilities, or sensitive data discovered during testing shall be treated
+as confidential and disclosed only to authorized representatives of the Authorizing Entity.
+</p>
+
+<h2>7. Indemnification & Liability</h2>
+<p>
+The parties acknowledge that security testing carries inherent risk.
+The Security Assessor agrees to exercise reasonable professional care.
+The Authorizing Entity agrees that authorized activities conducted within scope
+shall not constitute unauthorized access.
+</p>
+
+<h2>8. Term & Revocation</h2>
+<p>
+This authorization begins on the Effective Date and remains valid until:
+</p>
+<ul>
+    <li>The agreed testing window concludes; or</li>
+    <li>Written revocation is provided by the Authorizing Entity.</li>
+</ul>
+
+<h2>9. Governing Law</h2>
+<p>
+This Agreement shall be governed by the laws of the State of _____________________
+and applicable federal law.
+</p>
+
+<div class="signature-section">
+    <h2>Signatures</h2>
+
+    <div class="signature-line">
+        <div>
+            ___________________________________________<br>
+            Authorized Representative (Print Name & Title)
+        </div>
+
+        <div>
+            ___________________________________________<br>
+            Signature
+        </div>
+
+        <div>
+            Date: _____________________
+        </div>
+    </div>
+
+    <div class="signature-line">
+        <div>
+            ___________________________________________<br>
+            Security Assessor (Print Name)
+        </div>
+
+        <div>
+            ___________________________________________<br>
+            Signature
+        </div>
+
+        <div>
+            Date: _____________________
+        </div>
+    </div>
+</div>
+
+<p class="small">
+This document constitutes formal written authorization for defined security testing activities.
+Unauthorized testing outside the scope of this Agreement is strictly prohibited.
+</p>
+
+</body>
+</html>
