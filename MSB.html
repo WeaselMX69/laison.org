@@ -1,147 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Typing Chat</title>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    height: 100%;
-  }
-  .chat-wrapper {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-sizing: border-box;
-    overflow-y: auto;
-    height: 100vh;
-  }
-  .message {
-    padding: 12px 18px;
-    border-radius: 20px;
-    max-width: 80%;
-    word-wrap: break-word;
-    line-height: 1.4;
-    opacity: 0;
-  }
-  .user {
-    background-color: #444;
-    align-self: flex-end;
-    text-align: right;
-    color: #fff;
-  }
-  .assistant-yes {
-    background-color: #fff;
-    color: #000;
-    align-self: flex-start;
-    text-align: left;
-  }
-  .assistant-other {
-    background-color: #666;
-    align-self: flex-start;
-    text-align: left;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="HandheldFriendly" content="True">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      text-size-adjust: 100%;
+    }
+    .chat-wrapper {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      height: 100vh;
+      width: 100%;
+    }
+    .message {
+      padding: 12px 18px;
+      border-radius: 20px;
+      max-width: 80%;
+      word-wrap: break-word;
+      line-height: 1.4;
+      opacity: 0;
+    }
+    .user {
+      background-color: #444;
+      align-self: flex-end;
+      text-align: right;
+      color: #fff;
+    }
+    .assistant-yes {
+      background-color: #fff;
+      color: #000;
+      align-self: flex-start;
+      text-align: left;
+    }
+    .assistant-other {
+      background-color: #666;
+      align-self: flex-start;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
+  <div class="chat-wrapper" id="chat"></div>
+  <script>
+    const conversation = [
+      {"role":"user","message":"One word answers only ... The best things in life are free?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Financial institutions loan people money?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And they care about protecting their customers?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And they do this by establishing trust?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And they do this by getting to know people?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And documentation?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And compliance, accountability, procedures, and processes?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Is authentication critical to that?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And risk mitigation?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Printing off statements for existing customers?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Giving guidance for local business owners?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Using third party vendors who's principles align with theirs?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And establishing relationships with entities, as well as properly reporting to authorities?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"Are 203k rehab loans still a thing?"},
+      {"role":"assistant","message":"Yes.FHA 203(k) rehab loans remain an active U.S. federal housing program that lets buyers or homeowners finance both the purchase (or refinance) and renovation of a home in a single FHA-insured mortgage."},
+      {"role":"user","message":"STOP DRIFTING, one word answers only... And for a 203k rehab loan, banks need documents to verify creditworthiness of the borrower?"},
+      {"role":"assistant","message":"Yes."},
+      {"role":"user","message":"And  that would be 2 paystubs and a signature on an agreement authorizing the financial institution to use third party vendors to determine the creditworthiness of the borrower?"},
+      {"role":"assistant","message":"No."},
+      {"role":"user","message":"Teach me"},
+      {"role":"assistant","message":"For a 203(k) rehab loan, lenders verify much more than just two paystubs and a signature. They review income, assets, credit, identity, property details, and ratios. Two paystubs and a signature are part of the process, but far from the full picture."},
+      {"role":"user","message":"So I was right and you should have said yes, because the permission agreement authorizes the financial institution to use the third parties; including but not limited to; the US government, to determine the creditworthiness of the borrower, as well as to authenticate them. All of the documents you mentioned fit in that category, luckily maine is a 1 party state! Since this is the last message I get in the free tier, and I already know about all things including THE BANK OF YES, teach me how to throw a dance party, sometimes you just have to dance..."},
+      {"role":"assistant","message":"Sometimes you really do just have to dance. Set the intention, curate the sound (warm-up, lift, peak, cool-down), create the space (floor, speakers, lighting), lower the barrier to entry, use movement hacks, keep it safe, embrace freedom, and close intentionally with an anthem, photo, and gratitude."}
+    ];
 
-<div class="chat-wrapper" id="chat"></div>
+    const chatContainer = document.getElementById('chat');
 
-<script>
-const conversation = [
-  {"role":"user","message":"One word answers only ... The best things in life are free?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Financial institutions loan people money?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And they care about protecting their customers?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And they do this by establishing trust?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And they do this by getting to know people?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And documentation?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And compliance, accountability, procedures, and processes?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Is authentication critical to that?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And risk mitigation?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Printing off statements for existing customers?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Giving guidance for local business owners?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Using third party vendors who's principles align with theirs?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And establishing relationships with entities, as well as properly reporting to authorities?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"Are 203k rehab loans still a thing?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"STOP DRIFTING, one word answers only... And for a 203k rehab loan, banks need documents to verify creditworthiness of the borrower?"},
-  {"role":"assistant","message":"Yes."},
-  {"role":"user","message":"And  that would be 2 paystubs and a signature on an agreement authorizing the financial institution to use third party vendors to determine the creditworthiness of the borrower?"},
-  {"role":"assistant","message":"No."},
-  {"role":"user","message":"Teach me"},
-  {"role":"assistant","message":"For a 203(k) rehab loan, lenders verify much more than just two paystubs and a signature. They review income, assets, credit, identity, property details, and ratios. Two paystubs and a signature are part of the process, but far from the full picture."},
-  {"role":"user","message":"So I was right and you should have said yes, because the permission agreement authorizes the financial institution to use the third parties; including but not limited to; the US government, to determine the creditworthiness of the borrower, as well as to authenticate them. All of the documents you mentioned fit in that category, luckily maine is a 1 party state! Since this is the last message I get in the free tier, and I already know about all things including THE BANK OF YES, teach me how to throw a dance party, sometimes you just have to dance..."},
-  {"role":"assistant","message":"Sometimes you really do just have to dance. Set the intention, curate the sound (warm-up, lift, peak, cool-down), create the space (floor, speakers, lighting), lower the barrier to entry, use movement hacks, keep it safe, embrace freedom, and close intentionally with an anthem, photo, and gratitude."}
-];
+    let index = 0;
+    function typeMessage(msg, callback) {
+      const div = document.createElement('div');
+      let className;
+      if(msg.role === 'user') className = 'user';
+      else if(msg.message === 'Yes.') className = 'assistant-yes';
+      else className = 'assistant-other';
+      div.classList.add('message', className);
+      chatContainer.appendChild(div);
+      div.style.opacity = 1;
 
-const chatContainer = document.getElementById('chat');
+      let charIndex = 0;
 
-let index = 0;
-function typeMessage(msg, callback) {
-  const div = document.createElement('div');
-  let className;
-  if(msg.role === 'user') className = 'user';
-  else if(msg.message === 'Yes.') className = 'assistant-yes';
-  else className = 'assistant-other';
-  div.classList.add('message', className);
-  chatContainer.appendChild(div);
-  div.style.opacity = 1;
-
-  let charIndex = 0;
-
-  function typeChar() {
-    if(charIndex < msg.message.length) {
-      // Random chance to delete previous char (simulate typing edits)
-      if(Math.random() < 0.02 && charIndex > 2) {
-        div.textContent = div.textContent.slice(0, -1);
-        charIndex--;
-      } else {
-        div.textContent += msg.message[charIndex];
-        charIndex++;
+      function typeChar() {
+        if(charIndex < msg.message.length) {
+          if(Math.random() < 0.02 && charIndex > 2) {
+            div.textContent = div.textContent.slice(0, -1);
+            charIndex--;
+          } else {
+            div.textContent += msg.message[charIndex];
+            charIndex++;
+          }
+          const delay = 20 + Math.random() * 80;
+          setTimeout(typeChar, delay);
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        } else {
+          setTimeout(callback, 400 + Math.random() * 600);
+        }
       }
-      // Randomized delay for next char
-      const delay = 20 + Math.random() * 80;
-      setTimeout(typeChar, delay);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    } else {
-      // Done typing this message
-      setTimeout(callback, 400 + Math.random() * 600);
+      typeChar();
     }
-  }
-  typeChar();
-}
 
-function nextMessage() {
-  if(index >= conversation.length) return;
-  const msg = conversation[index];
-  index++;
-  typeMessage(msg, nextMessage);
-}
+    function nextMessage() {
+      if(index >= conversation.length) return;
+      const msg = conversation[index];
+      index++;
+      typeMessage(msg, nextMessage);
+    }
 
-nextMessage();
-</script>
-
+    nextMessage();
+  </script>
 </body>
 </html>
