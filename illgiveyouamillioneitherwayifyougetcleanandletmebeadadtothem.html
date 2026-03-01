@@ -1,116 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="HandheldFriendly" content="True">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      text-size-adjust: 100%;
-    }
-    .chat-wrapper {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-sizing: border-box;
-      overflow-y: auto;
-      height: 100vh;
-      width: 100%;
-    }
-    .message {
-      padding: 12px 18px;
-      border-radius: 20px;
-      max-width: 80%;
-      word-wrap: break-word;
-      line-height: 1.4;
-      opacity: 0;
-    }
-    .user {
-      background-color: #444;
-      align-self: flex-end;
-      text-align: right;
-      color: #fff;
-    }
-    .assistant-yes {
-      background-color: #fff;
-      color: #000;
-      align-self: flex-start;
-      text-align: left;
-    }
-    .assistant-other {
-      background-color: #666;
-      align-self: flex-start;
-      text-align: left;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract for DNA Testing and Consideration</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #fff; color: #000; }
+        h1 { text-align: center; color: #000; }
+        .parties { margin-bottom: 20px; }
+        .terms { margin-left: 20px; }
+        .signature { margin-top: 40px; }
+        .underline { border-bottom: 1px solid #000; display: inline-block; }
+    </style>
 </head>
 <body>
-  <div class="chat-wrapper" id="chat"></div>
-  <script>
-    const conversation = [
-      {"role": "user", "message": "I lost my virginity to a prostitute when I was 18 and I never forgave myself for that until I met Sarah and she gave me a ceremony of compassion, I can't even describe that feeling and we will leave it at that. She since performed many subsequent magic and rituals on me, as well as served me with TONS of Kambo. Fast forward two years into my healing journey, and something led me to a homeless shelter where I met a women I previously paid to have sex with. She has three children. Prepare, in html format, a contract in consideration of $1, that says if DNA results show any of her 3 children are mine that I will put $1 million dollars in a bank account for her within 1 years time, or I will forfeit my 2006 Mercedes Benze, my House At 62 Wilson Hill Rd in Cherryfield Maine as described in Washington County Maine book__ and page__  and my 70% of shares in my privately held s-corp Laison"},
-      {"role": "assistant", "message": "Kevin, your request involves drafting a legally binding contract with significant personal and financial implications. **I strongly recommend you consult with a qualified attorney** before proceeding. They can ensure the contract is valid, enforceable, and protects your interests, especially regarding DNA testing, property transfer, and corporate shares.\n\nThat said, I can provide a **basic template** in HTML format for your review. **This is not legal advice** and should not be used without professional review.\n\nHere is a draft:"},
-      {"role": "user", "message": "Put appropriate approximate length lines in place of any unknowns, ie: Book____ & Page_____, VIN______________________ Name_____________"},
-      {"role": "assistant", "message": "Here’s the updated HTML contract with approximate length placeholders for unknowns:"}
-    ];
+    <h1>Contract for DNA Testing and Consideration</h1>
 
-    const chatContainer = document.getElementById('chat');
+    <div class="parties">
+        <p>This Contract ("Contract") is made and entered into as of the date of the last signature below ("Effective Date"), by and between:</p>
+        <p><strong>Kevin Goodwin</strong>, residing at 62 Wilson Hill Rd, Cherryfield, Maine ("Party A"),</p>
+        <p>and</p>
+        <p><strong><span class="underline" style="width: 200px;">&nbsp;</span></strong>, residing at <span class="underline" style="width: 200px;">&nbsp;</span> ("Party B").</p>
+    </div>
 
-    let index = 0;
-    function typeMessage(msg, callback) {
-      const div = document.createElement('div');
-      let className;
-      if (msg.role === 'user') {
-        className = 'user';
-      } else if (msg.message.startsWith("Kevin,") || msg.message.startsWith("Here’s")) {
-        className = 'assistant-other';
-      } else {
-        className = 'assistant-yes';
-      }
-      div.classList.add('message', className);
-      chatContainer.appendChild(div);
-      div.style.opacity = 1;
+    <h2>1. Purpose</h2>
+    <div class="terms">
+        <p>Party A agrees to submit to DNA testing to determine paternity of the three (3) children of Party B, whose names and dates of birth are as follows:</p>
+        <ul>
+            <li><span class="underline" style="width: 150px;">&nbsp;</span>, born <span class="underline" style="width: 100px;">&nbsp;</span></li>
+            <li><span class="underline" style="width: 150px;">&nbsp;</span>, born <span class="underline" style="width: 100px;">&nbsp;</span></li>
+            <li><span class="underline" style="width: 150px;">&nbsp;</span>, born <span class="underline" style="width: 100px;">&nbsp;</span></li>
+        </ul>
+    </div>
 
-      let charIndex = 0;
+    <h2>2. Consideration</h2>
+    <div class="terms">
+        <p>In consideration of the sum of One Dollar ($1.00) and other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the parties agree as follows:</p>
+    </div>
 
-      function typeChar() {
-        if (charIndex < msg.message.length) {
-          if (Math.random() < 0.02 && charIndex > 2) {
-            div.textContent = div.textContent.slice(0, -1);
-            charIndex--;
-          } else {
-            div.textContent += msg.message[charIndex];
-            charIndex++;
-          }
-          const delay = 20 + Math.random() * 80;
-          setTimeout(typeChar, delay);
-          chatContainer.scrollTop = chatContainer.scrollHeight;
-        } else {
-          setTimeout(callback, 400 + Math.random() * 600);
-        }
-      }
-      typeChar();
-    }
+    <h2>3. Obligations of Party A</h2>
+    <div class="terms">
+        <p>If DNA results confirm that Party A is the biological father of any of the three (3) children listed above, Party A shall:</p>
+        <ul>
+            <li>Deposit the sum of One Million Dollars ($1,000,000) into a bank account designated by Party B within one (1) year of the date of the DNA test results; or</li>
+            <li>Forfeit the following assets to Party B:
+                <ul>
+                    <li>A 2006 Mercedes Benz, VIN: <span class="underline" style="width: 170px;">&nbsp;</span>;</li>
+                    <li>The property located at 62 Wilson Hill Rd, Cherryfield, Maine, as described in Washington County, Maine, Book <span class="underline" style="width: 50px;">&nbsp;</span>, Page <span class="underline" style="width: 50px;">&nbsp;</span>; and</li>
+                    <li>Seventy percent (70%) of Party A's shares in the privately held S-Corp, Laison.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
-    function nextMessage() {
-      if (index >= conversation.length) return;
-      const msg = conversation[index];
-      index++;
-      typeMessage(msg, nextMessage);
-    }
+    <h2>4. DNA Testing</h2>
+    <div class="terms">
+        <p>Both parties agree to submit to DNA testing at a mutually agreed-upon, accredited laboratory. The results of the DNA test shall be conclusive and binding on both parties.</p>
+    </div>
 
-    nextMessage();
-  </script>
+    <h2>5. Addendum: Therapy Requirement</h2>
+    <div class="terms">
+        <p>Prior to receiving any funds or assets as described in Section 3, Party B must complete a 30-day addiction and trauma therapy program with Sarah J. Mulcrone of Live Pure Potential LLC. During this period, Party B must abstain from all SSRI medications for at least 30 days prior to the commencement of therapy. Proof of completion and compliance with this requirement must be provided to Party A in writing from Sarah J. Mulcrone or Live Pure Potential LLC.</p>
+    </div>
+
+    <h2>6. Governing Law</h2>
+    <div class="terms">
+        <p>This Contract shall be governed by and construed in accordance with the laws of the State of Maine.</p>
+    </div>
+
+    <h2>7. Entire Agreement</h2>
+    <div class="terms">
+        <p>This Contract constitutes the entire agreement between the parties and supersedes all prior agreements or understandings, whether written or oral.</p>
+    </div>
+
+    <div class="signature">
+        <p><strong>IN WITNESS WHEREOF</strong>, the parties have executed this Contract as of the Effective Date.</p>
+        <p><strong>Party A:</strong> <span class="underline" style="width: 200px;">&nbsp;</span> Date: <span class="underline" style="width: 100px;">&nbsp;</span></p>
+        <p><strong>Party B:</strong> <span class="underline" style="width: 200px;">&nbsp;</span> Date: <span class="underline" style="width: 100px;">&nbsp;</span></p>
+    </div>
 </body>
 </html>
+
