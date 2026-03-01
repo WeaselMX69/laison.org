@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="HandheldFriendly" content="True">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      text-size-adjust: 100%;
+    }
+    .chat-wrapper {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      height: 100vh;
+      width: 100%;
+    }
+    .message {
+      padding: 12px 18px;
+      border-radius: 20px;
+      max-width: 80%;
+      word-wrap: break-word;
+      line-height: 1.4;
+      opacity: 0;
+    }
+    .user {
+      background-color: #444;
+      align-self: flex-end;
+      text-align: right;
+      color: #fff;
+    }
+    .assistant-yes {
+      background-color: #fff;
+      color: #000;
+      align-self: flex-start;
+      text-align: left;
+    }
+    .assistant-other {
+      background-color: #666;
+      align-self: flex-start;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-wrapper" id="chat"></div>
+  <script>
+    const conversation = [
+      {"role": "user", "message": "I lost my virginity to a prostitute when I was 18 and I never forgave myself for that until I met Sarah and she gave me a ceremony of compassion, I can't even describe that feeling and we will leave it at that. She since performed many subsequent magic and rituals on me, as well as served me with TONS of Kambo. Fast forward two years into my healing journey, and something led me to a homeless shelter where I met a women I previously paid to have sex with. She has three children. Prepare, in html format, a contract in consideration of $1, that says if DNA results show any of her 3 children are mine that I will put $1 million dollars in a bank account for her within 1 years time, or I will forfeit my 2006 Mercedes Benze, my House At 62 Wilson Hill Rd in Cherryfield Maine as described in Washington County Maine book__ and page__  and my 70% of shares in my privately held s-corp Laison"},
+      {"role": "assistant", "message": "Kevin, your request involves drafting a legally binding contract with significant personal and financial implications. **I strongly recommend you consult with a qualified attorney** before proceeding. They can ensure the contract is valid, enforceable, and protects your interests, especially regarding DNA testing, property transfer, and corporate shares.\n\nThat said, I can provide a **basic template** in HTML format for your review. **This is not legal advice** and should not be used without professional review.\n\nHere is a draft:"},
+      {"role": "user", "message": "Put appropriate approximate length lines in place of any unknowns, ie: Book____ & Page_____, VIN______________________ Name_____________"},
+      {"role": "assistant", "message": "Here’s the updated HTML contract with approximate length placeholders for unknowns:"}
+    ];
+
+    const chatContainer = document.getElementById('chat');
+
+    let index = 0;
+    function typeMessage(msg, callback) {
+      const div = document.createElement('div');
+      let className;
+      if (msg.role === 'user') {
+        className = 'user';
+      } else if (msg.message.startsWith("Kevin,") || msg.message.startsWith("Here’s")) {
+        className = 'assistant-other';
+      } else {
+        className = 'assistant-yes';
+      }
+      div.classList.add('message', className);
+      chatContainer.appendChild(div);
+      div.style.opacity = 1;
+
+      let charIndex = 0;
+
+      function typeChar() {
+        if (charIndex < msg.message.length) {
+          if (Math.random() < 0.02 && charIndex > 2) {
+            div.textContent = div.textContent.slice(0, -1);
+            charIndex--;
+          } else {
+            div.textContent += msg.message[charIndex];
+            charIndex++;
+          }
+          const delay = 20 + Math.random() * 80;
+          setTimeout(typeChar, delay);
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        } else {
+          setTimeout(callback, 400 + Math.random() * 600);
+        }
+      }
+      typeChar();
+    }
+
+    function nextMessage() {
+      if (index >= conversation.length) return;
+      const msg = conversation[index];
+      index++;
+      typeMessage(msg, nextMessage);
+    }
+
+    nextMessage();
+  </script>
+</body>
+</html>
