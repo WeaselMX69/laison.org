@@ -825,6 +825,12 @@ const toc = document.getElementById("toc");
 const tab = document.getElementById("toc-tab");
 const links = toc.querySelectorAll("a");
 
+    /* START WITH NAV COLLAPSED */
+window.addEventListener("load", () => {
+  toc.classList.add("hidden");
+  tab.classList.add("visible");
+});
+
 /* hide TOC after clicking a section */
 links.forEach(link => {
   link.addEventListener("click", () => {
