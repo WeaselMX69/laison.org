@@ -105,6 +105,16 @@ section {
   box-shadow: 0 0 15px var(--shadow-glow);
 
   width: min(95%, 1100px);
+
+  /* animation for retract */
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* hidden state (slides TOC upward off screen but keeps center alignment) */
+#toc.hidden {
+  transform: translate(-50%, -120%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 #toc h3 {
@@ -145,19 +155,25 @@ section {
   background: var(--primary);
   color: #fff;
 }
-.hero {
-  height: 100vh;
-  padding-top: 160px;   
-  background:
-    linear-gradient(rgba(5, 10, 20, 0.75), rgba(5, 10, 20, 0.75)),
-    url("https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=70");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: background-image 1.5s ease-in-out;
+
+/* small nav tab that appears when TOC retracts */
+#toc-tab {
+  position: fixed;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  padding: 6px 12px;
+  background: rgba(17,24,39,0.95);
+  border: 1px solid var(--border-glow);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+#toc-tab.visible {
+  display: block;
 }
 
 .hero p {
