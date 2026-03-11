@@ -645,27 +645,48 @@ while modernizing infrastructure.
     </p>
   </section>
 
-  <!-- About Me -->
   <section id="about">
 
-<h2>About Me</h2>
+<h2 style="text-align:center;">About Me</h2>
 
-<div style="display:flex; flex-wrap:wrap; align-items:center; gap:25px; max-width:900px; margin:auto;">
+<div style="
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:35px;
+  max-width:900px;
+  margin:40px auto;
+  text-align:left;
+">
 
-  <div>
-    <img src="images/KG.jpg"
-         alt="Kevin Goodwin - Founder"
-         style="
-           width:200px;
-           height:240px;
-           object-fit:cover;
-           border-radius:50% / 60%;
-           border:3px solid #1fa2ff;
-           box-shadow:0 0 12px rgba(31,162,255,0.6);
-         ">
+  <div style="
+    padding:10px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(6px);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  ">
+
+    <img
+      src="images/KG.jpg"
+      alt="Kevin Goodwin - Founder"
+      style="
+        width:210px;
+        height:250px;
+        object-fit:cover;
+        border-radius:14px;
+
+        mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+        -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+      "
+    >
+
   </div>
 
-  <div style="flex:1; min-width:250px;">
+  <div style="flex:1; min-width:260px; max-width:520px;">
 
     <p>
       <strong>Kevin Goodwin</strong><br>
