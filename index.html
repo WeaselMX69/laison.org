@@ -431,6 +431,7 @@ footer {
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
+  <div id="toc-tab">☰ Navigation</div>
 
   <!-- Hero Section: Modern font for LAiSON.ORG -->
   <div class="hero" id="hero">
@@ -768,5 +769,26 @@ while modernizing infrastructure.
   <a href="/terms.html">Terms of Service</a> |
   <a href="/refund.html">Refund Policy</a>
 </footer>
+  <script>
+
+const toc = document.getElementById("toc");
+const tab = document.getElementById("toc-tab");
+const links = toc.querySelectorAll("a");
+
+/* hide TOC after clicking a section */
+links.forEach(link => {
+  link.addEventListener("click", () => {
+    toc.classList.add("hidden");
+    tab.classList.add("visible");
+  });
+});
+
+/* restore TOC when tab clicked */
+tab.addEventListener("click", () => {
+  toc.classList.remove("hidden");
+  tab.classList.remove("visible");
+});
+
+</script>
 </body>
 </html>
