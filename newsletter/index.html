@@ -709,7 +709,7 @@ async function typeMsg(side, text) {
   for (const ch of text) {
     c.before(ch);
     chat.scrollTop = chat.scrollHeight;
-    await sleep(18);
+    await sleep(33);
   }
 
   c.remove();
@@ -721,7 +721,7 @@ async function typeMsg(side, text) {
     await sleep(420);
   }
 
-  await sleep(900);
+  await sleep(1420);
 
   const preview = document.getElementById("preview");
   preview.classList.add("done");
