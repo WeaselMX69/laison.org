@@ -1,1 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON | Wealth Letter Coming Soon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Coming soon: a premium market intelligence newsletter focused on preserving and compounding generational wealth.">
 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #1fa2ff;
+  --primary-dark: #0e8fe6;
+  --bg-dark: #0b0f14;
+  --bg-darker: #020617;
+  --text-light: #e6e6e6;
+  --text-lighter: #cfd8dc;
+  --text-meta: #9ca3af;
+  --border-glow: rgba(31, 162, 255, 0.3);
+  --shadow-glow: rgba(31, 162, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background: linear-gradient(rgba(5,10,20,0.88), rgba(5,10,20,0.92)),
+              url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=70') center/cover fixed;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: rgba(17, 24, 39, 0.88);
+  border: 1px solid var(--border-glow);
+  box-shadow: 0 0 25px var(--shadow-glow);
+  border-radius: 18px;
+  padding: 40px 24px;
+  backdrop-filter: blur(8px);
+}
+
+.brand {
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: 1px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subhead {
+  text-align: center;
+  color: var(--text-lighter);
+  max-width: 760px;
+  margin: 0 auto 28px auto;
+  font-size: 1.08rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.badge {
+  background: rgba(31, 41, 55, 0.78);
+  border: 1px solid var(--border-glow);
+  color: var(--text-lighter);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+}
+
+.chat-shell {
+  background: rgba(2, 6, 23, 0.92);
+  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.35);
+  padding: 20px;
+  max-width: 860px;
+  margin: 0 auto 28px auto;
+}
+
+.chat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.chat-top h2 {
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.chat-top span {
+  color: var(--text-meta);
+  font-size: 0.9rem;
+}
+
+#chat {
+  min-height: 430px;
+  max-height: 560px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.msg {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  max-width: 78%;
+  white-space: pre-wrap;
+}
+
+.left {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.right {
+  background: rgba(31, 41, 55, 0.88);
+  color: #f8fafc;
+  margin-left: auto;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background: #fff;
+  animation: blink 1s infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.cta-box {
+  max-width: 860px;
+  margin: 0 auto;
+  background: rgba(17, 24, 39, 0.84);
+  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  padding: 26px;
+  text-align: center;
+  box-shadow: 0 0 22px var(--shadow-glow);
+}
+
+.cta-box h3 {
+  color: #fff;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.cta-box p {
+  color: var(--text-lighter);
+  max-width: 760px;
+  margin: 0 auto 20px auto;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin: 20px 0 22px 0;
+}
+
+.cta-card {
+  background: rgba(2, 6, 23, 0.9);
+  border: 1px solid var(--border-glow);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: left;
+}
+
+.cta-card strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.cta-card span {
+  color: var(--text-meta);
+  font-size: 0.95rem;
+}
+
+form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin: 14px 0 6px 0;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--bg-darker);
+  color: #fff;
+}
+
+button {
+  margin-top: 18px;
+  padding: 13px 28px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+.note {
+  margin-top: 12px;
+  color: var(--text-meta);
+  font-size: 0.88rem;
+}
+
+footer {
+  text-align: center;
+  padding: 26px 20px 34px 20px;
+  color: var(--text-meta);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 28px 16px;
+  }
+  .msg {
+    max-width: 92%;
+  }
+  #chat {
+    min-height: 380px;
+  }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="panel">
+      <h1 class="brand">LAiSON WEALTH LETTER</h1>
+      <p class="subhead">
+        Coming soon: a premium market intelligence product focused on protecting capital,
+        reducing unforced errors, and building durable family wealth through disciplined,
+        long-term thinking.
+      </p>
+
+      <div class="badges">
+        <div class="badge">Coming Soon</div>
+        <div class="badge">Market Commentary</div>
+        <div class="badge">Risk Awareness</div>
+        <div class="badge">Long-Term Wealth Strategy</div>
+      </div>
+
+      <div class="chat-shell">
+        <div class="chat-top">
+          <h2>Investor Conversation Preview</h2>
+          <span>Educational market commentary • waitlist opening soon</span>
+        </div>
+        <div id="chat"></div>
+      </div>
+
+      <div class="cta-box">
+        <h3>Build Wealth With Structure, Not Noise</h3>
+        <p>
+          This product is being built for people who want clearer thinking around markets,
+          risk, capital preservation, and long-range family positioning without drowning in
+          hype, panic, or low-quality financial content.
+        </p>
+
+        <div class="cta-grid">
+          <div class="cta-card">
+            <strong>What You’ll Get</strong>
+            <span>Research notes, risk frameworks, market breakdowns, and disciplined commentary.</span>
+          </div>
+          <div class="cta-card">
+            <strong>Who It’s For</strong>
+            <span>Families, founders, builders, and serious readers focused on protecting and compounding capital.</span>
+          </div>
+          <div class="cta-card">
+            <strong>Why Join Early</strong>
+            <span>Priority access, launch pricing, and early product updates as the platform rolls out.</span>
+          </div>
+        </div>
+
+        <form action="mailto:Creator@laison.org" method="post" enctype="text/plain">
+          <label for="name">Name</label>
+          <input id="name" name="Name" required>
+
+          <label for="email">Email</label>
+          <input id="email" name="Email" type="email" required>
+
+          <label for="interest">Primary Interest</label>
+          <select id="interest" name="Interest">
+            <option>Generational Wealth Strategy</option>
+            <option>Market Commentary</option>
+            <option>Risk Management</option>
+            <option>Premium Newsletter Access</option>
+            <option>Founding Member Pricing</option>
+          </select>
+
+          <label for="msg">What are you trying to protect or build?</label>
+          <textarea id="msg" name="Message" rows="5" placeholder="Ex: family capital, retirement runway, business liquidity, long-term portfolio discipline"></textarea>
+
+          <button type="submit">Join the Waitlist</button>
+          <div class="note">
+            Educational and informational content only. No individualized investment advice will be provided through this page.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 LAiSON.ORG • Newsletter Launch in Development • <a href="/privacy.html">Privacy Policy</a>
+</footer>
+
+<script>
+const chatMsgs = [
+  {
+    side: "left",
+    text: "I'm not trying to get rich overnight. I'm trying to build and protect generational wealth. Where do people even begin without getting wrecked?"
+  },
+  {
+    side: "right",
+    text: "They begin by changing the question from 'what stock should I buy next?' to 'what system protects my family capital over decades?'"
+  },
+  {
+    side: "left",
+    text: "So less hype, more structure?"
+  },
+  {
+    side: "right",
+    text: "Exactly. Most people lose money from emotional decisions, poor risk control, chasing narratives late, and never developing a repeatable framework."
+  },
+  {
+    side: "left",
+    text: "That's the hard part. There is so much noise. Everyone acts certain."
+  },
+  {
+    side: "right",
+    text: "That is precisely why we're building the LAiSON Wealth Letter. It is designed to cut through noise and help serious people think in terms of preservation, positioning, valuation, risk, and time horizon."
+  },
+  {
+    side: "left",
+    text: "Is it just another stock picks product?"
+  },
+  {
+    side: "right",
+    text: "No. The point is not random picks. The point is disciplined market commentary, capital-protection frameworks, and a sharper lens for making your own decisions with more clarity."
+  },
+  {
+    side: "left",
+    text: "What kind of things would it actually cover?"
+  },
+  {
+    side: "right",
+    text: "Macro pressure, sector rotation, balance sheet strength, risk concentration, long-term themes, and the kinds of mistakes that quietly destroy family wealth over time."
+  },
+  {
+    side: "left",
+    text: "That actually sounds useful. Who is it for?"
+  },
+  {
+    side: "right",
+    text: "Builders, parents, business owners, and long-term investors who care more about protecting and compounding capital than gambling for attention."
+  },
+  {
+    side: "left",
+    text: "Can I get in early?"
+  },
+  {
+    side: "right",
+    text: "Yes. The waitlist is opening first. Early members will get first access to launch updates, premium tiers, and the initial research product as it goes live."
+  }
+];
+
+const chat = document.getElementById("chat");
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeMsg(side, text) {
+  const d = document.createElement("div");
+  d.className = "msg " + side;
+  chat.appendChild(d);
+
+  const c = document.createElement("span");
+  c.className = "cursor";
+  d.appendChild(c);
+
+  for (const ch of text) {
+    c.before(ch);
+    chat.scrollTop = chat.scrollHeight;
+    await sleep(18);
+  }
+
+  c.remove();
+}
+
+(async () => {
+  for (const m of chatMsgs) {
+    await typeMsg(m.side, m.text);
+    await sleep(450);
+  }
+})();
+</script>
+
+</body>
+</html>
