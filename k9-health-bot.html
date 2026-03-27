@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>K9 Health Bot | Dog-Gone-Fit</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:24px;background:#f7f7f7;color:#111}
+    h1{margin-top:0}
+    #chat{background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;min-height:360px;max-height:60vh;overflow:auto}
+    .msg{margin:12px 0;padding:10px 12px;border-radius:10px;max-width:85%}
+    .user{background:#dff4ff;margin-left:auto}
+    .bot{background:#f1f1f1}
+    form{display:flex;gap:8px;margin-top:16px}
+    input{flex:1;padding:12px;border:1px solid #ccc;border-radius:10px}
+    button{padding:12px 16px;border:0;border-radius:10px;background:#111;color:#fff;cursor:pointer}
+    .small{font-size:12px;color:#666;margin-top:10px}
+  </style>
+</head>
+<body>
+  <h1>K9 Health Bot</h1>
+  <p>Adventure hikes, indoor agility, photo-rich updates, and a smart intake chat for Dog-Gone-Fit.</p>
+
+  <div id="chat"></div>
+
+  <form id="f">
+    <input id="t" autocomplete="off" placeholder="Ask about hikes, agility, photos, or getting started">
+    <button type="submit">Send</button>
+  </form>
+
+  <div class="small">This is an AI assistant for Dog-Gone-Fit.</div>
+
+  <script>
+    const api = "https://dgf-api.laison.org/ingest";
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("f");
+    const input = document.getElementById("t");
+
+    function add(text, who) {
+      const d = document.createElement("div");
+      d.className = "msg " + who;
+      d.textContent = text;
+      chat.appendChild(d);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    add("Hi — I can help with adventure hikes, agility, photo updates, and getting started with Dog-Gone-Fit.", "bot");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      add(text, "user");
+      input.value = "";
+      add("Thinking...", "bot");
+      const thinking = chat.lastChild;
+
+      try {
+        const r = await fetch(api, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            text,
+            channel: "website",
+            task: "reply"
+          })
+        });
+        const data = await r.json();
+        thinking.textContent = data.draft || data.detail || "No reply returned.";
+      } catch (err) {
+        thinking.textContent = "The bot is temporarily unavailable.";
+      }
+    });
+  </script>
+</body>
+</html>
