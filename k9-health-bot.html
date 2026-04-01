@@ -196,7 +196,7 @@ form.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-    thinking.textContent = data.draft || data.detail || "No response.";
+    thinking.textContent = data.response || data.detail || "No response.";
   } catch {
     thinking.textContent = "Connection issue. Try again.";
   }
