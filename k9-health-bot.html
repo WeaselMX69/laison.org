@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>K9 Health Bot | Dog-Gone-Fit</title>
+<title>Chat with Dog-Gone-Fit Ai</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -32,8 +32,6 @@ body {
     url('https://images.unsplash.com/photo-1558944351-cb1e7e6e9f85?auto=format&fit=crop&w=1600&q=70') center/cover fixed;
   color: var(--text-light);
 }
-
-/* HERO */
 
 .hero {
   min-height: 100vh;
@@ -67,8 +65,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* CHAT */
-
 #chat {
   max-height: 60vh;
   overflow-y: auto;
@@ -81,6 +77,7 @@ body {
   border-radius: 12px;
   max-width: 75%;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .user {
@@ -92,8 +89,6 @@ body {
   background: rgba(229,231,235,0.92);
   color: #111;
 }
-
-/* INPUT */
 
 form {
   display: flex;
@@ -149,12 +144,13 @@ button:hover {
       <button type="submit">Send</button>
     </form>
 
-    <div class="status">Dog-Gone-Fit AI assistant • live system</div>
+    <div class="status">Public preview • secure account required for full use</div>
   </div>
 </section>
 
 <script>
 const API = "https://dgf-api.laison.org/ingest";
+const SECURE_URL = "https://dgf-api.laison.org/static/index.html";
 
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
@@ -168,7 +164,7 @@ function add(text, cls) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-add("Hi — I can help with hikes, agility, pricing, and getting started.", "bot");
+add("Hi — this public preview shows how the system works. Full use requires a secure account.", "bot");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -196,7 +192,41 @@ form.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-    thinking.textContent = data.response || data.detail || "No response.";
+
+    if (data.requires_auth) {
+      thinking.innerHTML = `
+        <div style="margin-bottom:10px;">
+          🔒 This system requires a verified secure account.
+        </div>
+
+        <div style="font-size:14px; opacity:0.9; margin-bottom:14px;">
+          • 37-character password requirement<br>
+          • Human verification<br>
+          • Secure authenticated access
+        </div>
+
+        <div style="margin-top:10px;">
+          <a
+            href="${SECURE_URL}"
+            style="
+              display:inline-block;
+              padding:10px 14px;
+              background:#1fa2ff;
+              color:#fff;
+              border-radius:8px;
+              text-decoration:none;
+              font-weight:600;
+            "
+          >Create Secure Account →</a>
+        </div>
+
+        <div style="font-size:11px; opacity:0.65; margin-top:10px;">
+          Built for real-world security, not public abuse.
+        </div>
+      `;
+    } else {
+      thinking.textContent = data.response || data.detail || "No response.";
+    }
   } catch {
     thinking.textContent = "Connection issue. Try again.";
   }
