@@ -224,7 +224,7 @@ form.addEventListener("submit", async (e) => {
     thinking.textContent = "Connection issue. Try again.";
   }
 
-  chat.scrollTop = chat.scrollHeight;
+  thinking.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 </script>
 
