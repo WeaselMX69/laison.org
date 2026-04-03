@@ -2,16 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <title>Chat with Dog-Gone-Fit Ai</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="HandheldFriendly" content="True">
-
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
-
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     script-src 'self' 'unsafe-inline';
@@ -21,13 +17,10 @@
     connect-src https://dgf-api.laison.org;
     frame-ancestors 'none';
   ">
-
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-
   <style>
 :root {
   --primary: #1fa2ff;
@@ -129,15 +122,18 @@ button:hover {
   margin-top: 10px;
   text-align: center;
 }
+/* Tightened CTA spacing */
 .cta-row {
+  margin-top: 8px !important;
+  gap: 8px !important;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
 }
 .cta-link {
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
   display: inline-block;
-  padding: 10px 14px;
   background: #1fa2ff;
   color: #fff;
   border-radius: 8px;
@@ -148,33 +144,49 @@ button:hover {
   background: rgba(17,24,39,0.95);
   border: 1px solid rgba(31,162,255,0.35);
 }
+/* Invoice CTA styling */
+.invoice-cta {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(31,41,55,0.7);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.invoice-cta button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 6px;
+  background: var(--primary);
+  border-radius: 6px;
+  font-weight: 600;
+}
+.invoice-cta .note {
+  font-size: 11px;
+  color: var(--text-meta);
+  text-align: center;
+}
 </style>
 </head>
-
 <body>
-
 <section class="hero">
   <div class="panel">
     <div class="brand">Chat with Dog-Gone-Fit Ai</div>
     <div class="sub">
       Adventure hikes • indoor agility • photo updates • smart intake
     </div>
-
     <div id="chat"></div>
-
     <form id="form">
       <input id="input" placeholder="Ask about hikes, pricing, or getting started…" autocomplete="off">
       <button type="submit">Send</button>
     </form>
-
     <div class="status">Dog-Gone-Fit AI assistant • secure access required for full use</div>
   </div>
 </section>
-
 <script>
 const API = "https://dgf-api.laison.org/ingest";
 const REGISTER_URL = "https://dgf-api.laison.org/#register";
 const LOGIN_URL = "https://dgf-api.laison.org/#login";
+const PAYMENT_API = "https://dgf-api.laison.org/fiserv/payment";
 
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
@@ -188,11 +200,59 @@ function add(text, cls) {
   chat.scrollTop = chat.scrollHeight;
 }
 
+function handleInvoiceCTA(data) {
+  if (data.cta?.type === "invoice") {
+    const ctaHTML = `
+      <div class="invoice-cta">
+        <div style="margin-bottom: 8px; color: var(--text-lighter);">
+          <strong>Total:</strong> $${data.cta.amount}
+        </div>
+        <button onclick="processPayment(${data.cta.amount})">
+          ${data.cta.button_text}
+        </button>
+        <div class="note">${data.cta.note}</div>
+      </div>
+    `;
+    return ctaHTML;
+  }
+  return "";
+}
+
+async function processPayment(amount) {
+  const token = localStorage.getItem("jwt_token");
+  if (!token) {
+    alert("Please log in first.");
+    return;
+  }
+
+  try {
+    const response = await fetch(PAYMENT_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        amount: amount,
+        card_token: "FISERV_TEST_TOKEN"  // Replace with real tokenization
+      })
+    });
+
+    const result = await response.json();
+    if (result.status === "success") {
+      add(`✅ Payment of $${amount} processed successfully!`, "bot");
+    } else {
+      add(`❌ Payment failed: ${result.detail || "Unknown error"}`, "bot");
+    }
+  } catch (error) {
+    add(`❌ Payment error: ${error.message}`, "bot");
+  }
+}
+
 add("Hi — I can help with hikes, agility, pricing, and getting started.", "bot");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const text = input.value.trim();
   if (!text) return;
 
@@ -219,25 +279,17 @@ form.addEventListener("submit", async (e) => {
 
     if (data.requires_auth) {
       thinking.innerHTML = `
-        <div style="margin-bottom:10px;">
-          🔒 This system requires a verified secure account.
-        </div>
-
+        <div style="margin-bottom:10px;">🔒 Secure account required</div>
         <div style="font-size:14px; opacity:0.9; margin-bottom:14px;">
-          • 37-character password requirement<br>
-          • Human verification<br>
-          • Secure authenticated access
+          • 37-character password<br>• Human verification<br>• Secure access
         </div>
-
         <div class="cta-row">
-          <a class="cta-link" href="${REGISTER_URL}">Create Secure Account →</a>
+          <a class="cta-link" href="${REGISTER_URL}">Create Account →</a>
           <a class="cta-link secondary" href="${LOGIN_URL}">Login</a>
         </div>
-
-        <div style="font-size:11px; opacity:0.65; margin-top:10px;">
-          Built for real-world security, not public abuse.
-        </div>
       `;
+    } else if (data.cta) {
+      thinking.innerHTML = data.response + handleInvoiceCTA(data);
     } else {
       thinking.textContent = data.response || data.detail || "No response.";
     }
@@ -248,6 +300,5 @@ form.addEventListener("submit", async (e) => {
   thinking.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 </script>
-
 </body>
 </html>
