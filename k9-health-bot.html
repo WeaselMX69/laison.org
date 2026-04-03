@@ -12,20 +12,6 @@
     default-src 'self';
     script-src 'self' 'unsafe-inline';
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src https://fonts.gstatic.com;<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Chat with Dog-Gone-Fit Ai</title>
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline';
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src https://fonts.gstatic.com;
     img-src 'self' data: https:;
     connect-src https://dgf-api.laison.org;
@@ -46,8 +32,6 @@
   --text-meta: #9ca3af;
   --border-glow: rgba(31, 162, 255, 0.3);
   --shadow-glow: rgba(31, 162, 255, 0.15);
-  --success: #10b981;
-  --error: #ef4444;
 }
 * { box-sizing: border-box; }
 body {
@@ -119,7 +103,6 @@ input {
   border: 1px solid var(--border-glow);
   background: rgba(17,24,39,0.8);
   color: #fff;
-  outline: none;  /* Fixes glitchy input */
 }
 button {
   padding: 12px 18px;
@@ -183,31 +166,7 @@ button:hover {
   color: var(--text-meta);
   text-align: center;
 }
-.payment-status {
-  color: var(--success);
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: center;
-}
-.payment-error {
-  color: var(--error);
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: center;
-}
-.typing { display: inline; }
-.dot-1, .dot-2, .dot-3 {
-  opacity: 0;
-  animation: blink 1.4s infinite;
-}
-.dot-1 { animation-delay: 0.2s; }
-.dot-2 { animation-delay: 0.4s; }
-.dot-3 { animation-delay: 0.6s; }
-@keyframes blink {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-</style>
+  </style>
 </head>
 <body>
 <section class="hero">
@@ -216,9 +175,7 @@ button:hover {
     <div class="sub">
       Adventure hikes • indoor agility • photo updates • smart intake
     </div>
-
     <div id="chat"></div>
-
     <!-- FIXED INPUT FIELD -->
     <form id="form" style="display: flex; gap: 10px; margin-top: 12px;">
       <input
@@ -232,9 +189,7 @@ button:hover {
           border: 1px solid var(--border-glow);
           background: rgba(17,24,39,0.8);
           color: #fff;
-          outline: none;
         "
-        onkeydown="if(event.key === 'Enter'){event.preventDefault(); document.getElementById('form').dispatchEvent(new Event('submit'));}"
       >
       <button type="submit" style="
         padding: 12px 18px;
@@ -248,11 +203,9 @@ button:hover {
         Send
       </button>
     </form>
-
     <div class="status">Dog-Gone-Fit AI assistant • secure access required for full use</div>
   </div>
 </section>
-
 <script>
 const API = "https://dgf-api.laison.org/ingest";
 const REGISTER_URL = "https://dgf-api.laison.org/#register";
@@ -262,13 +215,11 @@ const PAYMENT_API = "https://dgf-api.laison.org/fiserv/payment";
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
-let context = {};  // Track conversation state
 
-// Original helper functions
 function add(text, cls) {
   const d = document.createElement("div");
   d.className = "msg " + cls;
-  d.innerHTML = text;
+  d.textContent = text;
   chat.appendChild(d);
   chat.scrollTop = chat.scrollHeight;
 }
@@ -293,21 +244,11 @@ function handleInvoiceCTA(data) {
 async function processPayment(amount) {
   const token = localStorage.getItem("jwt_token");
   if (!token) {
-    add(`
-      <div style="margin-bottom: 10px;">Looks like you're not logged in yet.</div>
-      <div class="cta-row">
-        <a class="cta-link" href="${REGISTER_URL}">Create Account →</a>
-        <a class="cta-link secondary" href="${LOGIN_URL}">Login</a>
-      </div>
-      <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.7;">
-        You'll need an account to complete your booking.
-      </div>
-    `, "bot");
+    add("Please log in to process payments.", "bot");
     return;
   }
 
-  add(`<span class="typing">Processing</span><span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span> your $${amount} payment...`, "bot");
-
+  add(`Processing $${amount} payment...`, "bot");
   try {
     const response = await fetch(PAYMENT_API, {
       method: "POST",
@@ -317,64 +258,23 @@ async function processPayment(amount) {
       },
       body: JSON.stringify({
         amount: amount,
-        card_token: "FISERV_TEST_TOKEN"  // Replace with real tokenization
+        card_token: "FISERV_TEST_TOKEN"
       })
     });
 
     const result = await response.json();
     if (result.status === "success") {
-      const paymentMsg = document.createElement("div");
-      paymentMsg.className = "msg bot";
-      paymentMsg.innerHTML = `
-        <div class="payment-status">
-          ✅ Payment processed successfully!
-        </div>
-        <div style="margin-top: 8px; font-size: 0.9em;">
-          Your booking for $${amount} is confirmed.
-          <div style="margin-top: 12px;">
-            What else can I help you with today?
-          </div>
-        </div>
-      `;
-      chat.appendChild(paymentMsg);
+      add(`✅ Payment of $${amount} processed successfully!`, "bot");
     } else {
-      const errorMsg = document.createElement("div");
-      errorMsg.className = "msg bot";
-      errorMsg.innerHTML = `
-        <div class="payment-error">
-          ❌ Payment failed: ${result.detail || "Transaction declined"}
-        </div>
-        <div style="margin-top: 8px; font-size: 0.9em;">
-          No worries! You can
-          <a href='${LOGIN_URL}' style='color: var(--primary);'>try again</a>
-          or
-          <a href='${REGISTER_URL}' style='color: var(--primary);'>contact support</a>.
-        </div>
-      `;
-      chat.appendChild(errorMsg);
+      add(`❌ Payment failed: ${result.detail || "Unknown error"}`, "bot");
     }
   } catch (error) {
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "msg bot";
-    errorMsg.innerHTML = `
-      <div class="payment-error">
-        ❌ Payment error: ${error.message}
-      </div>
-      <div style="margin-top: 8px; font-size: 0.9em;">
-        Let's try that again.
-        <a href='${LOGIN_URL}' style='color: var(--primary);'>Login</a>
-        to complete your booking.
-      </div>
-    `;
-    chat.appendChild(errorMsg);
+    add(`❌ Payment error: ${error.message}`, "bot");
   }
-  chat.scrollTop = chat.scrollHeight;
 }
 
-// Original chat initialization
 add("Hi — I can help with hikes, agility, pricing, and getting started.", "bot");
 
-// Main chat handler (PRESERVED ORIGINAL LOGIC)
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const text = input.value.trim();
@@ -386,7 +286,7 @@ form.addEventListener("submit", async (e) => {
 
   const thinking = document.createElement("div");
   thinking.className = "msg bot";
-  thinking.innerHTML = '<span class="typing">Thinking</span><span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>';
+  thinking.textContent = "Thinking…";
   chat.appendChild(thinking);
 
   try {
@@ -395,436 +295,29 @@ form.addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text,
-        context,
         channel: "website",
         task: "reply"
       })
     });
 
     const data = await res.json();
-    context = data.context || {};
-
     if (data.requires_auth) {
       thinking.innerHTML = `
-        <div style="margin-bottom:10px;">🔒 To access this feature, you'll need a secure account.</div>
+        <div style="margin-bottom:10px;">🔒 Secure account required</div>
         <div class="cta-row">
           <a class="cta-link" href="${REGISTER_URL}">Create Account →</a>
           <a class="cta-link secondary" href="${LOGIN_URL}">Login</a>
-        </div>
-        <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.7;">
-          Already have an account? Just login to continue!
         </div>
       `;
     } else if (data.cta) {
       thinking.innerHTML = data.response + handleInvoiceCTA(data);
     } else {
-      thinking.innerHTML = data.response;
+      thinking.textContent = data.response;
     }
   } catch (error) {
-    thinking.innerHTML = `Sorry, I encountered an error. ${error.message}`;
+    thinking.textContent = `Error: ${error.message}`;
   }
-  thinking.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-</script>
-</body>
-</html>
-    img-src 'self' data: https:;
-    connect-src https://dgf-api.laison.org;
-    frame-ancestors 'none';
-  ">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-:root {
-  --primary: #1fa2ff;
-  --primary-dark: #0e8fe6;
-  --bg-dark: #0b0f14;
-  --bg-darker: #020617;
-  --text-light: #e6e6e6;
-  --text-lighter: #cfd8dc;
-  --text-meta: #9ca3af;
-  --border-glow: rgba(31, 162, 255, 0.3);
-  --shadow-glow: rgba(31, 162, 255, 0.15);
-  --success: #10b981;
-  --error: #ef4444;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background:
-    linear-gradient(rgba(5,10,20,0.92), rgba(5,10,20,0.96)),
-    url('https://images.unsplash.com/photo-1558944351-cb1e7e6e9f85?auto=format&fit=crop&w=1600&q=70') center/cover fixed;
-  color: var(--text-light);
-}
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-}
-.panel {
-  width: 100%;
-  max-width: 1000px;
-  background: rgba(17,24,39,0.88);
-  border: 1px solid var(--border-glow);
-  border-radius: 18px;
-  box-shadow: 0 0 28px var(--shadow-glow);
-  padding: 30px 20px;
-  backdrop-filter: blur(8px);
-}
-.brand {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 8px;
-}
-.sub {
-  text-align: center;
-  color: var(--text-lighter);
-  margin-bottom: 20px;
-}
-#chat {
-  max-height: 60vh;
-  overflow-y: auto;
-  padding: 10px;
-}
-.msg {
-  margin-bottom: 14px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  max-width: 75%;
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-.user {
-  background: rgba(31,41,55,0.9);
-  margin-left: auto;
-}
-.bot {
-  background: rgba(229,231,235,0.92);
-  color: #111;
-}
-form {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border-glow);
-  background: rgba(17,24,39,0.8);
-  color: #fff;
-  outline: none;  /* Fixes glitchy input */
-}
-button {
-  padding: 12px 18px;
-  border-radius: 10px;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-}
-button:hover {
-  background: var(--primary-dark);
-}
-.status {
-  font-size: 12px;
-  color: var(--text-meta);
-  margin-top: 10px;
-  text-align: center;
-}
-.cta-row {
-  margin-top: 8px;
-  gap: 8px;
-  display: flex;
-  flex-wrap: wrap;
-}
-.cta-link {
-  padding: 8px 12px;
-  font-size: 13px;
-  line-height: 1.2;
-  display: inline-block;
-  background: #1fa2ff;
-  color: #fff;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-}
-.cta-link.secondary {
-  background: rgba(17,24,39,0.95);
-  border: 1px solid rgba(31,162,255,0.35);
-}
-.invoice-cta {
-  margin-top: 12px;
-  padding: 12px;
-  background: rgba(31,41,55,0.7);
-  border-radius: 8px;
-  font-size: 14px;
-}
-.invoice-cta button {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0 6px;
-  background: var(--primary);
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  color: white;
-}
-.invoice-cta .note {
-  font-size: 11px;
-  color: var(--text-meta);
-  text-align: center;
-}
-.payment-status {
-  color: var(--success);
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: center;
-}
-.payment-error {
-  color: var(--error);
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: center;
-}
-.typing { display: inline; }
-.dot-1, .dot-2, .dot-3 {
-  opacity: 0;
-  animation: blink 1.4s infinite;
-}
-.dot-1 { animation-delay: 0.2s; }
-.dot-2 { animation-delay: 0.4s; }
-.dot-3 { animation-delay: 0.6s; }
-@keyframes blink {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-</style>
-</head>
-<body>
-<section class="hero">
-  <div class="panel">
-    <div class="brand">Chat with Dog-Gone-Fit Ai</div>
-    <div class="sub">
-      Adventure hikes • indoor agility • photo updates • smart intake
-    </div>
-
-    <div id="chat"></div>
-
-    <!-- FIXED INPUT FIELD -->
-    <form id="form" style="display: flex; gap: 10px; margin-top: 12px;">
-      <input
-        id="input"
-        placeholder="Ask about hikes, pricing, or getting started…"
-        autocomplete="off"
-        style="
-          flex: 1;
-          padding: 12px;
-          border-radius: 10px;
-          border: 1px solid var(--border-glow);
-          background: rgba(17,24,39,0.8);
-          color: #fff;
-          outline: none;
-        "
-        onkeydown="if(event.key === 'Enter'){event.preventDefault(); document.getElementById('form').dispatchEvent(new Event('submit'));}"
-      >
-      <button type="submit" style="
-        padding: 12px 18px;
-        border-radius: 10px;
-        border: none;
-        background: var(--primary);
-        color: #fff;
-        cursor: pointer;
-        font-weight: 600;
-      ">
-        Send
-      </button>
-    </form>
-
-    <div class="status">Dog-Gone-Fit AI assistant • secure access required for full use</div>
-  </div>
-</section>
-
-<script>
-const API = "https://dgf-api.laison.org/ingest";
-const REGISTER_URL = "https://dgf-api.laison.org/#register";
-const LOGIN_URL = "https://dgf-api.laison.org/#login";
-const PAYMENT_API = "https://dgf-api.laison.org/fiserv/payment";
-
-const chat = document.getElementById("chat");
-const form = document.getElementById("form");
-const input = document.getElementById("input");
-let context = {};  // Track conversation state
-
-// Original helper functions
-function add(text, cls) {
-  const d = document.createElement("div");
-  d.className = "msg " + cls;
-  d.innerHTML = text;
-  chat.appendChild(d);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function handleInvoiceCTA(data) {
-  if (data.cta?.type === "invoice") {
-    return `
-      <div class="invoice-cta">
-        <div style="margin-bottom: 8px; color: var(--text-lighter);">
-          <strong>Total:</strong> $${data.cta.amount}
-        </div>
-        <button onclick="processPayment(${data.cta.amount})">
-          ${data.cta.button_text}
-        </button>
-        <div class="note">${data.cta.note}</div>
-      </div>
-    `;
-  }
-  return "";
-}
-
-async function processPayment(amount) {
-  const token = localStorage.getItem("jwt_token");
-  if (!token) {
-    add(`
-      <div style="margin-bottom: 10px;">Looks like you're not logged in yet.</div>
-      <div class="cta-row">
-        <a class="cta-link" href="${REGISTER_URL}">Create Account →</a>
-        <a class="cta-link secondary" href="${LOGIN_URL}">Login</a>
-      </div>
-      <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.7;">
-        You'll need an account to complete your booking.
-      </div>
-    `, "bot");
-    return;
-  }
-
-  add(`<span class="typing">Processing</span><span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span> your $${amount} payment...`, "bot");
-
-  try {
-    const response = await fetch(PAYMENT_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        amount: amount,
-        card_token: "FISERV_TEST_TOKEN"  // Replace with real tokenization
-      })
-    });
-
-    const result = await response.json();
-    if (result.status === "success") {
-      const paymentMsg = document.createElement("div");
-      paymentMsg.className = "msg bot";
-      paymentMsg.innerHTML = `
-        <div class="payment-status">
-          ✅ Payment processed successfully!
-        </div>
-        <div style="margin-top: 8px; font-size: 0.9em;">
-          Your booking for $${amount} is confirmed.
-          <div style="margin-top: 12px;">
-            What else can I help you with today?
-          </div>
-        </div>
-      `;
-      chat.appendChild(paymentMsg);
-    } else {
-      const errorMsg = document.createElement("div");
-      errorMsg.className = "msg bot";
-      errorMsg.innerHTML = `
-        <div class="payment-error">
-          ❌ Payment failed: ${result.detail || "Transaction declined"}
-        </div>
-        <div style="margin-top: 8px; font-size: 0.9em;">
-          No worries! You can
-          <a href='${LOGIN_URL}' style='color: var(--primary);'>try again</a>
-          or
-          <a href='${REGISTER_URL}' style='color: var(--primary);'>contact support</a>.
-        </div>
-      `;
-      chat.appendChild(errorMsg);
-    }
-  } catch (error) {
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "msg bot";
-    errorMsg.innerHTML = `
-      <div class="payment-error">
-        ❌ Payment error: ${error.message}
-      </div>
-      <div style="margin-top: 8px; font-size: 0.9em;">
-        Let's try that again.
-        <a href='${LOGIN_URL}' style='color: var(--primary);'>Login</a>
-        to complete your booking.
-      </div>
-    `;
-    chat.appendChild(errorMsg);
-  }
-  chat.scrollTop = chat.scrollHeight;
-}
-
-// Original chat initialization
-add("Hi — I can help with hikes, agility, pricing, and getting started.", "bot");
-
-// Main chat handler (PRESERVED ORIGINAL LOGIC)
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const text = input.value.trim();
-  if (!text) return;
-
-  add(text, "user");
-  input.value = "";
-  input.focus();
-
-  const thinking = document.createElement("div");
-  thinking.className = "msg bot";
-  thinking.innerHTML = '<span class="typing">Thinking</span><span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>';
-  chat.appendChild(thinking);
-
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text,
-        context,
-        channel: "website",
-        task: "reply"
-      })
-    });
-
-    const data = await res.json();
-    context = data.context || {};
-
-    if (data.requires_auth) {
-      thinking.innerHTML = `
-        <div style="margin-bottom:10px;">🔒 To access this feature, you'll need a secure account.</div>
-        <div class="cta-row">
-          <a class="cta-link" href="${REGISTER_URL}">Create Account →</a>
-          <a class="cta-link secondary" href="${LOGIN_URL}">Login</a>
-        </div>
-        <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.7;">
-          Already have an account? Just login to continue!
-        </div>
-      `;
-    } else if (data.cta) {
-      thinking.innerHTML = data.response + handleInvoiceCTA(data);
-    } else {
-      thinking.innerHTML = data.response;
-    }
-  } catch (error) {
-    thinking.innerHTML = `Sorry, I encountered an error. ${error.message}`;
-  }
-  thinking.scrollIntoView({ behavior: "smooth", block: "start" });
+  thinking.scrollIntoView();
 });
 </script>
 </body>
