@@ -21,7 +21,7 @@
   --text-meta: #9ca3af;
   --border-glow: rgba(31, 162, 255, 0.34);
   --shadow-glow: rgba(31, 162, 255, 0.16);
-  --success: #00d084;
+  --success: #1fa2ff;;
 }
 
 * {
@@ -112,7 +112,7 @@ body {
 .line {
   opacity: 0;
   margin-bottom: 12px;
-  transition: opacity 0.9s ease;
+  transition: opacity 1.2s ease;
   color: var(--text-light);
   word-break: break-word;
 }
@@ -127,7 +127,7 @@ body {
   font-size: clamp(20px, 5vw, 25px);
   font-weight: 700;
   text-shadow: 0 0 6px rgba(0,208,132,0.16);
-  animation: glowPulse 2.5s ease-in-out infinite;
+  animation: glowPulse 3.3s ease-in-out infinite;
 }
 
 .hero {
@@ -154,7 +154,7 @@ body {
   display: inline-block;
   width: 1em;
   text-align: left;
-  animation: dots 1.2s steps(3, end) infinite;
+  animation: dots 1.7s steps(3, end) infinite;
 }
 
 .footer-note {
@@ -365,17 +365,17 @@ function appendLine() {
       behavior: "smooth",
       block: "center"
     });
-  }, 50);
+  }, 70);
 
   i++;
 
   let delay;
   if (i < 3) {
-    delay = 2000;
+    delay = 3000;
   } else if (i < 6) {
-    delay = 1700;
+    delay = 2300;
   } else {
-    delay = 1300;
+    delay = 1700;
   }
 
   setTimeout(showNextLine, delay);
