@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON | Chat Overview</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0b0b0b;
+        color: #eaeaea;
+        margin: 0;
+        padding: 20px;
+        font-size: clamp(18px, 4.5vw, 22px);
+    }
+
+    .chat-window {
+        max-width: 800px;
+        margin: auto;
+        border: 1px solid #4da3ff;
+        padding: 20px;
+        background-color: #111;
+    }
+
+    .line {
+        opacity: 0;
+        margin-bottom: 12px;
+        transition: opacity 1s ease;
+    }
+
+    .show {
+        opacity: 1;
+    }
+
+    strong {
+        color: #4da3ff;
+    }
+
+    .section-title {
+        color: #00d084;
+        margin-top: 20px;
+        font-size: clamp(20px, 5.2vw, 26px);
+        animation: glowPulse 2.5s ease-in-out infinite;
+    }
+
+    .hero {
+        font-size: clamp(24px, 6vw, 32px);
+        font-weight: bold;
+        letter-spacing: 0.01em; /* .01% edge */
+    }
+
+    .typing {
+        margin-bottom: 12px;
+        color: #4da3ff;
+        opacity: 0.7;
+        font-style: italic;
+    }
+
+    .dots::after {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        text-align: left;
+        animation: dots 1.2s steps(3, end) infinite;
+    }
+
+    @keyframes dots {
+        0% { content: ''; }
+        33% { content: '.'; }
+        66% { content: '..'; }
+        100% { content: '...'; }
+    }
+
+    @keyframes glowPulse {
+        0% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+        50% { text-shadow: 0 0 6px rgba(0,208,132,0.6); }
+        100% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="chat-window" id="chat"></div>
+
+<script>
+const lines = [
+"LAiSON",
+"AI Software & Business Systems",
+
+"",
+
+"Introduction",
+"Hello, my name is Kevin Goodwin.",
+"I am non-verbal.",
+"I can hear, but I cannot speak.",
+"I am the CEO & Founder of LAiSON.",
+"We are a Maine-based S-Corporation.",
+
+"I am a former real estate agent with Keller Williams.",
+"I am here to establish a professional banking relationship.",
+
+"Do you have an ASL interpreter available?",
+"If not, that is okay.",
+"I can communicate through writing.",
+
+"",
+
+"Banking Request",
+"Business checking account with treasury services.",
+"Incoming wire capability.",
+"Business debit card.",
+"Guidance on approximately $5,000 in startup funding.",
+
+"",
+
+"Use of Funds",
+"Lease-backed workspace.",
+"Legal and compliance structuring.",
+"Final-stage deployment preparation.",
+"Insurance binder.",
+
+"Funds will not be used for speculative development.",
+
+"",
+
+"Company Overview",
+"Unified platform for scheduling, CRM, booking, and payments.",
+"Built for compliance with federal and state regulations.",
+
+"",
+
+"Current Progress",
+"Working UI demo available.",
+"Backend architecture in development.",
+"Partnership with Dog-Gone-Fit.",
+"Payment processor integration planning.",
+
+"",
+
+"Revenue Approach",
+"Near-term revenue through partnerships.",
+"Low-risk service-based operations initially.",
+
+"",
+
+"Timeline",
+"Deadline: April 13th at 1:00 PM in Edgartown.",
+
+"",
+
+"Next Steps",
+"Schedule a meeting.",
+"Review documentation.",
+"Establish banking infrastructure.",
+"Discuss funding.",
+
+"",
+
+"Closing",
+"Thank you for your time.",
+"Kevin Goodwin.",
+"CEO, LAiSON. We can be found on the web at LAiSON.ORG"
+];
+
+const chat = document.getElementById("chat");
+
+let i = 0;
+
+function isSectionTitle(text) {
+    return [
+        "Introduction",
+        "Banking Request",
+        "Use of Funds",
+        "Company Overview",
+        "Current Progress",
+        "Revenue Approach",
+        "Timeline",
+        "Next Steps",
+        "Closing"
+    ].includes(text);
+}
+
+function appendLine() {
+    const isHeader = isSectionTitle(lines[i]);
+
+    const div = document.createElement("div");
+    div.className = "line";
+
+    if (isHeader) {
+        div.classList.add("section-title");
+    }
+
+    if (i === 0 || i === 1) {
+        div.classList.add("hero");
+    }
+
+    div.textContent = lines[i];
+    chat.appendChild(div);
+
+    setTimeout(() => {
+        div.classList.add("show");
+        div.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }, 50);
+
+    i++;
+
+    let delay;
+    if (i < 3) {
+        delay = 2000;
+    } else if (i < 6) {
+        delay = 1700;
+    } else {
+        delay = 1300;
+    }
+
+    setTimeout(showNextLine, delay);
+}
+
+function showNextLine() {
+    if (i < lines.length) {
+        const isHeader = isSectionTitle(lines[i]);
+        const useTyping = i < 3; // only first three lines
+
+        if (useTyping) {
+            const typing = document.createElement("div");
+            typing.className = "typing";
+            typing.innerHTML = 'Typing<span class="dots"></span>';
+            chat.appendChild(typing);
+
+            typing.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            let typingDuration = isHeader ? 900 : 500;
+
+            setTimeout(() => {
+                if (typing.parentNode === chat) {
+                    chat.removeChild(typing);
+                }
+                appendLine();
+            }, typingDuration);
+        } else {
+            appendLine();
+        }
+    }
+}
+
+showNextLine();
+</script>
+
+</body>
+</html>
