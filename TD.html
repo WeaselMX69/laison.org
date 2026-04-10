@@ -3,85 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <title>LAiSON | Chat Overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #0b0b0b;
-        color: #eaeaea;
-        margin: 0;
-        padding: 20px;
-        font-size: clamp(18px, 4.5vw, 22px);
-    }
+:root {
+  --primary: #1fa2ff;
+  --primary-dark: #0e8fe6;
+  --bg-dark: #0b0f14;
+  --bg-darker: #020617;
+  --panel: rgba(17, 24, 39, 0.88);
+  --panel-deep: rgba(2, 6, 23, 0.82);
+  --panel-line: rgba(255,255,255,0.06);
+  --text-light: #e6e6e6;
+  --text-lighter: #cfd8dc;
+  --text-meta: #9ca3af;
+  --border-glow: rgba(31, 162, 255, 0.34);
+  --shadow-glow: rgba(31, 162, 255, 0.16);
+  --success: #00d084;
+}
 
-    .chat-window {
-        max-width: 800px;
-        margin: auto;
-        border: 1px solid #4da3ff;
-        padding: 20px;
-        background-color: #111;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .line {
-        opacity: 0;
-        margin-bottom: 12px;
-        transition: opacity 1s ease;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    .show {
-        opacity: 1;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 12px;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--text-light);
+  font-size: clamp(18px, 4.5vw, 22px);
+  line-height: 1.62;
+  background:
+    radial-gradient(circle at top center, rgba(31,162,255,0.14), transparent 34%),
+    linear-gradient(180deg, #08111d 0%, #050b14 44%, #020617 100%);
+}
 
-    strong {
-        color: #4da3ff;
-    }
+.page-shell {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
 
-    .section-title {
-        color: #00d084;
-        margin-top: 20px;
-        font-size: clamp(20px, 5.2vw, 26px);
-        animation: glowPulse 2.5s ease-in-out infinite;
-    }
+.chat-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(8,14,24,0.92));
+  border: 1px solid var(--border-glow);
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.02) inset,
+    0 0 26px var(--shadow-glow),
+    0 18px 50px rgba(0,0,0,0.42);
+  overflow: hidden;
+}
 
-    .hero {
-        font-size: clamp(24px, 6vw, 32px);
-        font-weight: bold;
-        letter-spacing: 0.01em; /* .01% edge */
-    }
+.chat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 20%),
+    radial-gradient(circle at top, rgba(31,162,255,0.08), transparent 36%);
+  pointer-events: none;
+}
 
-    .typing {
-        margin-bottom: 12px;
-        color: #4da3ff;
-        opacity: 0.7;
-        font-style: italic;
-    }
+.chat-header {
+  position: relative;
+  z-index: 1;
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--panel-line);
+  text-align: center;
+}
 
-    .dots::after {
-        content: '';
-        display: inline-block;
-        width: 1em;
-        text-align: left;
-        animation: dots 1.2s steps(3, end) infinite;
-    }
+.brand {
+  margin: 0;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: clamp(1.75rem, 5.6vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow:
+    0 0 10px rgba(31,162,255,0.18),
+    0 0 20px rgba(31,162,255,0.08);
+}
 
-    @keyframes dots {
-        0% { content: ''; }
-        33% { content: '.'; }
-        66% { content: '..'; }
-        100% { content: '...'; }
-    }
+.subhead {
+  margin: 8px auto 0;
+  max-width: 700px;
+  color: var(--text-lighter);
+  font-size: clamp(0.92rem, 2.8vw, 1.04rem);
+  line-height: 1.45;
+}
 
-    @keyframes glowPulse {
-        0% { text-shadow: 0 0 0px rgba(0,208,132,0); }
-        50% { text-shadow: 0 0 6px rgba(0,208,132,0.6); }
-        100% { text-shadow: 0 0 0px rgba(0,208,132,0); }
-    }
+.chat-window {
+  position: relative;
+  z-index: 1;
+  padding: 16px 16px 18px;
+  background:
+    linear-gradient(180deg, rgba(2,6,23,0.58), rgba(2,6,23,0.74));
+}
+
+.line {
+  opacity: 0;
+  margin-bottom: 12px;
+  transition: opacity 0.9s ease;
+  color: var(--text-light);
+  word-break: break-word;
+}
+
+.show {
+  opacity: 1;
+}
+
+.section-title {
+  margin-top: 20px;
+  color: var(--success);
+  font-size: clamp(20px, 5vw, 25px);
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(0,208,132,0.16);
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.hero {
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  line-height: 1.24;
+  text-shadow:
+    0 0 8px rgba(31,162,255,0.18),
+    0 0 16px rgba(31,162,255,0.07);
+}
+
+.typing {
+  margin-bottom: 12px;
+  color: var(--primary);
+  opacity: 0.82;
+  font-style: italic;
+}
+
+.dots::after {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  text-align: left;
+  animation: dots 1.2s steps(3, end) infinite;
+}
+
+.footer-note {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px 16px;
+  color: var(--text-meta);
+  text-align: center;
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding-top: 12px;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}
+
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+  50% { text-shadow: 0 0 6px rgba(0,208,132,0.55); }
+  100% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 8px;
+    font-size: clamp(18px, 4.9vw, 21px);
+  }
+
+  .chat-card {
+    border-radius: 14px;
+  }
+
+  .chat-header {
+    padding: 14px 12px 10px;
+  }
+
+  .brand {
+    font-size: clamp(1.45rem, 7vw, 2.15rem);
+    letter-spacing: 0.05em;
+  }
+
+  .subhead {
+    font-size: 0.91rem;
+  }
+
+  .chat-window {
+    padding: 13px 12px 14px;
+  }
+
+  .line {
+    margin-bottom: 11px;
+  }
+
+  .section-title {
+    margin-top: 17px;
+    font-size: clamp(18px, 5.4vw, 23px);
+  }
+
+  .hero {
+    font-size: clamp(22px, 7vw, 28px);
+    line-height: 1.2;
+  }
+
+  .footer-note {
+    padding: 10px 12px 14px;
+    font-size: 0.78rem;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="chat-window" id="chat"></div>
+<div class="page-shell">
+  <div class="chat-card">
+    <div class="chat-header">
+      <h1 class="brand">LAiSON.ORG</h1>
+      <div class="subhead">AI Software &amp; Business Systems</div>
+    </div>
+
+    <div class="chat-window" id="chat"></div>
+
+    <div class="footer-note">
+      Mobile-optimized presentation with LAiSON visual styling.
+    </div>
+  </div>
+</div>
 
 <script>
 const lines = [
@@ -164,90 +328,84 @@ const lines = [
 ];
 
 const chat = document.getElementById("chat");
-
 let i = 0;
 
 function isSectionTitle(text) {
-    return [
-        "Introduction",
-        "Banking Request",
-        "Use of Funds",
-        "Company Overview",
-        "Current Progress",
-        "Revenue Approach",
-        "Timeline",
-        "Next Steps",
-        "Closing"
-    ].includes(text);
+  return [
+    "Introduction",
+    "Banking Request",
+    "Use of Funds",
+    "Company Overview",
+    "Current Progress",
+    "Revenue Approach",
+    "Timeline",
+    "Next Steps",
+    "Closing"
+  ].includes(text);
 }
 
 function appendLine() {
-    const isHeader = isSectionTitle(lines[i]);
+  const div = document.createElement("div");
+  div.className = "line";
 
-    const div = document.createElement("div");
-    div.className = "line";
+  if (isSectionTitle(lines[i])) {
+    div.classList.add("section-title");
+  }
 
-    if (isHeader) {
-        div.classList.add("section-title");
-    }
+  if (i === 0 || i === 1) {
+    div.classList.add("hero");
+  }
 
-    if (i === 0 || i === 1) {
-        div.classList.add("hero");
-    }
+  div.textContent = lines[i];
+  chat.appendChild(div);
 
-    div.textContent = lines[i];
-    chat.appendChild(div);
+  setTimeout(() => {
+    div.classList.add("show");
+    div.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 50);
 
-    setTimeout(() => {
-        div.classList.add("show");
-        div.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-    }, 50);
+  i++;
 
-    i++;
+  let delay;
+  if (i < 3) {
+    delay = 2000;
+  } else if (i < 6) {
+    delay = 1700;
+  } else {
+    delay = 1300;
+  }
 
-    let delay;
-    if (i < 3) {
-        delay = 2000;
-    } else if (i < 6) {
-        delay = 1700;
-    } else {
-        delay = 1300;
-    }
-
-    setTimeout(showNextLine, delay);
+  setTimeout(showNextLine, delay);
 }
 
 function showNextLine() {
-    if (i < lines.length) {
-        const isHeader = isSectionTitle(lines[i]);
-        const useTyping = i < 3; // only first three lines
+  if (i < lines.length) {
+    const useTyping = i < 3;
 
-        if (useTyping) {
-            const typing = document.createElement("div");
-            typing.className = "typing";
-            typing.innerHTML = 'Typing<span class="dots"></span>';
-            chat.appendChild(typing);
+    if (useTyping) {
+      const typing = document.createElement("div");
+      typing.className = "typing";
+      typing.innerHTML = 'Typing<span class="dots"></span>';
+      chat.appendChild(typing);
 
-            typing.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
+      typing.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
 
-            let typingDuration = isHeader ? 900 : 500;
-
-            setTimeout(() => {
-                if (typing.parentNode === chat) {
-                    chat.removeChild(typing);
-                }
-                appendLine();
-            }, typingDuration);
-        } else {
-            appendLine();
+      setTimeout(() => {
+        if (typing.parentNode === chat) {
+          chat.removeChild(typing);
         }
+        appendLine();
+      }, 500);
+    } else {
+      appendLine();
     }
+  }
 }
 
 showNextLine();
