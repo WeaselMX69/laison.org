@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON | Chat Overview</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0b0b0b;
+        color: #eaeaea;
+        margin: 0;
+        padding: 20px;
+        font-size: clamp(18px, 4.5vw, 22px);
+    }
+
+    .chat-window {
+        max-width: 800px;
+        margin: auto;
+        border: 1px solid #4da3ff;
+        padding: 20px;
+        background-color: #111;
+    }
+
+    .line {
+        opacity: 0;
+        margin-bottom: 12px;
+        transition: opacity 1s ease;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+
+    .show {
+        opacity: 1;
+    }
+
+    strong {
+        color: #4da3ff;
+    }
+
+    .section-title {
+        color: #00d084;
+        margin-top: 20px;
+        font-size: clamp(20px, 5.2vw, 26px);
+        animation: glowPulse 2.5s ease-in-out infinite;
+    }
+
+    .hero {
+        font-size: clamp(24px, 6vw, 32px);
+        font-weight: bold;
+        letter-spacing: 0.01em;
+    }
+
+    .typing {
+        margin-bottom: 12px;
+        color: #4da3ff;
+        opacity: 0.7;
+        font-style: italic;
+    }
+
+    .dots::after {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        text-align: left;
+        animation: dots 1.2s steps(3, end) infinite;
+    }
+
+    a {
+        color: #4da3ff;
+        text-decoration: underline;
+        word-break: break-word;
+    }
+
+    @keyframes dots {
+        0% { content: ''; }
+        33% { content: '.'; }
+        66% { content: '..'; }
+        100% { content: '...'; }
+    }
+
+    @keyframes glowPulse {
+        0% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+        50% { text-shadow: 0 0 6px rgba(0,208,132,0.6); }
+        100% { text-shadow: 0 0 0px rgba(0,208,132,0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="chat-window" id="chat"></div>
+
+<script>
+const lines = [
+"Hello. I am here on behalf of my corporation, LAiSON.ORG.",
+"",
+"I am non-verbal, can hear fine but can't speak",
+"Thank you for your patience.",
+"",
+"I would like to speak with a business account manager regarding establishing a business banking relationship for my corporation.",
+"This is time-sensitive and important.",
+"",
+"I have my documents with me and am prepared to sit down now if someone is available.",
+"",
+"If this branch cannot assist today, I am willing to go to another nearby branch that can.",
+"",
+"Thank you.",
+"",
+"Thank you for meeting with me.",
+"",
+"I am here on behalf of LAiSON.ORG, an active corporation, to establish a proper business banking relationship for immediate business operations.",
+"I am non-verbal and will be communicating through my phone while I lay out my documents.",
+"",
+"This is not a hobby or casual side project.",
+"LAiSON.ORG is being built as serious infrastructure around secure AI systems, web development, compliance-conscious technology, and long-term institutional relationships.",
+"",
+"Timing matters.",
+"I have active business development underway, including an immediate $5,000 opportunity,",
+"and I need the banking side set up correctly so I can move cleanly and professionally.",
+"",
+"I have prepared supporting documents and additional background is available at:",
+"laison.org/TD",
+"",
+"For KYC purposes:",
+"I have included my vehicle registration in case there is any address discrepancy with my license.",
+"I have updated my address with the Maine BMV and am awaiting the updated physical copy.",
+"I currently reside at the Church Street address, and property records can be verified through the Washington County Registry of Deeds.",
+"I am proactively disclosing this information to ensure full transparency and integrity.",
+"",
+"I am here to get this handled properly and efficiently.",
+"If needed, I am also willing to go to another nearby Bank of America branch that can complete this today.",
+"",
+"Thank you for your time and consideration.",
+"",
+"Thank you for taking a moment to review my documents.",
+"",
+"I also wanted to clarify that the older real estate business account I showed you",
+"was provided as a reference point because we have worked together before.",
+"",
+"My intention is to demonstrate continuity, familiarity with your institution,",
+"and a history of maintaining a proper banking relationship.",
+"",
+"Thank you for your time and consideration.",
+"",
+"Thank you for meeting with me.",
+"",
+"I would also like to open a personal account today, in addition to handling my business banking needs.",
+"",
+"I have the title to one of my Mercedes vehicles with me.",
+"",
+"I also need help with a separate issue involving my current Mercedes.",
+"It is under warranty for recent work to the SBC braking system,",
+"and it is now making noise again from the SBC pump.",
+"",
+"If possible, can you please call the dealer on my behalf using the VIN listed on the registration,",
+"and help coordinate a loaner vehicle for me?",
+"",
+"Thank you for your time and assistance.",
+"",
+"Misha — quick note:",
+"",
+"YOU are the bee’s sneeze! (Inside joke from his tissue box)",
+"",
+"Also, small idea that might actually be useful:",
+"If you grab a simple USB OTG adapter,",
+"you can have two keyboards connected at the same time.",
+"",
+"That means two people can type into your notepad simultaneously.",
+"",
+"Given your dual keyboard setup, it should work cleanly.",
+"",
+"Just figured I’d pass that along.",
+"",
+"— Kevin",
+"",
+"And just like that, he ALSO said No, “$$$” but only because he wasn't smart like me :-)",
+"He asked me for a stamped copy of a document sitting right in front of him, dead serious.",
+"- Kev, with light and love, over & out.",
+"",
+"I believe there may have been a minor issue with how the business name was entered into the Maine state system.",
+"",
+"I have already verified that the entity is properly registered,",
+"and I have the stamped mailing documentation with me as confirmation.",
+"",
+"The correct name is:",
+"LAiSON",
+"",
+"This may help resolve any lookup discrepancies.",
+"",
+"Thank you for taking a moment to review this.",
+"",
+"It was at this point I realized how much smarter than this guy I was; he literally sat there saying he needed a stamped copy of my mailed-back S-corp filings even though it was right there in front of them...",
+"In his defense, BOA requires onboarding with LexisNexis and not the Maine portal — your tax dollars at waste if you are a Maine resident ...",
+"Boy, too bad there wasn't a genius computer programmer who simply needed to pay his server bill and could then do what LexisNexis does...",
+"Hint, it's me, I'm the computer genius.",
+"I'm also sick of banks saying no to me and about to just make an elliptic-curve cryptographic currency, hell even the bank of YES said no to me...",
+"",
+"Additional reference:",
+'<a href="https://laison.org/MSB" target="_blank" rel="noopener noreferrer">laison.org/MSB</a>'
+];
+
+const chat = document.getElementById("chat");
+let i = 0;
+
+function appendLine() {
+    const div = document.createElement("div");
+    div.className = "line";
+
+    if (i === 0 || i === 1) {
+        div.classList.add("hero");
+    }
+
+    div.innerHTML = lines[i];
+    chat.appendChild(div);
+
+    setTimeout(() => {
+        div.classList.add("show");
+        div.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }, 50);
+
+    i++;
+
+    let delay;
+    if (i < 3) {
+        delay = 2000;
+    } else {
+        delay = 1300;
+    }
+
+    setTimeout(showNextLine, delay);
+}
+
+function showNextLine() {
+    if (i < lines.length) {
+        const useTyping = i < 3;
+
+        if (useTyping) {
+            const typing = document.createElement("div");
+            typing.className = "typing";
+            typing.innerHTML = 'Typing<span class="dots"></span>';
+            chat.appendChild(typing);
+
+            typing.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            setTimeout(() => {
+                if (typing.parentNode === chat) {
+                    chat.removeChild(typing);
+                }
+                appendLine();
+            }, 500);
+        } else {
+            appendLine();
+        }
+    }
+}
+
+showNextLine();
+</script>
+
+</body>
+</html>
