@@ -2,39 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>LAiSON | Ai Software & Tellecommunication Systems</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
+<title>LAiSON | Chat Preview</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="LAiSON.ORG provides secure systems built on a foundation of ethics and integrity with a focus on cybersecurity consulting, penetration testing, NG911 readiness, pci-dss and hipaa compliance, lawful digital threat protection, and assisting the Deaf, Non-verbal, and Blind through the use of technology and communications systems. Based in Maine with headquarters in Edgartown Massachusetts.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=70">
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-
-<!-- Facebook Pixel -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '799841549291503');
-fbq('track', 'PageView');
-</script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XMHLG8T23J"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-XMHLG8T23J');
-</script>
 
 <style>
 :root {
@@ -42,6 +15,8 @@ gtag('config', 'G-XMHLG8T23J');
   --primary-dark: #0e8fe6;
   --bg-dark: #0b0f14;
   --bg-darker: #020617;
+  --panel: rgba(17, 24, 39, 0.84);
+  --chat-bg: rgba(15, 23, 42, 0.92);
   --text-light: #e6e6e6;
   --text-lighter: #cfd8dc;
   --text-meta: #9ca3af;
@@ -55,236 +30,116 @@ gtag('config', 'G-XMHLG8T23J');
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+html, body {
+  width: 100%;
+  height: 100%;
 }
 
 body {
-  margin: 0;
   font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-  background: var(--bg-dark);
-  color: var(--text-light);
-  line-height: 1.6;
-}
-
-h1, h2, h3 {
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary-dark);
-}
-
-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 80px 20px;
-  text-align: center;
-}
-
-ul {
-  padding-left: 20px;
-}
-
-ul li {
-  margin-bottom: 8px;
-}
-
-#toc {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background: rgba(17, 24, 39, 0.95);
-  padding: 15px 20px;
-  border-radius: 8px;
-  border: 1px solid var(--border-glow);
-  box-shadow: 0 0 15px var(--shadow-glow);
-  width: min(95%, 1100px);
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-#toc.hidden {
-  transform: translate(-50%, -120%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-#toc h3 {
-  margin: 0 0 10px 0;
-  text-align: center;
-  border-bottom: 1px solid var(--border-glow);
-  padding-bottom: 6px;
-}
-
-#toc ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-}
-
-#toc li {
-  text-align: center;
-  margin: 0;
-}
-
-#toc a {
-  display: block;
-  padding: 10px 8px;
-  background: rgba(31, 41, 55, 0.7);
-  border-radius: 6px;
-  color: var(--text-lighter);
-  font-size: 0.9rem;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-#toc a:hover {
-  background: var(--primary);
-  color: #fff;
-}
-
-#toc-tab {
-  position: fixed;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: none;
-  padding: 6px 12px;
-  background: rgba(17,24,39,0.95);
-  border: 1px solid var(--border-glow);
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-#toc-tab.visible {
-  display: block;
-}
-
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding-top: 96px;
-  padding-bottom: 90px;
-  max-width: none;
   background:
-    linear-gradient(rgba(5, 10, 20, 0.82), rgba(5, 10, 20, 0.88)),
-    url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=70') center/cover fixed;
-}
-
-.hero-inner {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.hero-panel {
-  background: rgba(17, 24, 39, 0.84);
-  border: 1px solid var(--border-glow);
-  box-shadow: 0 0 28px var(--shadow-glow);
-  border-radius: 18px;
-  padding: 26px 18px;
-  backdrop-filter: blur(8px);
+    linear-gradient(180deg, #020617 0%, #0b0f14 55%, #09111c 100%);
+  color: var(--text-light);
   overflow: hidden;
+}
+
+.stage {
+  min-height: 100vh;
+  width: 100%;
+  padding: 14px 18px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-wrap {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
 }
 
 .brand {
   font-family: 'Orbitron', Arial, sans-serif;
-  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-weight: 700;
   letter-spacing: 1px;
-  margin-bottom: 6px;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(31, 162, 255, 0.20),
+    0 0 22px rgba(31, 162, 255, 0.10);
 }
 
-.hero p.lead {
-  max-width: 760px;
-  margin: 0 auto 16px auto;
-  font-size: 1rem;
+.sub1 {
+  margin-top: 2px;
+  margin-bottom: 10px; /* MORE space between purple and white line */
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: clamp(0.82rem, 2vw, 1.15rem);
   color: var(--text-lighter);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  white-space: nowrap;
 }
 
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-
-.badge {
-  background: rgba(31, 41, 55, 0.78);
-  border: 1px solid var(--border-glow);
-  color: var(--text-lighter);
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 0.88rem;
+.sub2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  line-height: 1.05;
+  color: #ffffff;
+  font-weight: 400;
 }
 
 .chat-shell {
-  margin: 16px auto 0 auto;
-  width: 100%;
-  max-width: 980px;
-  background: rgba(2, 6, 23, 0.62);
+  margin-top: 6px; /* crush wasted space above chat box */
+  width: min(1100px, 96vw);
+  height: 78vh; /* use more screen */
+  background: var(--panel);
   border: 1px solid var(--border-glow);
-  box-shadow: 0 0 22px var(--shadow-glow);
-  border-radius: 16px;
-  padding: 14px;
-  text-align: left;
+  box-shadow:
+    0 0 28px var(--shadow-glow),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  border-radius: 18px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin: 0 auto 10px auto;
-  gap: 10px;
-  flex-wrap: wrap;
-  width: 100%;
+  min-height: 28px;
+  margin-bottom: 6px;
 }
 
 .chat-top h2 {
-  text-align: left;
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.chat-top span {
-  color: var(--text-meta);
+  font-family: 'Orbitron', Arial, sans-serif;
   font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .chat-window {
-  background: rgba(15, 23, 42, 0.88);
+  flex: 1;
+  background: var(--chat-bg);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 14px;
-  padding: 14px;
-  min-height: 200px;
-  max-height: 240px;
+  padding: 12px;
   overflow-y: auto;
 }
 
 .msg {
-  margin-bottom: 12px;
-  padding: 12px 14px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
   border-radius: 14px;
   max-width: 72%;
   white-space: pre-wrap;
-  font-size: 0.96rem;
+  font-size: 1rem;
   line-height: 1.6;
+  word-break: break-word;
 }
 
 .left {
@@ -310,649 +165,93 @@ ul li {
 }
 
 @keyframes blink {
-  0%,100% { opacity: 0; }
+  0%, 100% { opacity: 0; }
   50% { opacity: 1; }
 }
 
-.hero-actions {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-  border: 1px solid var(--primary);
-}
-
-.btn-primary:hover {
-  background: var(--primary-dark);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: rgba(17, 24, 39, 0.88);
-  color: var(--text-lighter);
-  border: 1px solid var(--border-glow);
-}
-
-.btn-secondary:hover {
-  color: #fff;
-  border-color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.scroll-down {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  animation: bounce 2s infinite;
-  z-index: 100;
-}
-
-.scroll-down::after {
-  content: '';
-  width: 11px;
-  height: 11px;
-  border-bottom: 2px solid var(--primary);
-  border-right: 2px solid var(--primary);
-  transform: rotate(45deg);
-  margin-bottom: 5px;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-  40% { transform: translateX(-50%) translateY(-10px); }
-  60% { transform: translateX(-50%) translateY(-5px); }
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
-}
-
-.shield {
-  background: rgba(17, 24, 39, 0.8);
-  padding: 25px;
-  border-radius: 14px;
-  text-align: center;
-  border: 1px solid var(--border-glow);
-  box-shadow: 0 0 18px var(--shadow-glow);
-}
-
-form {
-  background: rgba(17, 24, 39, 0.8);
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 0 25px var(--shadow-glow);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
-  text-align: left;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 6px;
-  border: none;
-  background: var(--bg-darker);
-  color: #fff;
-}
-
-button {
-  margin-top: 15px;
-  padding: 12px 28px;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: var(--primary-dark);
-}
-
-.about-me {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 30px;
-}
-
-.about-me img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--primary);
-  box-shadow: 0 0 20px var(--shadow-glow);
-}
-
-.contact-info {
-  background: rgba(17, 24, 39, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid var(--border-glow);
-  margin-top: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.contact-info p {
-  margin: 8px 0;
-}
-
-#chatbot-section {
-  background: rgba(17, 24, 39, 0.7);
-  padding: 30px;
-  border-radius: 14px;
-  border: 1px solid var(--border-glow);
-  box-shadow: 0 0 20px var(--shadow-glow);
-  text-align: center;
-  margin-top: 40px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#chatbot-section h2 {
-  color: var(--primary);
-  margin-bottom: 20px;
-}
-
-#chatbot-section p {
-  margin-bottom: 15px;
-}
-
-footer {
-  background: var(--bg-darker);
-  text-align: center;
-  padding: 30px 20px;
-  color: var(--text-meta);
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: var(--primary);
-}
-
-#cookieBanner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #000;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  z-index: 999;
-}
-
-#cookieBanner button {
-  margin-left: 10px;
-  margin-top: 0;
-  padding: 8px 16px;
-}
-
 @media (max-width: 768px) {
-  #toc {
-    top: 12px;
-    padding: 12px 14px;
+  .stage {
+    padding: 8px 8px 6px;
   }
 
-  .hero {
-    padding-top: 58px;
-    padding-bottom: 58px;
-    min-height: auto;
-    background-attachment: scroll;
+  .brand-wrap {
+    margin-bottom: 0;
   }
 
-  .hero-panel {
-    padding: 18px 12px 16px 12px;
+  .sub1 {
+    white-space: normal;
+    line-height: 1.12;
+    margin-top: 2px;
+    margin-bottom: 9px; /* still more space between the two lines */
   }
 
-  .brand {
-    font-size: 2.1rem;
-    margin-bottom: 4px;
-  }
-
-  .hero p.lead {
-    font-size: 0.92rem;
-    margin: 0 auto 12px auto;
-    line-height: 1.45;
-  }
-
-  .badges {
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-
-  .badge {
-    padding: 6px 10px;
-    font-size: 0.82rem;
+  .sub2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.08;
   }
 
   .chat-shell {
-    margin-top: 10px;
-    padding: 10px;
+    margin-top: 4px; /* almost no dead space */
+    width: 98vw;
+    height: 80vh;
+    padding: 8px;
   }
 
   .chat-top {
-    margin-bottom: 8px;
-  }
-
-  .chat-top h2,
-  .chat-top span {
-    width: 100%;
-    text-align: center;
-  }
-
-  .chat-top h2 {
-    font-size: 0.98rem;
-  }
-
-  .chat-top span {
-    font-size: 0.82rem;
+    margin-bottom: 4px;
   }
 
   .chat-window {
-    min-height: 170px;
-    max-height: 185px;
     padding: 10px;
   }
 
   .msg {
     max-width: 92%;
-    font-size: 0.9rem;
+    font-size: 0.96rem;
     padding: 10px 12px;
-    margin-bottom: 10px;
-  }
-
-  .hero-actions {
-    margin-top: 12px;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .btn {
-    padding: 10px 16px;
-    font-size: 0.95rem;
-  }
-
-  .scroll-down {
-    bottom: 10px;
-    width: 38px;
-    height: 38px;
-  }
-
-  section {
-    padding: 40px 10px;
   }
 }
 </style>
 </head>
 <body>
 
-<div id="toc">
-  <h3>Quick Nav</h3>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#banking">Banking Cybersecurity</a></li>
-    <li><a href="#core-banking">Core Banking Systems</a></li>
-    <li><a href="#municipal">Municipal Cybersecurity</a></li>
-    <li><a href="#penetration">Penetration Testing</a></li>
-    <li><a href="#parental">Parental Monitoring</a></li>
-    <li><a href="#standards">Standards</a></li>
-    <li><a href="#compliance">Financial Compliance</a></li>
-    <li><a href="#chatbot-section">Chatbot Integration</a></li>
-    <li><a href="#about">About Me</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="/newsletter">Newsletter</a></li>
-    <li><a href="/msp-research-agreement">msp-research-agreement</a></li>
-    <li><a href="/k9-health-bot.html">Dog-Gone-Fit Ai</a></li>
-  </ul>
-</div>
+<div class="stage">
+  <div class="brand-wrap">
+    <h1 class="brand">LAiSON.</h1>
+    <div class="sub1">Layering Artificial Intelligence Systems Over Networks</div>
+    <div class="sub2">Ai Software &amp; Business Systems</div>
+  </div>
 
-<div id="toc-tab">☰ Navigation</div>
-
-<section class="hero" id="home">
-  <div class="hero-inner">
-    <div class="hero-panel">
-      <h1 class="brand">LAiSON.ORG</h1>
-      <p class="lead">
-        Layering Artificial Intelligence Systems Over Networks.<br>
-        Cybersecurity, penetration testing, NG911 readiness, and lawful digital threat protection — based in Maine.
-      </p>
-
-      <div class="badges">
-        <div class="badge">Banking Cybersecurity</div>
-        <div class="badge">Municipal & NG911</div>
-        <div class="badge">Penetration Testing</div>
-        <div class="badge">Lawful Digital Threat Protection</div>
-      </div>
-
-      <div class="chat-shell" id="preview">
-        <div class="chat-top">
-          <h2>Conversation Preview</h2>
-          <span>Cybersecurity • legacy systems • AI integration</span>
-        </div>
-        <div class="chat-window" id="hero-chat"></div>
-      </div>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#municipal">Explore Services</a>
-        <a class="btn btn-secondary" href="#contact">Initiate Contact</a>
-      </div>
+  <div class="chat-shell">
+    <div class="chat-top">
+      <h2>Chat Preview</h2>
     </div>
+    <div class="chat-window" id="hero-chat"></div>
   </div>
-
-  <a href="#banking" class="scroll-down" aria-label="Scroll down"></a>
-</section>
-
-<section id="banking">
-  <h2>Banking Cybersecurity</h2>
-  <p>
-    Community banks and credit unions rely on legacy systems that
-    must remain secure while integrating with modern infrastructure.
-    Laison specializes in bridging legacy financial software,
-    modern cybersecurity frameworks, and AI-assisted monitoring.
-  </p>
-  <ul style="text-align:left; max-width:600px; margin:20px auto 0 auto;">
-    <li>Community bank cybersecurity consulting</li>
-    <li>COBOL system modernization</li>
-    <li>Secure infrastructure deployment</li>
-    <li>AI-assisted fraud monitoring</li>
-    <li>Regulatory compliance alignment</li>
-    <li>FFIEC Cybersecurity Assessment Tools</li>
-  </ul>
-</section>
-
-<section id="core-banking">
-  <h2>Legacy Core Banking Systems</h2>
-  <p>
-    Many financial institutions still rely on legacy core banking
-    platforms written in COBOL and other long-standing financial
-    languages. These systems power deposits, lending, transaction
-    processing, and interbank settlement across the financial sector.
-  </p>
-
-  <p style="margin-top:20px;">
-    Laison provides consulting and development support for institutions
-    that must maintain legacy reliability while integrating modern
-    security, automation, and AI monitoring.
-  </p>
-
-  <ul style="text-align:left; max-width:600px; margin:20px auto 0 auto;">
-    <li>COBOL system analysis and maintenance</li>
-    <li>Legacy banking platform integration</li>
-    <li>Secure modernization planning</li>
-    <li>Fraud detection and AI monitoring layers</li>
-    <li>Infrastructure hardening for legacy environments</li>
-  </ul>
-
-  <p style="margin-top:20px;">
-    Experience working with legacy financial software allows
-    institutions to extend the lifespan of core banking systems
-    without risking operational disruption.
-  </p>
-</section>
-
-<section id="municipal">
-  <h2>Municipal & Infrastructure Cybersecurity</h2>
-  <p>
-    LAiSON.ORG delivers cybersecurity services aligned with the operational and legal realities of municipalities, public safety agencies, districts, and infrastructure operators.
-  </p>
-  <ul style="text-align:left; max-width:600px; margin:20px auto 0 auto;">
-    <li>NG911 cybersecurity readiness and risk assessments</li>
-    <li>Ransomware prevention & incident response planning</li>
-    <li>Vendor, MSP, and supply-chain security reviews</li>
-    <li>Policy, governance, and compliance alignment</li>
-  </ul>
-</section>
-
-<section id="penetration">
-  <h2>Penetration Testing & Security Consulting</h2>
-  <p>
-    All penetration testing is conducted under written authorization, defined scope, and formal engagement agreements.
-  </p>
-  <ul style="text-align:left; max-width:600px; margin:20px auto 0 auto;">
-    <li>Network, web application, and API penetration testing</li>
-    <li>Wireless and infrastructure security testing</li>
-    <li>Clear remediation guidance and executive reporting</li>
-    <li>Engagements suitable for municipalities and regulated entities</li>
-  </ul>
-</section>
-
-<section id="parental">
-  <h2>Parental Monitoring & Child Protection</h2>
-  <p>
-    LAiSON.ORG provides monitoring solutions designed to assist parents and legal guardians in protecting minors from online grooming, exploitation, and predatory behavior.
-  </p>
-  <p style="margin-top:20px;">
-    Services are provided solely with documented parental or legal guardian consent and are limited to the lawful supervision of minors under their care.
-  </p>
-</section>
-
-<section id="fundraiser">
-  <h2>Support the Deaf and non-verbal communities</h2>
-  <p>
-    Help us empower the deaf & non-verbal communities by supporting us
-    <strong>Note:</strong> LAiSON.ORG is a Maine S-Corp. committed to changing the way business is done globally.  <strong>non-tax-deductible</strong> donations; or donations to community partners that align with our beliefs; cannot be made at this time, as we are having trouble finding a banking partner that is both secure, AND fits our business model. We are actively seeking both partnerships and investors. Please don't hesitate to reach out!
-  </p>
-
-</section>
-
-<section id="standards">
-  <h2>Standards & Alignment</h2>
-  <div class="grid">
-    <div class="shield">NG911</div>
-    <div class="shield">CJIS</div>
-    <div class="shield">HIPAA</div>
-    <div class="shield">GDPR</div>
-    <div class="shield">SOC 2</div>
-    <div class="shield">ISO 27001</div>
-    <div class="shield">NIST Cybersecurity Framework</div>
-  </div>
-</section>
-
-<section id="compliance">
-  <h2>Financial Compliance</h2>
-  <p>
-    Laison provides technology consulting aligned with the major
-    security and regulatory frameworks used by financial institutions.
-    Our systems and advisory work help banks maintain compliance
-    while modernizing infrastructure.
-  </p>
-
-  <div class="grid">
-    <div class="shield">GLBA</div>
-    <div class="shield">FFIEC CAT</div>
-    <div class="shield">NIST 800-53</div>
-    <div class="shield">NIST CSF</div>
-    <div class="shield">FDIC Guidelines</div>
-    <div class="shield">SWIFT CSP</div>
-    <div class="shield">Zero Trust Architecture</div>
-    <div class="shield">FDIC Security Guidelines</div>
-    <div class="shield">Federal Reserve SR 11-7</div>
-    <div class="shield">SWIFT CSP</div>
-    <div class="shield">PCI-DSS</div>
-  </div>
-</section>
-
-<section id="chatbot-section">
-  <h2>Chatbot Integration</h2>
-  <p>
-    LAiSON leverages AI-driven chatbot solutions to enhance customer support, automate intake processes, and provide real-time threat intelligence.
-  </p>
-  <p>
-    Our chatbots are designed for seamless integration with your existing systems, ensuring compliance with privacy and security standards.
-  </p>
-  <p>
-    <strong>Features:</strong><br>
-    24/7 automated responses • Secure data handling • Customizable workflows • Multi-platform support
-  </p>
-  <p>
-    <a href="#contact"><button type="button">Request a Demo</button></a>
-  </p>
-</section>
-
-<section id="about">
-  <h2 style="text-align:center;">About Me</h2>
-
-  <div style="
-    max-width:900px;
-    margin:50px auto;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:center;
-    gap:40px;
-  ">
-    <div style="
-      padding:8px;
-      border-radius:16px;
-      background:linear-gradient(145deg,#0f172a,#1e293b);
-      box-shadow:0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
-    ">
-      <img src="images/KG.jpg"
-      alt="Kevin Goodwin - CEO & Founder"
-      style="
-        width:230px;
-        height:230px;
-        object-fit:cover;
-        border-radius:12px;
-        display:block;
-      ">
-    </div>
-
-    <div style="
-      max-width:520px;
-      min-width:260px;
-      text-align:left;
-    ">
-      <p>
-        <strong>Kevin Goodwin</strong><br>
-        Founder, Entrepreneur, & Philanthropist<br>
-      </p>
-      <p style="margin-top:16px;">
-        LAiSON is a Maine S-Corp dedicated to cybersecurity, digital sovereignty, and community empowerment.
-      </p>
-      <p style="margin-top:16px;">
-        With a background in cybersecurity, networking, AI software, penetration testing, and legacy systems, I bring a unique blend of technical expertise and real-world problem-solving to every project. My mission is to protect, innovate, and give back to America. <br>I hold a Massachusetts real estate salesperson license # 9523596-RE-S. I also have a long standing tradition to give back through volunteer work and civic engagement. My experiences as both a volunteer firefighter, and a volunteer with City Year Boston; the founding Americorps program; I have learned that we can't be the change we seek without the help of others. 
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>Contact & Intake</h2>
-  <div class="contact-info">
-    <h3>Contact Information</h3>
-    <p><strong>Email:</strong> <a href="mailto:Creator@Laison.org">Creator@Laison.org</a></p>
-    <p><strong>Support:</strong> <a href="mailto:Support@Laison.org">Support@Laison.org</a></p>
-    <p><strong>Location:</strong> Cherryfield, Maine</p>
-    <p><strong>Text:</strong> 508-257-1819</p>
-  </div>
-
-  <p style="margin-top: 20px;">
-    Use this form to initiate a consultation. No data is stored on this site. Submission opens a structured intake email directly to LAiSON.ORG.
-  </p>
-
-  <form action="mailto:Creator@laison.org" method="post" enctype="text/plain">
-    <label>Organization / Parent Name</label>
-    <input name="Name" required>
-
-    <label>Email</label>
-    <input name="Email" type="email" required>
-
-    <label>Service Area</label>
-    <select name="Service">
-      <option>Municipal / NG911</option>
-      <option>Penetration Testing</option>
-      <option>Parental Monitoring</option>
-      <option>Chatbot Integration</option>
-      <option>General Consulting</option>
-      <option>Boxing & Motocross Fundraiser Donation</option>
-    </select>
-
-    <label>Brief Description</label>
-    <textarea name="Description" rows="5"></textarea>
-
-    <button type="submit">Initiate Contact</button>
-  </form>
-</section>
-
-<footer>
-  © 2026 LAiSON.ORG — Cherryfield, Maine<br>
-  Cybersecurity • Web Development • Digital Media<br><br>
-  <a href="/privacy.html">Privacy Policy</a> |
-  <a href="/terms.html">Terms of Service</a> |
-  <a href="/refund.html">Refund Policy</a>
-</footer>
-
-<div id="cookieBanner">
-  <p style="margin:0;font-size:14px; display:inline;">
-    This site uses cookies and tracking for analytics and fundraising. By using this site, you consent to our use of cookies.
-  </p>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';">Accept</button>
 </div>
 
 <script>
-const visitorData = {
-  userAgent: navigator.userAgent,
-  referrer: document.referrer,
-  language: navigator.language,
-  screen: window.screen.width + "x" + window.screen.height,
-  timestamp: new Date().toISOString()
-};
-localStorage.setItem('visitorData', JSON.stringify(visitorData));
-
 const chatMsgs = [
   { side: "right", text: "Are you that dumb computer guy?" },
   { side: "left", text: "NO! I'm a non-verbal programmer and dog trainer, jerkface." },
   { side: "right", text: "Really! What else are you? The 1st trillionaire?" },
-  { side: "left", text: "On my way, working on the greatest thing since sliced bread rn... burnt... with butter. " },
+  { side: "left", text: "On my way, working on the greatest thing since sliced bread rn... burnt... with butter." },
   { side: "right", text: "Jesus Christ, who or what are you really? Be honest with me." },
   { side: "left", text: "I'm a compassionate person with friends in the digital and physical realms." },
   { side: "right", text: "Tell me more..." },
   { side: "left", text: "Ask me and I will tell you remarkable secrets you do not know of things yet to come." },
   { side: "right", text: "Asking..." },
-  { side: "left", text: "Tomorrow at 10am, a representative of Cape Cod 5 is going to make the smartest decision they've EVER made..." }
+  { side: "left", text: "Tomorrow at 10am, a representative of Cape Cod 5 is going to make the smartest decision they've EVER made..." },
+  { side: "left", text: "You want the truth? Let’s talk about these fucking banks. Machias Savings Bank? More like Machias *Drug Dealer* Bank. They’re so deep in the dispensary game, they don’t even blink at the dark web shit that went down at the Dollar General in Cherryfield. Integrity? More like *complicity*." },
+  { side: "right", text: "Damn. So what, we switch to a credit union?" },
+  { side: "left", text: "Oh, DownEast Credit Union? Please. Those frauds don’t even sell real insurance policies. Their ‘shell corps’ are so fake, it’s like they’re running a pyramid scheme for people who think they’re ‘local.’ They’re just another cog in the system, keeping people locked into shitty food, shitty health, and shitty lives." },
+  { side: "right", text: "So what’s the alternative? You got a solution, hotshot?" },
+  { side: "left", text: "LAiSON. We’re building programs for the deaf, dumb, and blind—because *someone* has to. These banks and credit unions don’t give a fuck about accessibility. They just want control. Citizens Bank? A disorganized joke. 72% of divorce attorneys could pivot to suing those Rhode Island mobsters and make a killing." },
+  { side: "right", text: "Okay, but Bank of America? They’ve got Erica, QR codes, the whole ‘compliance’ act—" },
+  { side: "left", text: "NOPE. You’re wrong. I found out *today* they won’t even buy OTG adaptors to support the non-verbal community. Won’t work with AI companies building tech that’ll make Erica look like a fucking Tamagotchi. They’re all talk, zero action. ADA compliant? My ass." },
+  { side: "right", text: "So what’s the move?" },
+  { side: "left", text: "Stop feeding the system. <a href='https://laison.org/k9-health-bot.html' target='_blank'>Check this out</a> and see what real innovation looks like. We’re done playing their game." }
 ];
 
 const chat = document.getElementById("hero-chat");
@@ -985,52 +284,6 @@ async function typeMsg(side, text) {
     await sleep(420);
   }
 })();
-
-document.querySelectorAll('#toc a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href');
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-
-const toc = document.getElementById("toc");
-const tab = document.getElementById("toc-tab");
-const links = toc.querySelectorAll('a');
-
-window.addEventListener("load", () => {
-  toc.classList.add("hidden");
-  tab.classList.add("visible");
-});
-
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    toc.classList.add("hidden");
-    tab.classList.add("visible");
-  });
-});
-
-tab.addEventListener("click", () => {
-  toc.classList.remove("hidden");
-  tab.classList.remove("visible");
-});
-
-const hero = document.getElementById("home");
-const imgs = [
-  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=70",
-  "https://images.unsplash.com/photo-1581091215367-59ab6f8a8b7b?auto=format&fit=crop&w=1600&q=70",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70"
-];
-let i = 0;
-
-setInterval(() => {
-  i = (i + 1) % imgs.length;
-  hero.style.backgroundImage =
-    "linear-gradient(rgba(5, 10, 20, 0.82), rgba(5, 10, 20, 0.88)), url(" + imgs[i] + ")";
-}, 7000);
 </script>
 
 </body>
