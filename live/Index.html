@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LAiSON Live</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src https://dgf-api.laison.org;
+    frame-ancestors 'none';
+  ">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1fa2ff;
+  --primary-dark: #0e8fe6;
+  --bg-dark: #0b0f14;
+  --bg-darker: #020617;
+  --text-light: #e6e6e6;
+  --text-lighter: #cfd8dc;
+  --text-meta: #9ca3af;
+  --border-glow: rgba(31, 162, 255, 0.3);
+  --shadow-glow: rgba(31, 162, 255, 0.15);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background:
+    linear-gradient(rgba(5,10,20,0.92), rgba(5,10,20,0.96)),
+    url('https://images.unsplash.com/photo-1558944351-cb1e7e6e9f85?auto=format&fit=crop&w=1600&q=70') center/cover fixed;
+  color: var(--text-light);
+}
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.panel {
+  width: 100%;
+  max-width: 1000px;
+  min-height: min(92vh, 1000px);
+  background: rgba(17,24,39,0.88);
+  border: 1px solid var(--border-glow);
+  border-radius: 18px;
+  box-shadow: 0 0 28px var(--shadow-glow);
+  padding: 24px 18px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+}
+.brand {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.sub {
+  text-align: center;
+  color: var(--text-lighter);
+  margin-bottom: 16px;
+}
+#chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 2px;
+}
+.msg {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  max-width: 82%;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.bot {
+  background: rgba(229,231,235,0.92);
+  color: #111;
+}
+.status {
+  font-size: 12px;
+  color: var(--text-meta);
+  margin-top: 10px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="panel">
+    <div class="brand">LAiSON LIVE</div>
+    <div class="sub">Live output viewer</div>
+    <div id="chat"></div>
+    <div class="status" id="status">Waiting for live output…</div>
+  </div>
+</section>
+
+<script>
+const API = "https://dgf-api.laison.org/live";
+const chat = document.getElementById("chat");
+const statusEl = document.getElementById("status");
+let currentBubble = null;
+
+function startBubble() {
+  currentBubble = document.createElement("div");
+  currentBubble.className = "msg bot";
+  currentBubble.textContent = "";
+  chat.appendChild(currentBubble);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addToken(text) {
+  if (!currentBubble) startBubble();
+  currentBubble.textContent += text;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function connect() {
+  statusEl.textContent = "Connected";
+  const es = new EventSource(API);
+
+  es.onopen = () => {
+    statusEl.textContent = "Live";
+  };
+
+  es.onmessage = (e) => {
+    if (e.data === "[START]") {
+      startBubble();
+      return;
+    }
+    if (e.data === "[END]") {
+      currentBubble = null;
+      return;
+    }
+    addToken(e.data);
+  };
+
+  es.onerror = () => {
+    statusEl.textContent = "Reconnecting…";
+    es.close();
+    setTimeout(connect, 1500);
+  };
+}
+
+connect();
+</script>
+</body>
+</html>
