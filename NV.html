@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quick Order</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --text:#111111;
+    --blue:#5aa2ff;
+    --blue-soft:#eaf3ff;
+    --yellow:#ffe37a;
+    --yellow-soft:#fff7cf;
+    --border:#d8e8ff;
+    --shadow:0 14px 40px rgba(55, 95, 160, 0.12);
+    --radius:28px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:var(--bg);
+    color:var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  body{
+    overflow:hidden;
+  }
+
+  .app{
+    width:100%;
+    min-height:100vh;
+    position:relative;
+    background:
+      radial-gradient(circle at top left, #f7fbff 0%, #ffffff 40%),
+      linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+  }
+
+  .screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    transition:opacity .35s ease, transform .35s ease;
+    background:transparent;
+  }
+
+  .screen.hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(10px);
+  }
+
+  .card{
+    width:min(100%, 760px);
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px 18px 20px;
+  }
+
+  .landing-card{
+    min-height:calc(100vh - 36px);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:18px;
+    background:
+      linear-gradient(180deg, #ffffff 0%, #fdfefe 100%);
+  }
+
+  .badge{
+    display:inline-block;
+    align-self:flex-start;
+    background:var(--yellow-soft);
+    color:#756100;
+    border:1px solid #f3df8f;
+    border-radius:999px;
+    padding:8px 14px;
+    font-size:clamp(14px, 3.6vw, 18px);
+    font-weight:700;
+  }
+
+  .landing-main{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:18px;
+    flex:1;
+  }
+
+  .landing-title{
+    margin:0;
+    font-size:clamp(38px, 10vw, 72px);
+    line-height:.96;
+    letter-spacing:-0.03em;
+    color:var(--blue);
+    font-weight:800;
+  }
+
+  .landing-text{
+    margin:0;
+    font-size:clamp(24px, 6vw, 40px);
+    line-height:1.18;
+    color:#111;
+    max-width:12ch;
+  }
+
+  .landing-sub{
+    margin:0;
+    font-size:clamp(18px, 4.8vw, 28px);
+    line-height:1.3;
+    color:#333;
+    max-width:18ch;
+  }
+
+  .arrow-wrap{
+    display:flex;
+    justify-content:flex-end;
+  }
+
+  .arrow-btn{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(180deg, var(--yellow) 0%, #ffd84d 100%);
+    color:#111;
+    width:min(34vw, 120px);
+    height:min(34vw, 120px);
+    min-width:86px;
+    min-height:86px;
+    border-radius:999px;
+    box-shadow:
+      0 10px 24px rgba(255, 210, 54, 0.28),
+      inset 0 1px 0 rgba(255,255,255,0.7);
+    font-size:clamp(40px, 12vw, 58px);
+    font-weight:800;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+
+  .arrow-btn:active{
+    transform:scale(.97);
+  }
+
+  .message-card{
+    min-height:calc(100vh - 36px);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:18px;
+    padding-top:20px;
+    padding-bottom:16px;
+  }
+
+  .top-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .back-btn,
+  .replay-btn{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    border-radius:999px;
+    padding:12px 18px;
+    font-size:clamp(16px, 4vw, 20px);
+    font-weight:700;
+  }
+
+  .back-btn{
+    background:var(--blue-soft);
+    color:var(--blue);
+  }
+
+  .replay-btn{
+    background:var(--yellow-soft);
+    color:#6e5a00;
+  }
+
+  .content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .headline{
+    margin:0 0 18px 0;
+    color:var(--blue);
+    font-weight:800;
+    letter-spacing:-0.035em;
+    font-size:clamp(36px, 10vw, 66px);
+    line-height:1.03;
+    max-width:8ch;
+  }
+
+  .lines{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .line{
+    margin:0;
+    font-size:clamp(25px, 7vw, 42px);
+    line-height:1.24;
+    color:#111;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+
+  .line.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .footer-note{
+    font-size:clamp(14px, 3.6vw, 18px);
+    color:#666;
+    text-align:center;
+    min-height:1.5em;
+  }
+
+  @media (max-height: 760px){
+    .landing-text{ font-size:clamp(22px, 5.8vw, 34px); }
+    .landing-sub{ font-size:clamp(16px, 4.2vw, 24px); }
+    .headline{ font-size:clamp(32px, 9vw, 54px); }
+    .line{ font-size:clamp(22px, 6.2vw, 34px); line-height:1.2; }
+    .card{ padding:18px 16px 16px; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+
+    <section class="screen" id="landingScreen">
+      <div class="card landing-card">
+        <div class="badge">Please tap</div>
+
+        <div class="landing-main">
+          <h1 class="landing-title">My name is Kevin, I am non-verbal, can hear but don't speak</h1>
+          <p class="landing-text"></p>
+          <p class="landing-sub">I am the CEO of Laison.org and starting a Teir 3 Tellco. I am the only one LOCAL that can help West Tis residents with their problem of 5G coverage in a manner win-win for residents. I have the mindset & skillset to reprogram a 5ess machine. We are a Maine S-corp. w/accts @ Santandar. </p>
+        </div>
+
+        <div class="arrow-wrap">
+          <button class="arrow-btn" id="openMessageBtn" aria-label="Open message">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen hidden" id="messageScreen">
+      <div class="card message-card">
+        <div class="top-row">
+          <button class="back-btn" id="backBtn" aria-label="Go back">← Back</button>
+          <button class="replay-btn" id="replayBtn" aria-label="Replay message">Replay</button>
+        </div>
+
+        <div class="content">
+          <h2 class="headline">.</h2>
+
+          <div class="lines" id="lines">
+            <p class="line">But I don't have enough liquid capitol to register here as foreign entity.</p>
+            <p class="line">Can you check out my product at Laison.org & sample shareholder agreement at Laison.org/SA </p>
+            <p class="line"> and I will follow up by E-mail. </p>
+            <p class="line"></p>
+            <p class="line">Mine is Creator@Laison.org</p>
+            <p class="line">I write Ai software, like ChatGPT but better.</p>
+            <p class="line">Just takes money</p>
+            <p class="line">to make money</p>
+            <p class="line"></p>
+            <p class="line">Thank you for your time!</p>
+          </div>
+        </div>
+
+        <div class="footer-note" id="statusNote">Message plays slowly for easy reading.</div>
+      </div>
+    </section>
+
+  </div>
+
+<script>
+  const landingScreen = document.getElementById("landingScreen");
+  const messageScreen = document.getElementById("messageScreen");
+  const openMessageBtn = document.getElementById("openMessageBtn");
+  const backBtn = document.getElementById("backBtn");
+  const replayBtn = document.getElementById("replayBtn");
+  const statusNote = document.getElementById("statusNote");
+  const lines = Array.from(document.querySelectorAll(".line"));
+
+  let timers = [];
+
+  function clearTimers() {
+    timers.forEach(t => clearTimeout(t));
+    timers = [];
+  }
+
+  function resetLines() {
+    clearTimers();
+    lines.forEach(line => line.classList.remove("show"));
+    statusNote.textContent = "Message plays slowly for easy reading.";
+  }
+
+  function playLines() {
+    resetLines();
+
+    const startDelay = 500;
+    const step = 1500;
+
+    lines.forEach((line, index) => {
+      const t = setTimeout(() => {
+        line.classList.add("show");
+      }, startDelay + (index * step));
+      timers.push(t);
+    });
+
+    const done = setTimeout(() => {
+      statusNote.textContent = "Done. Tap Replay to play it again.";
+    }, startDelay + (lines.length * step) + 200);
+    timers.push(done);
+  }
+
+  function showLanding() {
+    clearTimers();
+    landingScreen.classList.remove("hidden");
+    messageScreen.classList.add("hidden");
+  }
+
+  function showMessage() {
+    landingScreen.classList.add("hidden");
+    messageScreen.classList.remove("hidden");
+    playLines();
+  }
+
+  openMessageBtn.addEventListener("click", showMessage);
+  backBtn.addEventListener("click", showLanding);
+  replayBtn.addEventListener("click", playLines);
+</script>
+</body>
+</html>
