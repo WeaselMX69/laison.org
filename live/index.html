@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>LAiSON Live</title>
+
+<style>
+:root{
+  --bg:#050b12;
+  --panel:rgba(12,18,28,.72);
+  --line:rgba(255,255,255,.08);
+  --text:#ecf5ff;
+  --muted:#9eb3c8;
+  --accent:#4fb7ff;
+  --accent2:#9ce3ff;
+  --bubble:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:
+    radial-gradient(circle at top, rgba(79,183,255,.18), transparent 35%),
+    linear-gradient(180deg, #050b12 0%, #091320 100%);
+  color:var(--text);
+}
+
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  padding:12px;
+}
+
+.app{
+  width:100%;
+  max-width:860px;
+  min-height:calc(100vh - 24px);
+  display:flex;
+  flex-direction:column;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+}
+
+.top{
+  padding:18px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.title{
+  font-size:clamp(20px,4vw,28px);
+  font-weight:800;
+  letter-spacing:.05em;
+}
+
+.status{
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid rgba(79,183,255,.3);
+  color:var(--accent2);
+}
+
+.chat{
+  flex:1;
+  overflow:auto;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+}
+
+.bubble{
+  max-width:90%;
+  padding:14px 16px;
+  border-radius:22px;
+  border:1px solid var(--line);
+  background:var(--bubble);
+  line-height:1.5;
+  font-size:16px;
+  white-space:pre-wrap;
+}
+
+@media(max-width:640px){
+  .wrapper{padding:0}
+  .app{border-radius:0;border:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="app">
+    <div class="top">
+      <div class="title">LAiSON LIVE</div>
+      <div class="status" id="status">CONNECTING</div>
+    </div>
+
+    <div class="chat" id="chat">
+      <div class="bubble" id="output">Waiting for stream...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const statusEl = document.getElementById("status");
+const output = document.getElementById("output");
+const chat = document.getElementById("chat");
+
+let started = false;
+
+const es = new EventSource("https://dgf-api.laison.org/live");
+
+es.onopen = () => {
+  statusEl.textContent = "LIVE";
+};
+
+es.addEventListener("ready", () => {
+  statusEl.textContent = "LIVE";
+});
+
+es.onmessage = (e) => {
+  if (!started) {
+    output.textContent = "";
+    started = true;
+  }
+
+  try{
+    const token = JSON.parse(e.data);
+    output.textContent += token;
+    chat.scrollTop = chat.scrollHeight;
+  }catch{}
+};
+
+es.onerror = () => {
+  statusEl.textContent = "RECONNECTING";
+};
+</script>
+
+</body>
+</html>
