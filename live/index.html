@@ -118,9 +118,7 @@ const statusEl = document.getElementById("status");
 const output = document.getElementById("output");
 const chat = document.getElementById("chat");
 
-let started = false;
-
-const es = new EventSource("https://dgf-api.laison.org/live");
+const es = new EventSource("https://api.laison.org/live");
 
 es.onopen = () => {
   statusEl.textContent = "LIVE";
@@ -131,14 +129,17 @@ es.addEventListener("ready", () => {
 });
 
 es.onmessage = (e) => {
-  if (!started) {
-    output.textContent = "";
-    started = true;
-  }
-
   try{
-    const token = JSON.parse(e.data);
-    output.textContent += token;
+    const msg = JSON.parse(e.data);
+
+    if (msg.type === "reset") {
+      output.textContent = "";
+    } else if (msg.type === "snapshot") {
+      output.textContent = msg.text || "";
+    } else if (msg.type === "token") {
+      output.textContent += msg.token || "";
+    }
+
     chat.scrollTop = chat.scrollHeight;
   }catch{}
 };
