@@ -70,7 +70,6 @@ body{
   transform:translateY(10px);
 }
 
-/* LANDING SCREEN */
 .landing-screen{
   display:flex;
   align-items:center;
@@ -173,7 +172,6 @@ body{
   transform:scale(.97);
 }
 
-/* CHAT SCREEN */
 .chat-screen{
   background:
     linear-gradient(180deg, #020617 0%, #0b0f14 55%, #09111c 100%);
@@ -359,7 +357,6 @@ body{
   50%{ opacity:1; }
 }
 
-/* OVERLAY */
 .overlay{
   display:flex;
   position:fixed;
@@ -443,39 +440,59 @@ body{
   border:1px solid rgba(31, 162, 255, 0.45);
 }
 
-/* URGENT NOTICE — SMALL SQUARE TOP RIGHT */
+/* URGENT NOTICE — SCROLLABLE TOP RIGHT */
 .urgent-overlay {
   position: fixed;
   top: 12px;
   right: 12px;
   z-index: 99999;
-  width: 180px;
-  height: 180px;
+  width: 240px;
+  height: 240px;
   background: #ffffff;
-  border: 1px solid #d7d7d7;
-  border-radius: 6px;
+  border: 2px solid #b00020;
+  border-radius: 8px;
   padding: 10px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #111;
   cursor: pointer;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.urgent-overlay::-webkit-scrollbar {
+  width: 7px;
+}
+
+.urgent-overlay::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 999px;
+}
+
+.urgent-overlay::-webkit-scrollbar-thumb {
+  background: #b00020;
+  border-radius: 999px;
 }
 
 .urgent-overlay-header {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 6px;
+  gap: 6px;
+  margin-bottom: 7px;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
+  padding-bottom: 6px;
+  background:#fff;
+  position: sticky;
+  top: -10px;
+  z-index: 2;
 }
 
 .urgent-overlay-header h3 {
   margin: 0;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 900;
-  color: #111;
+  color: #b00020;
   font-family: inherit;
   letter-spacing: 0.035em;
   text-transform: uppercase;
@@ -483,31 +500,31 @@ body{
 }
 
 .urgent-icon {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #dc3545;
   flex: 0 0 auto;
 }
 
 .urgent-overlay-content {
-  margin: 0 0 7px 0;
-  font-size: 0.68rem;
-  color: #333;
-  line-height: 1.25;
+  margin: 0 0 8px 0;
+  font-size: 0.76rem;
+  color: #222;
+  line-height: 1.28;
 }
 
 .urgent-overlay-content p {
-  margin: 0 0 6px 0;
+  margin: 0 0 7px 0;
 }
 
 .urgent-overlay-link {
   display: inline-block;
   background: #111;
   color: #ffffff;
-  padding: 6px 7px;
+  padding: 7px 8px;
   border-radius: 4px;
   text-decoration: none;
-  font-weight: 800;
-  font-size: 0.62rem;
+  font-weight: 900;
+  font-size: 0.66rem;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -518,29 +535,33 @@ body{
 
 @media (max-width: 768px) {
   .urgent-overlay {
-    width: 142px;
-    height: 142px;
+    width: 190px;
+    height: 205px;
     right: 8px;
     top: 8px;
     padding: 8px;
   }
 
+  .urgent-overlay-header {
+    top: -8px;
+  }
+
   .urgent-overlay-header h3 {
-    font-size: 0.58rem;
+    font-size: 0.64rem;
   }
 
   .urgent-icon {
-    font-size: 0.75rem;
+    font-size: 0.82rem;
   }
 
   .urgent-overlay-content {
-    font-size: 0.58rem;
-    line-height: 1.18;
+    font-size: 0.64rem;
+    line-height: 1.2;
   }
 
   .urgent-overlay-link {
-    font-size: 0.54rem;
-    padding: 5px 6px;
+    font-size: 0.58rem;
+    padding: 6px 7px;
   }
 }
 </style>
@@ -588,24 +609,25 @@ body{
     </section>
   </div>
 
-<div class="urgent-overlay" onclick="window.location.href='urgent-notice.html';">
-  <div class="urgent-overlay-header">
-    <span class="urgent-icon">⚠️</span>
-    <h3>URGENT PUBLIC NOTICE</h3>
+  <div class="urgent-overlay" onclick="window.location.href='urgent-notice.html';">
+    <div class="urgent-overlay-header">
+      <span class="urgent-icon">⚠️</span>
+      <h3>URGENT PUBLIC NOTICE</h3>
+    </div>
+    <div class="urgent-overlay-content">
+      <p><strong>Corruption concerns in Cherryfield, Maine.</strong></p>
+      <p>
+        What began as a town website rebuild escalated into a broader situation involving a meeting with a Cybersecurity Intelligence Agent over a darkweb credit card theft ring.
+      </p>
+      <p>
+        I created a page to help preserve the story, names, records, and digital context tied to two devices connected to the events.
+      </p>
+      <p>
+        Full context is documented.
+      </p>
+    </div>
+    <a href="urgent-notice.html" class="urgent-overlay-link">READ FULL NOTICE →</a>
   </div>
-  <div class="urgent-overlay-content">
-    <p>
-      <strong>Corruption concerns in Cherryfield, Maine.</strong>
-    </p>
-    <p>
-      What began as a town website rebuild escalated into a broader situation involving meeting with a Cybersecurity Intelligence Agent over a darkweb credit card theft ring, I have created a page to assist in preservation of digital evidence on 2 devices tied to the events.
-    </p>
-    <p>
-      Names, records, and full context are documented.
-    </p>
-  </div>
-  <a href="urgent-notice.html" class="urgent-overlay-link">READ FULL NOTICE →</a>
-</div>
   
   <div class="overlay" id="healthBotOverlay" aria-hidden="true">
     <div class="overlay-card">
