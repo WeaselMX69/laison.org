@@ -1,94 +1,791 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LAiSON</title>
-
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+:root{
+  --white-bg:#ffffff;
+  --white-text:#111111;
+  --blue:#5aa2ff;
+  --blue-soft:#eaf3ff;
+  --yellow:#ffe37a;
+  --yellow-soft:#fff7cf;
+  --white-border:#d8e8ff;
+  --white-shadow:0 14px 40px rgba(55, 95, 160, 0.12);
+
+  --dark-bg:#0b0f14;
+  --dark-bg-2:#020617;
+  --panel:rgba(17, 24, 39, 0.84);
+  --chat-bg:rgba(15, 23, 42, 0.92);
+  --text-light:#e6e6e6;
+  --text-lighter:#cfd8dc;
+  --text-meta:#9ca3af;
+  --border-glow:rgba(31, 162, 255, 0.3);
+  --shadow-glow:rgba(31, 162, 255, 0.15);
+
+  --radius:28px;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  padding:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  overflow:hidden;
   background:#fff;
+  min-height:100dvh;
 }
 
-.container{
-  max-width:800px;
-  margin:0 auto;
-  padding:24px;
+.app{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
 }
 
-h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:48px;
-  color:#5aa2ff;
+.screen{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-height:100dvh;
+  transition:opacity .35s ease, transform .35s ease;
+}
+
+.screen.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(10px);
+}
+
+/* LANDING SCREEN */
+.landing-screen{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:
+    radial-gradient(circle at top left, #f7fbff 0%, #ffffff 40%),
+    linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+}
+
+.landing-card{
+  width:min(100%, 760px);
+  min-height:calc(100vh - 36px);
+  min-height:calc(100dvh - 36px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+  background:#fff;
+  border:1px solid var(--white-border);
+  border-radius:var(--radius);
+  box-shadow:var(--white-shadow);
+  padding:22px 18px 20px;
+}
+
+.badge{
+  display:inline-block;
+  align-self:flex-start;
+  background:var(--yellow-soft);
+  color:#756100;
+  border:1px solid #f3df8f;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:clamp(14px, 3.6vw, 18px);
+  font-weight:700;
+}
+
+.landing-main{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+  flex:1;
+}
+
+.landing-title{
+  margin:0;
+  font-size:clamp(38px, 10vw, 72px);
+  line-height:.96;
+  letter-spacing:-0.03em;
+  color:var(--blue);
+  font-weight:800;
 }
 
 .landing-text{
-  font-size:22px;
-  margin-top:10px;
+  margin:0;
+  font-size:clamp(24px, 6vw, 40px);
+  line-height:1.18;
+  color:#111;
+  max-width:13ch;
 }
 
 .landing-sub{
-  font-size:16px;
-  color:#444;
-}
-
-.notice{
-  position:fixed;
-  top:18px;
-  right:18px;
-  width:340px;
-  background:#fff;
-  border:1px solid #ddd;
-  padding:16px;
-  border-radius:6px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.12);
-  cursor:pointer;
-}
-
-.notice h3{
-  margin:0 0 10px 0;
-  font-size:14px;
-  letter-spacing:.05em;
-}
-
-.notice p{
   margin:0;
-  font-size:13px;
+  font-size:clamp(18px, 4.8vw, 28px);
+  line-height:1.3;
   color:#333;
+  max-width:18ch;
 }
 
-.notice a{
-  display:inline-block;
-  margin-top:10px;
-  background:#111;
+.arrow-wrap{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.arrow-btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(180deg, var(--yellow) 0%, #ffd84d 100%);
+  color:#111;
+  width:min(34vw, 120px);
+  height:min(34vw, 120px);
+  min-width:86px;
+  min-height:86px;
+  border-radius:999px;
+  box-shadow:
+    0 10px 24px rgba(255, 210, 54, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  font-size:clamp(40px, 12vw, 58px);
+  font-weight:800;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+.arrow-btn:active{
+  transform:scale(.97);
+}
+
+/* CHAT SCREEN */
+.chat-screen{
+  background:
+    linear-gradient(180deg, #020617 0%, #0b0f14 55%, #09111c 100%);
+  color:var(--text-light);
+  display:flex;
+  flex-direction:column;
+}
+
+.stage{
+  flex:1;
+  min-height:0;
+  width:100%;
+  padding:12px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+.top-controls{
+  width:min(1100px, 96vw);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:0;
+  flex:0 0 auto;
+}
+
+.control-btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:clamp(14px, 3.6vw, 18px);
+  font-weight:700;
+}
+
+.back-btn{
+  background:rgba(255,255,255,0.08);
   color:#fff;
-  padding:8px 12px;
-  font-size:12px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.replay-btn{
+  background:rgba(31, 162, 255, 0.15);
+  color:#8ec5ff;
+  border:1px solid rgba(31, 162, 255, 0.24);
+}
+
+.brand-wrap{
+  width:100%;
+  text-align:center;
+  margin-bottom:0;
+  flex:0 0 auto;
+}
+
+.brand{
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(2.2rem, 6vw, 4.2rem);
+  font-weight:700;
+  letter-spacing:1px;
+  color:#ffffff;
+  text-shadow:
+    0 0 10px rgba(31, 162, 255, 0.20),
+    0 0 22px rgba(31, 162, 255, 0.10);
+  margin:0;
+}
+
+.sub1{
+  margin-top:2px;
+  margin-bottom:10px;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(0.82rem, 2vw, 1.15rem);
+  color:var(--text-lighter);
+  letter-spacing:0.01em;
+  line-height:1.05;
+  white-space:nowrap;
+}
+
+.sub2{
+  margin-top:0;
+  margin-bottom:0;
+  padding-top:0;
+  font-size:clamp(0.9rem, 2.2vw, 1.2rem);
+  line-height:1.05;
+  color:#ffffff;
+  font-weight:400;
+}
+
+.chat-shell{
+  margin-top:6px;
+  width:min(1100px, 96vw);
+  flex:1;
+  min-height:0;
+  background:var(--panel);
+  border:1px solid var(--border-glow);
+  box-shadow:
+    0 0 28px var(--shadow-glow),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:28px;
+  margin-bottom:6px;
+  flex:0 0 auto;
+}
+
+.chat-top h2{
+  margin:0;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  color:var(--text-meta);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+.chat-window{
+  flex:1;
+  min-height:0;
+  background:var(--chat-bg);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;
+  padding:12px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.msg{
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  max-width:72%;
+  white-space:pre-wrap;
+  font-size:1rem;
+  line-height:1.6;
+  word-break:break-word;
+}
+
+.left{
+  background:rgba(229, 231, 235, 0.94);
+  color:#111827;
+}
+
+.right{
+  background:rgba(31, 41, 55, 0.9);
+  color:#f8fafc;
+  margin-left:auto;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  height:16px;
+  background:#fff;
+  animation:blink 1s infinite;
+  margin-left:4px;
+  vertical-align:middle;
+}
+
+.status-note{
+  width:min(1100px, 96vw);
+  text-align:center;
+  color:#97a6b8;
+  font-size:clamp(13px, 3.2vw, 16px);
+  padding-top:0;
+  min-height:1.4em;
+  flex:0 0 auto;
+}
+
+@keyframes blink{
+  0%,100%{ opacity:0; }
+  50%{ opacity:1; }
+}
+
+/* OVERLAY */
+.overlay{
+  display:flex;
+  position:fixed;
+  inset:0;
+  background:rgba(0, 0, 0, 0.88);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  padding:18px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.overlay-card{
+  width:min(100%, 560px);
+  background:#0b0f14;
+  border:1px solid rgba(31, 162, 255, 0.4);
+  box-shadow:
+    0 0 28px rgba(31, 162, 255, 0.16),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  border-radius:22px;
+  padding:22px 18px 18px;
+  text-align:center;
+  transform:translateY(12px) scale(.98);
+  transition:transform .45s ease;
+}
+
+.overlay.show .overlay-card{
+  transform:translateY(0) scale(1);
+}
+
+.overlay-title{
+  margin:0 0 10px 0;
+  color:#8ec5ff;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(1.35rem, 5vw, 2rem);
+  line-height:1.1;
+}
+
+.overlay-text{
+  margin:0 0 18px 0;
+  color:#e6e6e6;
+  font-size:clamp(1rem, 4vw, 1.15rem);
+  line-height:1.5;
+}
+
+.overlay-actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.overlay-link,
+.overlay-close{
+  appearance:none;
+  border:none;
   text-decoration:none;
-  border-radius:4px;
+  cursor:pointer;
+  width:100%;
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:clamp(1rem, 4vw, 1.08rem);
+  font-weight:700;
+  text-align:center;
+}
+
+.overlay-link{
+  background:linear-gradient(180deg, #5aa2ff 0%, #2e83f7 100%);
+  color:#fff;
+}
+
+.overlay-close{
+  background:transparent;
+  color:#8ec5ff;
+  border:1px solid rgba(31, 162, 255, 0.45);
+}
+
+/* URGENT NOTICE — SMALL SQUARE TOP RIGHT */
+.urgent-overlay {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 99999;
+  width: 180px;
+  height: 180px;
+  background: #ffffff;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #111;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.urgent-overlay-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.urgent-overlay-header h3 {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #111;
+  font-family: inherit;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.urgent-icon {
+  font-size: 0.9rem;
+  color: #dc3545;
+  flex: 0 0 auto;
+}
+
+.urgent-overlay-content {
+  margin: 0 0 7px 0;
+  font-size: 0.68rem;
+  color: #333;
+  line-height: 1.25;
+}
+
+.urgent-overlay-content p {
+  margin: 0 0 6px 0;
+}
+
+.urgent-overlay-link {
+  display: inline-block;
+  background: #111;
+  color: #ffffff;
+  padding: 6px 7px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.urgent-overlay-link:hover {
+  background: #222;
+}
+
+@media (max-width: 768px) {
+  .urgent-overlay {
+    width: 142px;
+    height: 142px;
+    right: 8px;
+    top: 8px;
+    padding: 8px;
+  }
+
+  .urgent-overlay-header h3 {
+    font-size: 0.58rem;
+  }
+
+  .urgent-icon {
+    font-size: 0.75rem;
+  }
+
+  .urgent-overlay-content {
+    font-size: 0.58rem;
+    line-height: 1.18;
+  }
+
+  .urgent-overlay-link {
+    font-size: 0.54rem;
+    padding: 5px 6px;
+  }
 }
 </style>
 </head>
-
 <body>
+  <div class="app">
+    <section class="screen landing-screen" id="landingScreen">
+      <div class="landing-card">
+        <div class="badge">Please tap</div>
 
-<div class="container">
-  <h1>LAiSON.</h1>
-  <p class="landing-text">AI systems, evidence handling, and controlled deployment.</p>
-  <p class="landing-sub">Tap below to view notice.</p>
-</div>
+        <div class="landing-main">
+          <h1 class="landing-title">LAiSON.</h1>
+          <p class="landing-text">Layering Artificial Intelligence Systems Over Networks</p>
+          <p class="landing-sub">Tap through for a quick live preview.</p>
+        </div>
 
-<div class="notice" onclick="window.location.href='urgent-notice.html';">
-  <h3>PUBLIC NOTICE</h3>
-  <p>
-    A device is being preserved for potential law enforcement review.
-  </p>
-  <a href="urgent-notice.html">VIEW NOTICE</a>
-</div>
+        <div class="arrow-wrap">
+          <button class="arrow-btn" id="openMessageBtn" aria-label="Open preview">→</button>
+        </div>
+      </div>
+    </section>
 
+    <section class="screen chat-screen hidden" id="messageScreen">
+      <div class="stage">
+        <div class="top-controls">
+          <button class="control-btn back-btn" id="backBtn" aria-label="Go back">← Back</button>
+          <button class="control-btn replay-btn" id="replayBtn" aria-label="Replay chat">Replay</button>
+        </div>
+
+        <div class="brand-wrap">
+          <h1 class="brand">LAiSON.</h1>
+          <div class="sub1">Layering Artificial Intelligence Systems Over Networks</div>
+          <div class="sub2">Ai Software &amp; Business Systems</div>
+        </div>
+
+        <div class="chat-shell">
+          <div class="chat-top">
+            <h2>Chat Preview</h2>
+          </div>
+          <div class="chat-window" id="hero-chat"></div>
+        </div>
+
+        <div class="status-note" id="statusNote">Conversation plays automatically.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="urgent-overlay" onclick="window.location.href='urgent-notice.html';">
+    <div class="urgent-overlay-header">
+      <span class="urgent-icon">⚠️</span>
+      <h3>PUBLIC NOTICE</h3>
+    </div>
+    <div class="urgent-overlay-content">
+      <p>Device preserved for potential law enforcement review.</p>
+      <p>Original statement and context retained.</p>
+    </div>
+    <a href="urgent-notice.html" class="urgent-overlay-link">VIEW NOTICE</a>
+  </div>
+
+  <div class="overlay" id="healthBotOverlay" aria-hidden="true">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Dog-Gone-Fit AI</h2>
+      <p class="overlay-text">
+        Focused, high-impact AI for real-world use. See the demo or pass for now.
+      </p>
+      <div class="overlay-actions">
+        <a
+          class="overlay-link"
+          href="https://laison.org/k9-health-bot.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open Dog-Gone-Fit AI
+        </a>
+        <button
+          class="overlay-close"
+          id="overlayCloseBtn"
+          type="button"
+        >
+          No Thanks
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const landingScreen = document.getElementById("landingScreen");
+const messageScreen = document.getElementById("messageScreen");
+const openMessageBtn = document.getElementById("openMessageBtn");
+const backBtn = document.getElementById("backBtn");
+const replayBtn = document.getElementById("replayBtn");
+const chat = document.getElementById("hero-chat");
+const statusNote = document.getElementById("statusNote");
+const overlay = document.getElementById("healthBotOverlay");
+const overlayCloseBtn = document.getElementById("overlayCloseBtn");
+
+const chatMsgs = [
+  { side: "right", text: "Are you that guy that can't talk? Are you dumb?" },
+  { side: "left", text: "NO! Well, yes... but NO! I'm the CEO of LAiSON & a non-verbal dog trainer, I can speak, but I chose not to talk because of what I know and what I bring to the table" },
+  { side: "right", text: "Really? What do you bring to the table?" },
+  { side: "left", text: "Commands... all the commands, lol. I also have vision!" },
+  { side: "right", text: "What kinda stuff you working on...for programs?" },
+  { side: "left", text: "Right now? I'm deploying the next level of Ai for businesses! Greatest thing since sliced bread..." },
+  { side: "right", text: "Lies. Greatest thing since sliced bread is toast!" },
+  { side: "left", text: "Exactly. Fewer external dependencies, tighter control, cleaner audit trails. Aligns with NIST and FFIEC expectations without creating new exposure." },
+  { side: "right", text: "WTF Are you talking about dude !?!?!" },
+  { side: "left", text: "Targeted deployments. One high-impact problem at a time. Dog-Gone-Fit AI shows the model—focused system, measurable outcome, no vendor lock-in. It was built by LAiSON outside the traditional SaaS model—because that model is reaching its limits. Organizations are over-integrated, overexposed, and under-controlled. Building correctly from the start costs more upfront, but the long-term savings and control are exponential." },
+  { side: "right", text: "Sounds cool!" },
+  { side: "left", text: "It will! Audio part of the stack is next!?!" },
+  { side: "right", text: "What's a stack?!" },
+  { side: "left", text: "What's a quit claim deed? How do you know I'm not native? Who owns this land?" },
+  { side: "right", text: "EXCUSE ME !?!?! OFFENSIVE! Banks are NOT going to give you money with that attitude!?" },
+  { side: "left", text: "My product will sell itself, LITERALLY AND FIGURATIVELY. Debt comes with interest, the banks will be begging me for integrative Ai solutions and agreements to touch their systems soon. Just takes time, trust, and boldness ;-)" },
+  { side: "right", text: "Where can I see it !?!?! " },
+  { side: "left", text: "Check it out in..." }
+];
+
+let runId = 0;
+let overlayTimer = null;
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function clearOverlayTimer() {
+  if (overlayTimer) {
+    clearTimeout(overlayTimer);
+    overlayTimer = null;
+  }
+}
+
+function hideOverlay() {
+  clearOverlayTimer();
+  overlay.classList.remove("show");
+  overlay.setAttribute("aria-hidden", "true");
+}
+
+function showOverlay() {
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function showLanding() {
+  runId++;
+  landingScreen.classList.remove("hidden");
+  messageScreen.classList.add("hidden");
+  chat.innerHTML = "";
+  statusNote.textContent = "Conversation plays automatically.";
+  hideOverlay();
+}
+
+async function typeMsg(side, text, currentRunId, isLast = false) {
+  if (currentRunId !== runId) return;
+
+  const bubble = document.createElement("div");
+  bubble.className = "msg " + side;
+  chat.appendChild(bubble);
+
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+  bubble.appendChild(cursor);
+
+  for (const ch of text) {
+    if (currentRunId !== runId) return;
+
+    cursor.before(ch);
+    chat.scrollTop = chat.scrollHeight;
+
+    let delay = 43 + Math.floor(Math.random() * 18);
+
+    if (ch === "," || ch === ".") delay += 45;
+    if (ch === "!" || ch === "?") delay += 80;
+    if (Math.random() < 0.04) delay += 110;
+
+    await sleep(delay);
+  }
+
+  cursor.remove();
+
+  if (isLast) {
+    const countdownSpan = document.createElement("span");
+    countdownSpan.style.marginLeft = "6px";
+    countdownSpan.style.fontWeight = "700";
+    countdownSpan.style.color = "#8ec5ff";
+    bubble.appendChild(countdownSpan);
+
+    let seconds = 10;
+
+    while (seconds > 0) {
+      if (currentRunId !== runId) return;
+
+      countdownSpan.textContent = seconds;
+      chat.scrollTop = chat.scrollHeight;
+      await sleep(1000);
+      seconds--;
+    }
+
+    countdownSpan.textContent = "0";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function playConversation() {
+  runId++;
+  const currentRunId = runId;
+
+  hideOverlay();
+  chat.innerHTML = "";
+  statusNote.textContent = "Playing preview...";
+
+  for (let i = 0; i < chatMsgs.length; i++) {
+    const m = chatMsgs[i];
+    const isLast = i === chatMsgs.length - 1;
+
+    if (currentRunId !== runId) return;
+    await typeMsg(m.side, m.text, currentRunId, isLast);
+    await sleep(509);
+  }
+
+  if (currentRunId !== runId) return;
+
+  statusNote.textContent = "Done. Opening next step...";
+  clearOverlayTimer();
+  overlayTimer = setTimeout(() => {
+    if (currentRunId !== runId) return;
+    showOverlay();
+    statusNote.textContent = "Choose an option below.";
+  }, 500);
+}
+
+function showMessage() {
+  landingScreen.classList.add("hidden");
+  messageScreen.classList.remove("hidden");
+  playConversation();
+}
+
+openMessageBtn.addEventListener("click", showMessage);
+backBtn.addEventListener("click", showLanding);
+replayBtn.addEventListener("click", playConversation);
+overlayCloseBtn.addEventListener("click", hideOverlay);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") hideOverlay();
+});
+</script>
 </body>
 </html>
