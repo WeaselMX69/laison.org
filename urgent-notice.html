@@ -1,123 +1,167 @@
-<!-- urgent-notice.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evidence Preservation Notice</title>
+<title>Urgent Public Notice – Cherryfield, Maine</title>
+
 <style>
 body{
   margin:0;
   padding:20px;
   background:#f6f6f6;
   color:#111;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   line-height:1.6;
 }
 .container{
-  max-width:820px;
+  max-width:880px;
   margin:0 auto;
   background:#fff;
   padding:24px;
   border:1px solid #ddd;
-  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
 }
 h1{
-  margin:0 0 16px 0;
-  font-size:1.6rem;
-  line-height:1.15;
+  margin-top:0;
+  color:#b00020;
+}
+h2{
+  border-bottom:1px solid #ddd;
+  padding-bottom:6px;
+  margin-top:28px;
 }
 .notice{
-  border-left:4px solid #111;
-  padding:12px 14px;
-  margin:18px 0;
-  background:#f9f9f9;
-}
-.label{
+  border-left:5px solid #b00020;
+  background:#fff5f5;
+  padding:14px;
   font-weight:700;
 }
-.box{
-  margin-top:10px;
-  padding:12px;
-  border:1px solid #ddd;
-  background:#fafafa;
-  word-break:break-word;
-}
-.original{
-  margin-top:22px;
-  padding:16px;
-  border:1px dashed #999;
-  background:#fff;
-  white-space:pre-wrap;
-}
-.small{
+.section{
   margin-top:18px;
-  color:#555;
-  font-size:.9rem;
+}
+.names{
+  background:#f9f9f9;
+  border:1px solid #ddd;
+  padding:14px;
 }
 </style>
 </head>
+
 <body>
 <div class="container">
-  <h1>Evidence Preservation Notice</h1>
 
-  <div class="notice">
-    <div><span class="label">Device:</span> AT&amp;T prepaid phone, damaged.</div>
-    <div><span class="label">Status:</span> Preserved for potential law enforcement review.</div>
-    <div><span class="label">Timestamp:</span> <span id="ts"></span></div>
-    <div><span class="label">Page Hash:</span></div>
-    <div class="box" id="hash">calculating...</div>
-  </div>
+<h1>Urgent Public Notice: Cherryfield, Maine</h1>
 
-  <div class="box">
-    <div><span class="label">Referenced context retained for whoever receives the phone:</span></div>
-    <br>
-    Gabe Gay<br>
-    Alex<br>
-    Barry Curtis<br>
-    Cherryfield, Maine<br>
-    Town-related corruption concerns<br>
-    Suspected unauthorized access to the AT&amp;T prepaid phone before it was broken
-  </div>
-
-  <div class="original">
-ORIGINAL STATEMENT / CONTEXT PRESERVED:
-
-Public Notice: Corruption in Cherryfield, Maine
-
-fuck cherryfield maine
-
-got server bill covered Dog-Gone-Fit Ai's back to playing fetch while I learn to deprogram rust...
-
-I suspect Gabe Gay or his GF Alex hacked that AT&amp;T prepaid phone before I broke it.
-
-Barry Curtis and town-related corruption concerns are pertinent context for whoever receives the phone.
-
-This page is intended to preserve the original context and route attention to the device for possible federal law enforcement review.
-  </div>
-
-  <div class="small">
-    LAiSON — Layering Artificial Intelligence Systems Over Networks
-  </div>
+<div class="notice">
+This notice documents corruption concerns in Cherryfield, Maine, and preserves the full context tied to two devices being held for potential law enforcement review.
 </div>
 
-<script>
-(function(){
-  const ts = new Date().toISOString();
-  document.getElementById("ts").textContent = ts;
+<h2>How This Started</h2>
 
-  const text = document.body.innerText;
-  const data = new TextEncoder().encode(text);
+<p>
+This situation began when I went to redo the Cherryfield town website. What started as a normal technical task quickly escalated into broader concerns involving town conduct, interference, and possible misconduct.
+</p>
 
-  crypto.subtle.digest("SHA-256", data).then(function(buf){
-    const hash = Array.from(new Uint8Array(buf)).map(function(b){
-      return b.toString(16).padStart(2, "0");
-    }).join("");
-    document.getElementById("hash").textContent = hash;
-  }).catch(function(){
-    document.getElementById("hash").textContent = "SHA-256 unavailable in this browser context";
-  });
-})();
-</script>
+<h2>Retail / Financial Concern</h2>
+
+<p>
+There are concerns related to potential credit card skimming activity involving a Dollar General location. This is part of the broader context that led to my reporting and involvement with federal authorities.
+</p>
+
+<h2>Federal Contact</h2>
+
+<p>
+I met with federal authorities last fall regarding these concerns. This notice serves in part to preserve continuity of that reporting and ensure nothing is lost or misrepresented.
+</p>
+
+<h2>Devices</h2>
+
+<p>
+There are two devices connected to this situation:
+</p>
+
+<ul>
+<li>An AT&amp;T prepaid phone that I believe may have been accessed without authorization prior to being broken</li>
+<li>A second device being preserved as part of the same overall context</li>
+</ul>
+
+<p>
+These devices are not isolated — they are directly tied to the events described on this page.
+</p>
+
+<h2>Harassment Report Dispute</h2>
+
+<p>
+A harassment/trespass narrative was created against me. That claim is disputed.
+</p>
+
+<p>
+The report was filed by:
+</p>
+
+<div class="names">
+Angela Sprague<br>
+Alexandria Hudson
+</div>
+
+<p>
+My position is that this narrative does not reflect the reality of the situation and may be connected to the broader context described here.
+</p>
+
+<p>
+I have Google Voice records that I believe provide relevant context, including personal conversations that contradict the harassment framing and show a different set of interactions and intent.
+</p>
+
+<h2>FOAA Issue</h2>
+
+<p>
+The Washington County Sheriff’s Office has not fulfilled my FOAA request for full report records related to my reporting of this situation.
+</p>
+
+<p>
+Instead, only the harassment-related report was provided, while other requested records were not.
+</p>
+
+<h2>Named Individuals (Context)</h2>
+
+<div class="names">
+Gabe Gay<br>
+Alex<br>
+Barry Curtis<br>
+Cherryfield, Maine<br>
+Angela Sprague<br>
+Alexandria Hudson
+</div>
+
+<p>
+These names are included as part of the factual context of the situation and should be considered in relation to the events described.
+</p>
+
+<h2>Statement</h2>
+
+<p>
+I believe there are serious issues surrounding this situation that require proper review. Some of my concerns are based on direct experience and records, while others are based on patterns and observations that I believe warrant investigation.
+</p>
+
+<p>
+This notice is not intended to replace formal investigation, but to ensure that the full story and context are preserved and not lost or reduced to a single narrative.
+</p>
+
+<h2>Purpose</h2>
+
+<p>
+This page exists to preserve the original story and ensure that whoever receives the devices understands the full context behind them.
+</p>
+
+<p>
+The goal is simple: get the devices, the records, and the full story into the hands of the appropriate authority for proper review.
+</p>
+
+<p>
+LAiSON — Layering Artificial Intelligence Systems Over Networks
+</p>
+
+</div>
 </body>
 </html>
