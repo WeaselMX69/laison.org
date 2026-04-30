@@ -531,6 +531,149 @@ body{
   background: #222;
 }
 
+.urgent-overlay.compact {
+  width: 120px;
+  height: 120px;
+  padding: 5px;
+}
+
+.urgent-overlay.compact .urgent-overlay-header {
+  gap: 3px;
+  margin-bottom: 4px;
+  padding-bottom: 3px;
+  top: -5px;
+}
+
+.urgent-overlay.compact .urgent-overlay-header h3 {
+  font-size: 0.42rem;
+  letter-spacing: 0.015em;
+}
+
+.urgent-overlay.compact .urgent-icon {
+  font-size: 0.58rem;
+}
+
+.urgent-overlay.compact .urgent-overlay-content {
+  font-size: 0.38rem;
+  line-height: 1.12;
+  margin-bottom: 4px;
+}
+
+.urgent-overlay.compact .urgent-overlay-content p {
+  margin-bottom: 3px;
+}
+
+.urgent-overlay.compact .urgent-overlay-link {
+  font-size: 0.34rem;
+  padding: 4px 5px;
+  border-radius: 3px;
+}
+
+/* LAiSON LIVE Window — upgraded draggable / bottom-left resizable / zoomable */
+#laison-live-mini {
+  position: fixed;
+  top: 274px;
+  right: 12px;
+  width: 120px;
+  height: 240px;
+  min-width: 96px;
+  min-height: 140px;
+  background: #ffffff;
+  border: 2px solid #00eaff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #111;
+  z-index: 99998;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  margin-top: -1px;
+  user-select: none;
+  touch-action: none;
+  overflow: hidden;
+}
+
+#laison-live-mini:hover,
+#laison-live-mini.live-active {
+  opacity: 1;
+}
+
+#laison-live-mini-bar {
+  height: 34px;
+  background: #000;
+  color: #00eaff;
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(0, 234, 255, 0.3);
+  margin-bottom: 8px;
+  cursor: move;
+  position: relative;
+  z-index: 4;
+}
+
+#laison-live-mini-bar button {
+  background: transparent;
+  color: #00eaff;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+#laison-live-close {
+  position: relative;
+  z-index: 999999;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+#laison-live-mini-frame-wrap {
+  width: 100%;
+  height: calc(100% - 42px);
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+}
+
+#laison-live-mini-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform-origin: 0 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+#laison-live-resize-handle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  background: #00eaff;
+  border-top-right-radius: 8px;
+  cursor: nesw-resize;
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.45);
+}
+
+#laison-live-resize-handle::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid rgba(0,0,0,0.55);
+  border-bottom: 2px solid rgba(0,0,0,0.55);
+}
+
 @media (max-width: 768px) {
   .urgent-overlay {
     width: 190px;
@@ -560,6 +703,39 @@ body{
   .urgent-overlay-link {
     font-size: 0.58rem;
     padding: 6px 7px;
+  }
+
+  .urgent-overlay.compact {
+    width: 95px;
+    height: 103px;
+    right: 8px;
+    top: 8px;
+    padding: 4px;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-header {
+    top: -4px;
+    gap: 2px;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-header h3 {
+    font-size: 0.32rem;
+  }
+
+  .urgent-overlay.compact .urgent-icon {
+    font-size: 0.43rem;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-content {
+    font-size: 0.31rem;
+    line-height: 1.08;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-link {
+    font-size: 0.28rem;
+    padding: 3px 4px;
   }
 }
 </style>
@@ -627,58 +803,25 @@ body{
     <a href="urgent-notice.html" class="urgent-overlay-link">READ FULL NOTICE →</a>
   </div>
 
-  <!-- LAiSON Live Mini Overlay - HALF WIDTH (120px) AND FAR RIGHT ALIGNED -->
-  <div id="laison-live-mini" style="
-    position: fixed;
-    top: 274px;
-    right: 12px;
-    width: 120px; /* HALF OF 240px */
-    height: 240px;
-    background: #ffffff;
-    border: 2px solid #00eaff;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    color: #111;
-    z-index: 99998;
-    overflow: hidden;
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
-    margin-top: -1px;
-  "
-  onmouseenter="this.style.opacity='1'"
-  onmouseleave="this.style.opacity='0.5'"
-  ontouchstart="this.style.opacity='1'">
-
-    <div id="laison-live-mini-bar" style="
-      height: 34px;
-      background: #000;
-      color: #00eaff;
-      font-family: Orbitron, Arial, sans-serif;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 10px;
-      border-bottom: 1px solid rgba(0, 234, 255, 0.3);
-      margin-bottom: 8px;
-    ">
+  <!-- LAiSON Live Mini Overlay - upgraded, same aligned location, bottom-left resize handle -->
+  <div id="laison-live-mini" aria-label="LAiSON Live floating window">
+    <div id="laison-live-mini-bar">
       <span>LAiSON Live</span>
-      <button onclick="document.getElementById('laison-live-mini').style.display='none'" style="
-        background: transparent;
-        color: #00eaff;
-        border: 0;
-        font-size: 22px;
-        cursor: pointer;
-      ">×</button>
+      <button
+        type="button"
+        id="laison-live-close"
+        aria-label="Close LAiSON Live"
+        onclick="document.getElementById('laison-live-mini').style.display='none'; return false;"
+      >×</button>
     </div>
-
-    <iframe
-      id="laison-live-mini-frame"
-      src="https://laison.org/live"
-      style="width: 100%; height: calc(100% - 42px); border: 0;"
-    ></iframe>
+    <div id="laison-live-mini-frame-wrap">
+      <iframe
+        id="laison-live-mini-frame"
+        src="https://laison.org/live"
+        title="LAiSON Live"
+      ></iframe>
+    </div>
+    <div id="laison-live-resize-handle" aria-label="Resize LAiSON Live from bottom left"></div>
   </div>
 
   <div class="overlay" id="healthBotOverlay" aria-hidden="true">
@@ -771,6 +914,8 @@ function showLanding() {
   chat.innerHTML = "";
   statusNote.textContent = "Conversation plays automatically.";
   hideOverlay();
+  restoreUrgentNotice();
+  tuckLaisonLiveBack();
 }
 
 async function typeMsg(side, text, currentRunId, isLast = false) {
@@ -856,6 +1001,8 @@ async function playConversation() {
 function showMessage() {
   landingScreen.classList.add("hidden");
   messageScreen.classList.remove("hidden");
+  shrinkUrgentNotice();
+  tuckLaisonLiveBack();
   playConversation();
 }
 
@@ -868,26 +1015,327 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") hideOverlay();
 });
 
+function shrinkUrgentNotice() {
+  const urgent = document.querySelector(".urgent-overlay");
+  if (urgent) urgent.classList.add("compact");
+}
+
+function restoreUrgentNotice() {
+  const urgent = document.querySelector(".urgent-overlay");
+  if (urgent) urgent.classList.remove("compact");
+}
+
+function tuckLaisonLiveBack() {
+  if (window.resetLaisonLiveMiniToOriginal) {
+    window.resetLaisonLiveMiniToOriginal();
+  }
+}
+
 // Refresh the iframe every 3 minutes
 setInterval(() => {
   const frame = document.getElementById("laison-live-mini-frame");
   if (frame) frame.src = "https://laison.org/live?refresh=" + Date.now();
 }, 180000);
 
-// Dynamic positioning to ensure perfect alignment
-function positionLiveMini() {
-  const urgent = document.querySelector('.urgent-overlay');
-  const liveMini = document.getElementById('laison-live-mini');
-  if (urgent && liveMini) {
+// LAiSON Live upgraded behavior: same placement, draggable bar, bottom-left resize, zoom, and pan.
+(function setupLaisonLiveMini() {
+  const liveMini = document.getElementById("laison-live-mini");
+  const liveMiniBar = document.getElementById("laison-live-mini-bar");
+  const liveMiniFrame = document.getElementById("laison-live-mini-frame");
+  const liveMiniClose = document.getElementById("laison-live-close");
+  const resizeHandle = document.getElementById("laison-live-resize-handle");
+
+  if (!liveMini || !liveMiniBar || !liveMiniFrame || !resizeHandle) return;
+
+  const minWidth = 96;
+  const minHeight = 140;
+  let userPositionedLiveMini = false;
+  let isDraggingLiveMini = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  function setLiveMiniActive(active) {
+    liveMini.classList.toggle("live-active", active);
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
+  }
+
+  function closeLaisonLive(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === "function") {
+        e.stopImmediatePropagation();
+      }
+    }
+    liveMini.style.display = "none";
+    return false;
+  }
+
+  window.closeLaisonLiveMini = closeLaisonLive;
+
+  if (liveMiniClose) {
+    liveMiniClose.onclick = closeLaisonLive;
+
+    liveMiniClose.addEventListener("click", closeLaisonLive, true);
+    liveMiniClose.addEventListener("mousedown", (e) => {
+      e.stopPropagation();
+    }, true);
+    liveMiniClose.addEventListener("touchstart", (e) => {
+      e.stopPropagation();
+    }, true);
+    liveMiniClose.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+    }, true);
+  }
+
+  function keepLiveMiniInsideViewport() {
+    const rect = liveMini.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const left = clamp(rect.left, 0, Math.max(0, window.innerWidth - width));
+    const top = clamp(rect.top, 0, Math.max(0, window.innerHeight - height));
+    liveMini.style.left = `${left}px`;
+    liveMini.style.top = `${top}px`;
+    liveMini.style.right = "auto";
+  }
+
+  function positionLiveMini() {
+    const urgent = document.querySelector(".urgent-overlay");
+    if (!urgent || userPositionedLiveMini) return;
+
     const urgentRect = urgent.getBoundingClientRect();
     liveMini.style.top = `${urgentRect.bottom + window.scrollY - 1}px`;
     liveMini.style.right = `${window.innerWidth - urgentRect.right}px`;
+    liveMini.style.left = "auto";
   }
-}
 
-// Run on load and resize
-window.addEventListener('load', positionLiveMini);
-window.addEventListener('resize', positionLiveMini);
+  liveMini.addEventListener("mouseenter", () => setLiveMiniActive(true));
+  liveMini.addEventListener("mouseleave", () => setLiveMiniActive(false));
+  liveMini.addEventListener("touchstart", () => setLiveMiniActive(true), { passive: true });
+
+  function startDrag(clientX, clientY) {
+    const rect = liveMini.getBoundingClientRect();
+    isDraggingLiveMini = true;
+    userPositionedLiveMini = true;
+    dragOffsetX = clientX - rect.left;
+    dragOffsetY = clientY - rect.top;
+    liveMiniBar.style.cursor = "grabbing";
+    setLiveMiniActive(true);
+  }
+
+  function moveDrag(clientX, clientY) {
+    if (!isDraggingLiveMini) return;
+    const width = liveMini.offsetWidth;
+    const height = liveMini.offsetHeight;
+    const nextLeft = clamp(clientX - dragOffsetX, 0, Math.max(0, window.innerWidth - width));
+    const nextTop = clamp(clientY - dragOffsetY, 0, Math.max(0, window.innerHeight - height));
+    liveMini.style.left = `${nextLeft}px`;
+    liveMini.style.top = `${nextTop}px`;
+    liveMini.style.right = "auto";
+  }
+
+  function stopDrag() {
+    if (!isDraggingLiveMini) return;
+    isDraggingLiveMini = false;
+    liveMiniBar.style.cursor = "move";
+  }
+
+  liveMiniBar.addEventListener("mousedown", (e) => {
+    if (e.target && e.target.id === "laison-live-close") return;
+    startDrag(e.clientX, e.clientY);
+    e.preventDefault();
+  });
+
+  liveMiniBar.addEventListener("touchstart", (e) => {
+    if (e.target && e.target.id === "laison-live-close") return;
+    if (!e.touches.length) return;
+    startDrag(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener("mousemove", (e) => moveDrag(e.clientX, e.clientY));
+  document.addEventListener("touchmove", (e) => {
+    if (!isDraggingLiveMini || !e.touches.length) return;
+    moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("mouseup", stopDrag);
+  document.addEventListener("touchend", stopDrag);
+
+  let isResizingLiveMini = false;
+  let resizeStartX = 0;
+  let resizeStartY = 0;
+  let resizeStartLeft = 0;
+  let resizeStartWidth = 0;
+  let resizeStartHeight = 0;
+
+  function startResize(clientX, clientY) {
+    const rect = liveMini.getBoundingClientRect();
+    isResizingLiveMini = true;
+    userPositionedLiveMini = true;
+    resizeStartX = clientX;
+    resizeStartY = clientY;
+    resizeStartLeft = rect.left;
+    resizeStartWidth = rect.width;
+    resizeStartHeight = rect.height;
+    liveMini.style.left = `${rect.left}px`;
+    liveMini.style.top = `${rect.top}px`;
+    liveMini.style.right = "auto";
+    setLiveMiniActive(true);
+  }
+
+  function moveResize(clientX, clientY) {
+    if (!isResizingLiveMini) return;
+
+    const deltaX = clientX - resizeStartX;
+    const deltaY = clientY - resizeStartY;
+    const maxWidth = resizeStartLeft + resizeStartWidth;
+    const nextWidth = clamp(resizeStartWidth - deltaX, minWidth, maxWidth);
+    const rightEdge = resizeStartLeft + resizeStartWidth;
+    const nextLeft = rightEdge - nextWidth;
+    const nextHeight = Math.max(minHeight, resizeStartHeight + deltaY);
+
+    liveMini.style.left = `${nextLeft}px`;
+    liveMini.style.width = `${nextWidth}px`;
+    liveMini.style.height = `${nextHeight}px`;
+    liveMini.style.right = "auto";
+  }
+
+  function stopResize() {
+    isResizingLiveMini = false;
+  }
+
+  resizeHandle.addEventListener("mousedown", (e) => {
+    startResize(e.clientX, e.clientY);
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  resizeHandle.addEventListener("touchstart", (e) => {
+    if (!e.touches.length) return;
+    startResize(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+    e.stopPropagation();
+  }, { passive: false });
+
+  document.addEventListener("mousemove", (e) => moveResize(e.clientX, e.clientY));
+  document.addEventListener("touchmove", (e) => {
+    if (!isResizingLiveMini || !e.touches.length) return;
+    moveResize(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("mouseup", stopResize);
+  document.addEventListener("touchend", stopResize);
+
+  let liveScale = 1;
+  let livePanX = 0;
+  let livePanY = 0;
+  let isPanningLiveFrame = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let isPinchingLiveFrame = false;
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+
+  function applyFrameTransform() {
+    liveScale = clamp(liveScale, 0.55, 3.25);
+    liveMiniFrame.style.transform = `translate(${livePanX}px, ${livePanY}px) scale(${liveScale})`;
+  }
+
+  liveMiniFrame.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    liveScale *= e.deltaY > 0 ? 0.9 : 1.1;
+    applyFrameTransform();
+  }, { passive: false });
+
+  liveMiniFrame.addEventListener("mousedown", (e) => {
+    isPanningLiveFrame = true;
+    panStartX = e.clientX - livePanX;
+    panStartY = e.clientY - livePanY;
+    liveMiniFrame.style.cursor = "grabbing";
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isPanningLiveFrame) return;
+    livePanX = e.clientX - panStartX;
+    livePanY = e.clientY - panStartY;
+    applyFrameTransform();
+  });
+
+  document.addEventListener("mouseup", () => {
+    isPanningLiveFrame = false;
+    liveMiniFrame.style.cursor = "grab";
+  });
+
+  liveMiniFrame.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      const a = e.touches[0];
+      const b = e.touches[1];
+      isPinchingLiveFrame = true;
+      pinchStartDistance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      pinchStartScale = liveScale;
+      e.preventDefault();
+      return;
+    }
+
+    if (e.touches.length === 1) {
+      isPanningLiveFrame = true;
+      panStartX = e.touches[0].clientX - livePanX;
+      panStartY = e.touches[0].clientY - livePanY;
+    }
+  }, { passive: false });
+
+  liveMiniFrame.addEventListener("touchmove", (e) => {
+    if (isPinchingLiveFrame && e.touches.length === 2) {
+      const a = e.touches[0];
+      const b = e.touches[1];
+      const distance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      if (pinchStartDistance > 0) liveScale = pinchStartScale * (distance / pinchStartDistance);
+      applyFrameTransform();
+      e.preventDefault();
+      return;
+    }
+
+    if (isPanningLiveFrame && e.touches.length === 1) {
+      livePanX = e.touches[0].clientX - panStartX;
+      livePanY = e.touches[0].clientY - panStartY;
+      applyFrameTransform();
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  liveMiniFrame.addEventListener("touchend", () => {
+    isPinchingLiveFrame = false;
+    isPanningLiveFrame = false;
+  });
+
+  window.resetLaisonLiveMiniToOriginal = function resetLaisonLiveMiniToOriginal() {
+    userPositionedLiveMini = false;
+    liveMini.style.display = "block";
+    liveMini.style.width = "120px";
+    liveMini.style.height = "240px";
+    liveMini.style.left = "auto";
+    liveMini.style.right = "12px";
+    liveMini.style.top = "274px";
+    liveScale = 1;
+    livePanX = 0;
+    livePanY = 0;
+    applyFrameTransform();
+    requestAnimationFrame(positionLiveMini);
+  };
+
+  window.addEventListener("load", positionLiveMini);
+  window.addEventListener("resize", () => {
+    if (userPositionedLiveMini) keepLiveMiniInsideViewport();
+    else positionLiveMini();
+  });
+
+  positionLiveMini();
+})();
 </script>
 </body>
 </html>
