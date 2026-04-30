@@ -6,7 +6,6 @@
 <title>LAiSON</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --white-bg:#ffffff;
@@ -628,23 +627,30 @@ body{
     <a href="urgent-notice.html" class="urgent-overlay-link">READ FULL NOTICE →</a>
   </div>
 
-  <!-- LAiSON Live Mini Overlay (Below Urgent Notice) -->
+  <!-- LAiSON Live Mini Overlay - HALF WIDTH (120px) AND FAR RIGHT ALIGNED -->
   <div id="laison-live-mini" style="
     position: fixed;
-    top: 272px; /* Positioned directly below the urgent-overlay (12px top + 240px height + 12px padding + 8px margin) */
+    top: 274px;
     right: 12px;
-    width: 240px;
+    width: 120px; /* HALF OF 240px */
     height: 240px;
     background: #ffffff;
     border: 2px solid #00eaff;
     border-radius: 8px;
     padding: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     color: #111;
-    z-index: 99998; /* Below urgent-overlay (z-index: 99999) */
+    z-index: 99998;
     overflow: hidden;
-  ">
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+    margin-top: -1px;
+  "
+  onmouseenter="this.style.opacity='1'"
+  onmouseleave="this.style.opacity='0.5'"
+  ontouchstart="this.style.opacity='1'">
+
     <div id="laison-live-mini-bar" style="
       height: 34px;
       background: #000;
@@ -667,14 +673,11 @@ body{
         cursor: pointer;
       ">×</button>
     </div>
+
     <iframe
       id="laison-live-mini-frame"
       src="https://laison.org/live"
-      style="
-        width: 100%;
-        height: calc(100% - 42px); /* 34px bar + 8px margin */
-        border: 0;
-      "
+      style="width: 100%; height: calc(100% - 42px); border: 0;"
     ></iframe>
   </div>
 
@@ -865,11 +868,26 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") hideOverlay();
 });
 
-// Refresh the iframe every 3 minutes (180,000 milliseconds)
+// Refresh the iframe every 3 minutes
 setInterval(() => {
   const frame = document.getElementById("laison-live-mini-frame");
   if (frame) frame.src = "https://laison.org/live?refresh=" + Date.now();
 }, 180000);
+
+// Dynamic positioning to ensure perfect alignment
+function positionLiveMini() {
+  const urgent = document.querySelector('.urgent-overlay');
+  const liveMini = document.getElementById('laison-live-mini');
+  if (urgent && liveMini) {
+    const urgentRect = urgent.getBoundingClientRect();
+    liveMini.style.top = `${urgentRect.bottom + window.scrollY - 1}px`;
+    liveMini.style.right = `${window.innerWidth - urgentRect.right}px`;
+  }
+}
+
+// Run on load and resize
+window.addEventListener('load', positionLiveMini);
+window.addEventListener('resize', positionLiveMini);
 </script>
 </body>
 </html>
