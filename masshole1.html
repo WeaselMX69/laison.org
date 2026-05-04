@@ -3,69 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TC0049 Fillable HTML</title>
+<title>Motion to the Court and Affidavit - Fillable</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#d7d7d7;font-family:Arial,Helvetica,sans-serif;color:#000}
-.toolbar{position:sticky;top:0;z-index:99;background:#111;color:white;padding:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.toolbar button{font-weight:700;padding:8px 12px;border-radius:6px;border:1px solid #777;background:white;color:#111;cursor:pointer}
-.sheet{width:8.5in;height:11in;background:white;margin:18px auto;padding:.25in .45in;box-shadow:0 0 12px #555;overflow:hidden;position:relative}
-input,textarea,.editable{background:#eef4ff;border:1px solid #000;font-family:Arial,Helvetica,sans-serif;font-size:10.5px;padding:2px 4px;outline:none}
-input{height:.19in}
-textarea{resize:none;overflow:auto}
-.header{display:grid;grid-template-columns:2.1in 2.35in 2.45in;border:2px solid #000;height:.66in}
-.header>div{border-right:1px solid #000;padding:6px 8px}
+.toolbar{position:sticky;top:0;z-index:99;background:#111;color:#fff;padding:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.toolbar button{font-weight:700;padding:8px 12px;border-radius:6px;border:1px solid #777;background:#fff;color:#111;cursor:pointer}
+.sheet{width:8.5in;height:11in;background:#fff;margin:18px auto;padding:.28in .42in;box-shadow:0 0 12px #555;overflow:hidden;position:relative}
+input,textarea{background:#eef4ff;border:1px solid #000;font-family:Arial,Helvetica,sans-serif;font-size:11px;padding:2px 4px;outline:none}
+input{height:.20in}
+textarea{resize:none;overflow:auto;line-height:1.35}
+.header{display:grid;grid-template-columns:2.65in 2.1in 1.35in 1.4in;border:2px solid #000;height:.82in}
+.header>div{border-right:1px solid #000;padding:5px}
 .header>div:last-child{border-right:0}
-.title{font-weight:800;font-size:13px;line-height:1.18}
-.label{font-size:8px;display:block;margin-bottom:3px}
-.case-input{width:100%;height:.29in}
-.court-title{font-weight:800;font-size:14px;line-height:1.2;margin-top:5px}
-.vs-row{display:grid;grid-template-columns:1fr 1in 1fr;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;height:.26in;text-align:center;align-items:center;font-weight:800;font-size:10px}
-.party-row{display:grid;grid-template-columns:1fr 1fr;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;height:.30in}
-.party-cell{display:grid;grid-template-columns:1.05in 1fr;gap:5px;align-items:center;border-right:1px solid #000;padding:3px 5px;font-size:8.5px}
-.party-cell:last-child{border-right:0;grid-template-columns:.8in 1fr .85in}
-.motion-box{border-left:2px solid #000;border-right:2px solid #000;border-bottom:2px solid #000;height:5.85in;padding:12px 9px 8px;font-size:9.6px}
-.check{width:12px;height:12px;appearance:none;-webkit-appearance:none;background:white;border:1.4px solid #000;margin:0}
+.title{font-size:16px;font-weight:800;text-align:center;line-height:1.05}
+.label{font-size:9px;text-transform:uppercase;display:block;margin-bottom:3px}
+.court-title{font-size:15px;font-weight:800;text-align:center;margin-top:.10in}
+.row{display:grid;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000}
+.case-row{grid-template-columns:2in 1.8in 2.1in 1fr;height:.45in}
+.cell{border-right:1px solid #000;padding:4px;font-size:9px}
+.cell:last-child{border-right:0}
+.cell input{width:100%}
+.motion-body{border-left:2px solid #000;border-right:2px solid #000;border-bottom:2px solid #000;height:5.58in;padding:8px 12px;font-size:11.5px;line-height:1.35}
+.check{width:13px;height:13px;appearance:none;-webkit-appearance:none;background:#fff;border:1.5px solid #000;vertical-align:middle;margin:0 5px}
 .check:checked{background:linear-gradient(45deg,transparent 42%,#000 42%,#000 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#000 42%,#000 58%,transparent 58%)}
-.onbehalf{display:grid;grid-template-columns:1in .16in .68in .16in 1in .16in 1fr;gap:6px;align-items:center;margin-bottom:10px}
-.motion-line{display:grid;grid-template-columns:.16in 1fr;gap:8px;align-items:start;margin:7px 0}
-.motion-content{line-height:1.18}
-.motion-content b{font-weight:800}
-.inline-field{display:inline-block;width:1.45in;height:.17in;vertical-align:middle}
-.right-field{float:right;width:1.55in;height:.17in;margin-left:6px}
-.right-field.long{width:1.75in}
-.wide-field{width:100%;height:.20in;margin-top:4px;display:block}
-.caption{text-align:center;font-size:7px;display:block}
-.other-textarea{width:100%;height:.62in;margin-top:4px;line-height:1.2}
-.service-box{border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;height:.78in;padding:9px;font-size:9px}
-.service-line{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-.knowledge-row{display:flex;gap:20px;margin-top:4px;padding-left:.25in}
-.grid-row{display:grid;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;font-size:8px}
-.grid-row.top{grid-template-columns:1.35in 2.5in 2in 1fr;height:.33in}
-.grid-row.mid{grid-template-columns:1.45in 2.65in 2in 1fr;height:.36in}
-.grid-row.assent{display:block;height:.31in;padding:6px;font-size:8.5px}
-.grid-cell{border-right:1px solid #000;padding:3px 4px;display:grid;grid-template-columns:auto 1fr;gap:5px;align-items:center}
-.grid-cell input{width:100%}
-.clerk{border-left:2px solid #000;border-right:2px solid #000;border-bottom:2px solid #000;height:.82in;font-size:8px}
-.clerk-title{text-align:center;font-weight:800;font-size:10px;padding:4px;border-bottom:1px solid #000}
-.clerk-grid{display:grid;grid-template-columns:2.8in 2in 1fr;height:.55in}
-.clerk-grid>div{border-right:1px solid #000;padding:4px}
-.clerk-grid>div:last-child{border-right:0}
-.instructions{border:2px solid #000;border-bottom:0;padding:10px;font-size:10px;line-height:1.3}
-.affidavit-wrap{border:2px solid #000;padding:10px;height:9.0in}
-.affidavit{width:100%;height:8.45in;background:#eef4ff;border:1px solid #000;padding:10px;font-size:12px;line-height:1.4;overflow:auto;white-space:pre-wrap}
-.affidavit:empty:before{content:"Type affidavit / notes here. Use Add Continuation Page for more pages.";color:#555}
-.page-label{text-align:right;font-size:9px;margin-top:6px}
-.continuation-head{font-weight:800;font-size:13px;margin-bottom:8px}
-.continued-meta{display:grid;grid-template-columns:1.3in 1fr .7in 1in;gap:8px;align-items:center;margin-bottom:8px;font-size:10px}
-.continued-meta input{width:100%}
+.motion-line{margin:8px 0}
+.blank{display:inline-block;border-bottom:1px solid #000;height:.18in;vertical-align:bottom}
+.w1{width:1.35in}.w2{width:2in}.w3{width:3in}
+.proof-title{text-align:center;font-weight:800;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;padding:4px;font-size:13px}
+.proof{border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;height:.82in;padding:7px;font-size:10.5px}
+.sig-row{grid-template-columns:1.1in 2.2in 2.25in 1fr;height:.48in}
+.addr-row{grid-template-columns:2.8in 1fr;height:.50in}
+.assent{border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;text-align:center;font-size:10px;padding:7px;height:.33in}
+.hearing{border-left:2px solid #000;border-right:2px solid #000;border-bottom:2px solid #000;height:.48in;padding:7px;font-size:11px}
+.clerk{display:grid;grid-template-columns:1.6in 1.35in 1.55in 1fr;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;height:.43in;font-size:10px}
+.judge-title{text-align:center;font-weight:800;border-left:2px solid #000;border-right:2px solid #000;border-bottom:1px solid #000;padding:4px}
+.judge{display:grid;grid-template-columns:1in 1.6in 1in 1.1in 1fr;border-left:2px solid #000;border-right:2px solid #000;border-bottom:2px solid #000;height:.66in;font-size:10px}
+.footer{position:absolute;bottom:.10in;left:.42in;font-size:9px}
+.page2-title{font-weight:800;text-align:center;font-size:16px;margin-bottom:8px}
+.note-meta{display:grid;grid-template-columns:1.2in 1fr 1.1in 1fr;border:2px solid #000;margin-bottom:10px}
+.note-meta div{border-right:1px solid #000;padding:5px;font-size:10px}
+.note-meta div:last-child{border-right:0}
+.note-meta input{width:100%}
+.instructions{border:2px solid #000;border-bottom:0;padding:9px;font-size:10.5px;line-height:1.3}
+.bigbox{border:2px solid #000;padding:10px;height:9.35in}
+.bigbox textarea{width:100%;height:8.8in;font-size:12px}
+.page-label{text-align:right;font-size:9px;margin-top:4px}
 @page{size:letter;margin:0}
 @media print{
-body{background:white}
+body{background:#fff}
 .toolbar{display:none}
 .sheet{margin:0;box-shadow:none;width:8.5in;height:11in;overflow:hidden;break-after:page;page-break-after:always}
 .sheet:last-child{break-after:auto;page-break-after:auto}
-input,textarea,.editable{background:#eef4ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+input,textarea{background:#eef4ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -73,124 +63,164 @@ input,textarea,.editable{background:#eef4ff!important;-webkit-print-color-adjust
 
 <div class="toolbar">
 <button onclick="window.print()">Print / Save PDF</button>
-<button onclick="addContinuationPage()">Add Continuation Page</button>
+<button onclick="addContinuationPage()">Add Affidavit / Continuation Page</button>
 <button onclick="clearForm()">Clear</button>
 </div>
 
-<form id="tc0049">
+<form id="form">
 
 <section class="sheet">
 <div class="header">
 <div class="title">MOTION TO THE COURT<br>AND AFFIDAVIT</div>
-<div><span class="label">CASE DOCKET NO.</span><input class="case-input" name="case_docket_no"></div>
-<div class="court-title">Trial Court of Massachusetts<br>District Court Department</div>
+<div><span class="label">DOCKET NO.</span><input name="docket"></div>
+<div class="court-title">Massachusetts Trial Court</div>
+<div style="text-align:center;font-size:11px;padding-top:18px">COURT SEAL</div>
 </div>
 
-<div class="vs-row"><div></div><div>vs.</div><div><span style="float:right;font-weight:400;margin-right:.25in">DISTRICT COURT</span></div></div>
-
-<div class="party-row">
-<div class="party-cell"><span>PLAINTIFF / COMMONWEALTH</span><input name="plaintiff"></div>
-<div class="party-cell"><span>DEFENDANT</span><input name="defendant"><input name="district"></div>
+<div class="row case-row">
+<div class="cell"><span class="label">PLAINTIFF/COMMONWEALTH</span><input name="plaintiff"></div>
+<div class="cell"><span class="label">DEFENDANT</span><input name="defendant"></div>
+<div class="cell"><span class="label">COURT DEPARTMENT</span><input name="court_department" value="BOSTON MUNICIPAL COURT / DISTRICT COURT"></div>
+<div class="cell"><span class="label">DIVISION</span><input name="division"></div>
 </div>
 
-<div class="motion-box">
-<div class="onbehalf">
-<span>On behalf of the</span>
-<input type="checkbox" class="check"><span>Plaintiff</span>
-<input type="checkbox" class="check"><span>Commonwealth</span>
-<input type="checkbox" class="check"><span>Defendant</span>
-<span>in this case, I respectfully request the Court:</span>
+<div class="motion-body">
+<div style="margin-bottom:10px">
+On behalf of the
+<label><input type="checkbox" class="check">Plaintiff</label>
+<label><input type="checkbox" class="check">Commonwealth</label>
+<label><input type="checkbox" class="check">Defendant</label>
+in this case, I respectfully request the Court:
 </div>
 
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Continuance: to continue this case which is presently scheduled for</b> <input class="inline-field"> <input class="right-field long"><span class="caption" style="float:right;width:1.75in;clear:right">Event</span><br clear="all">until <input class="inline-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Remove default: to order that the default, default order, or default judgment that was entered on</b><input class="right-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Remove dismissal: to order that the order of, or judgment of dismissal that was entered on</b><input class="right-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Speedy trial: to order that the complaints whose numbers are listed below be advanced for speedy trial, for the reasons given on page 2 of this form.</b><input class="wide-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>New trial: to order that the court's judgment in this case dated</b><input class="right-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Revise or revoke sentence: to revise or revoke the sentence(s) imposed in this case on</b><input class="right-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Amend or extend an abuse prevention order: to extend or amend the abuse prevention order under G.L. c. 209A dated</b><input class="right-field"></div></div>
-<div class="motion-line"><input type="checkbox" class="check"><div class="motion-content"><b>Withdraw from representation: to be permitted to withdraw from further representation of the</b><input class="right-field long"><span class="caption" style="float:right;width:1.75in;clear:right">Party</span></div></div>
+<div class="motion-line"><i>Continuance:</i> to continue this case which is presently scheduled for <span class="blank w3"></span> (event) on <span class="blank w1"></span>, until <span class="blank w1"></span>, for the reasons given on page two of this form.</div>
 
-<div class="motion-line">
-<input type="checkbox" class="check" checked>
-<div class="motion-content">
-<b>Other: Specify the relief requested.</b>
-<textarea class="other-textarea">Motion for entry of default and request for hearing. See attached affidavit / notes and continuation pages as needed.</textarea>
-</div>
-</div>
-</div>
+<div class="motion-line"><i>Remove default:</i> to order that the default, default order, or default judgment that was entered on <span class="blank w2"></span> be set aside, and that this case be restored to the court's calendar, for the reasons given on page two of this form.</div>
 
-<div class="service-box">
-<div class="service-line">I have today <input type="checkbox" class="check"> mailed <input type="checkbox" class="check"> delivered a copy of this motion to all other parties to this case.</div>
-<div>Any statements of fact made in this motion are made under the penalties of perjury and</div>
-<div class="knowledge-row"><label><input type="checkbox" class="check"> of my own personal knowledge.</label><label><input type="checkbox" class="check"> based on information that I believe is true.</label></div>
+<div class="motion-line"><i>Remove dismissal:</i> to order that the order for, or judgment of, dismissal that was entered on <span class="blank w2"></span> be set aside, and that this case be restored to the court's calendar, for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><i>Speedy trial:</i> to order that the complaints whose docket number is listed above be advanced for speedy trial, for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><i>New trial:</i> to order that the court's judgment in this case dated <span class="blank w2"></span> be vacated and a new trial ordered, for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><i>Revise and revoke sentence:</i> to revise or revoke the sentence(s) imposed in this case on <span class="blank w2"></span> (date) for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><i>Amend or extend an abuse prevention order:</i> to extend or amend the abuse prevention order under G.L. c. 209A dated <span class="blank w1"></span> in the manner and for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><i>Withdraw from representation:</i> to be permitted to withdraw from further representation of the <span class="blank w2"></span> (party) in this case for the reasons given on page two of this form.</div>
+
+<div class="motion-line"><label><input type="checkbox" class="check" name="other"><b>Other</b></label> (Specify what you are asking the Court to do and the reasons on a separate piece of paper and attach it to this form.)</div>
 </div>
 
-<div class="grid-row top"><div class="grid-cell"><span>DATE</span><input></div><div class="grid-cell"><span>SIGNED</span><input></div><div></div><div></div></div>
-<div class="grid-row mid"><div class="grid-cell"><span>PRINT NAME</span><input></div><div class="grid-cell"><span>ADDRESS</span><input></div><div class="grid-cell"><span>PHONE NO.</span><input></div><div></div></div>
-<div class="grid-row assent">If motion is agreed to by other party, that party or attorney should sign here to indicate assent.</div>
-<div class="grid-row mid"><div class="grid-cell"><span>DATE</span><input></div><div class="grid-cell"><span>SIGNED</span><input></div><div class="grid-cell"><span>PHONE NO.</span><input></div><div></div></div>
+<div class="proof-title">PROOF OF SERVICE - NOTICE OF MOTION</div>
+<div class="proof">
+On <span class="blank w1"></span> (date) I gave notice to all other parties in this case by
+<label><input type="checkbox" class="check">mail</label>
+<label><input type="checkbox" class="check">e-mail</label>
+<label><input type="checkbox" class="check">personally delivering a copy of this motion</label>
+<br>
+Any statements of fact made in this motion are made under the penalties of perjury and are
+<label><input type="checkbox" class="check">of my own personal knowledge.</label>
+<label><input type="checkbox" class="check">based on information I believe is true.</label>
+</div>
+
+<div class="row sig-row">
+<div class="cell"><span class="label">DATE</span><input></div>
+<div class="cell"><span class="label">PRINT NAME</span><input></div>
+<div class="cell"><span class="label">SIGNATURE</span><input></div>
+<div class="cell"><span class="label">PHONE NUMBER</span><input></div>
+</div>
+
+<div class="row addr-row">
+<div class="cell"><span class="label">E-MAIL ADDRESS</span><input></div>
+<div class="cell"><span class="label">BUSINESS ADDRESS</span><input></div>
+</div>
+
+<div class="assent">If motion is agreed to by other party, that party or attorney should sign here to indicate assent.</div>
+
+<div class="row sig-row">
+<div class="cell"><span class="label">DATE</span><input></div>
+<div class="cell"><span class="label">PRINT NAME</span><input></div>
+<div class="cell"><span class="label">SIGNATURE</span><input></div>
+<div class="cell"><span class="label">PHONE NUMBER</span><input></div>
+</div>
+
+<div class="hearing">The moving party requests a hearing before the Court on: &nbsp; DATE <span class="blank w2"></span> &nbsp; TIME <span class="blank w2"></span></div>
 
 <div class="clerk">
-<div class="clerk-title">FOR CLERK-MAGISTRATE'S USE ONLY</div>
-<div class="clerk-grid">
-<div>This motion has been scheduled for hearing<br><br><input style="width:.5in"> <input style="width:2.2in"></div>
-<div>at <input style="width:1.25in"><br><br>Courtroom <input style="width:1.05in"></div>
-<div>A.M./P.M.<br><br><input style="width:1.55in"><span class="caption">Clerk-Magistrate</span></div>
+<div class="cell" style="font-weight:800;text-align:center">FOR CLERK MAGISTRATE USE ONLY</div>
+<div class="cell">hearing scheduled as requested</div>
+<div class="cell">hearing scheduled for DATE</div>
+<div class="cell">TIME</div>
 </div>
+
+<div class="judge-title">FOR JUDGE'S USE ONLY</div>
+<div class="judge">
+<div class="cell">After hearing</div>
+<div class="cell">Without a hearing this motion is</div>
+<div class="cell"><b>ALLOWED</b></div>
+<div class="cell"><b>DENIED</b></div>
+<div class="cell"></div>
 </div>
+
+<div class="row" style="grid-template-columns:1.5in 1fr;height:.46in">
+<div class="cell"><span class="label">DATE</span><input></div>
+<div class="cell"><span class="label">SIGNATURE OF JUSTICE</span><input></div>
+</div>
+
+<div class="footer">Standardized / Multi: BMC, DC &nbsp; Civil/Criminal &nbsp; TC0049</div>
 </section>
 
 <section class="sheet note-page">
-<div class="header" style="margin-bottom:.28in">
-<div class="title">MOTION TO THE COURT<br>AND AFFIDAVIT</div>
-<div><span class="label">CASE DOCKET NO.</span><input class="case-input docket-copy"></div>
-<div class="court-title">Trial Court of Massachusetts<br>District Court Department</div>
+<div class="page2-title">ATTACHED AFFIDAVIT / REASONS FOR MOTION</div>
+<div class="note-meta">
+<div>DOCKET NO.<br><input class="docket-copy"></div>
+<div>PLAINTIFF<br><input></div>
+<div>DEFENDANT<br><input></div>
+<div>PAGE<br><input value="2"></div>
 </div>
-
 <div class="instructions">
-Please note that you must comply with any court rules that govern your specific motion. Attach any materials you wish the Court to consider.<br>
-Include all reasons for your motion; failing to include a reason may bar you from raising it later. Factual statements are made under penalties of perjury.
+Use this page for the factual affidavit, reasons supporting the motion, and requested relief. Add continuation pages as needed.
 </div>
-
-<div class="affidavit-wrap">
-<div class="editable affidavit" contenteditable="true"></div>
+<div class="bigbox">
+<textarea placeholder="Type affidavit / reasons / request for relief here."></textarea>
 </div>
-<div class="page-label">Page 2 - Affidavit / Notes</div>
+<div class="page-label">Page 2 - Affidavit / Reasons</div>
 </section>
 
 </form>
 
 <script>
 function addContinuationPage(){
-  const form=document.getElementById('tc0049');
-  const count=document.querySelectorAll('.continuation-page').length+3;
+  const form=document.getElementById('form');
+  const page=document.querySelectorAll('.note-page,.continuation-page').length+1;
+  const docket=document.querySelector('[name=docket]').value || '';
   const section=document.createElement('section');
   section.className='sheet continuation-page';
   section.innerHTML=`
-    <div class="continuation-head">AFFIDAVIT / NOTES CONTINUATION</div>
-    <div class="continued-meta">
-      <span>CASE DOCKET NO.</span><input value="${document.querySelector('[name=case_docket_no]').value || ''}">
-      <span>PAGE</span><input value="${count}">
+    <div class="page2-title">ATTACHED AFFIDAVIT / REASONS CONTINUATION</div>
+    <div class="note-meta">
+      <div>DOCKET NO.<br><input value="${docket.replace(/"/g,'&quot;')}"></div>
+      <div>PLAINTIFF<br><input></div>
+      <div>DEFENDANT<br><input></div>
+      <div>PAGE<br><input value="${page+1}"></div>
     </div>
-    <div class="affidavit-wrap">
-      <div class="editable affidavit" contenteditable="true"></div>
-    </div>
-    <div class="page-label">Continuation Page ${count}</div>
+    <div class="instructions">Continuation page for affidavit, reasons supporting the motion, and requested relief.</div>
+    <div class="bigbox"><textarea placeholder="Continue here."></textarea></div>
+    <div class="page-label">Continuation Page ${page+1}</div>
   `;
   form.appendChild(section);
   section.scrollIntoView({behavior:'smooth'});
 }
 
 function clearForm(){
-  if(!confirm('Clear all fields?'))return;
+  if(!confirm('Clear all fields and remove continuation pages?'))return;
   document.querySelectorAll('input').forEach(i=>{if(i.type==='checkbox')i.checked=false;else i.value=''});
   document.querySelectorAll('textarea').forEach(t=>t.value='');
-  document.querySelectorAll('[contenteditable=true]').forEach(e=>e.innerHTML='');
   document.querySelectorAll('.continuation-page').forEach(p=>p.remove());
 }
 
-document.querySelector('[name=case_docket_no]').addEventListener('input',e=>{
+document.querySelector('[name=docket]').addEventListener('input',e=>{
   document.querySelectorAll('.docket-copy').forEach(x=>x.value=e.target.value);
 });
 </script>
