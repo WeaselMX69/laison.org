@@ -2,91 +2,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motion Form</title>
+<title>Motion to the Court and Affidavit</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:white}
-.toolbar{position:sticky;top:0;z-index:999;background:#111;padding:8px;text-align:center}
-.toolbar button{font:bold 14px Arial;padding:8px 12px;margin:3px}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:#000;
+  background:#fff;
+}
 .page{
-  position:relative;
   width:8.5in;
   height:11in;
   margin:0 auto;
+  padding:0.5in;
+  box-sizing:border-box;
   page-break-after:always;
-  background-size:100% 100%;
-  background-repeat:no-repeat;
-  background-position:center;
 }
-.page:last-child{page-break-after:auto}
-#p1{background-image:url("page1.jpg")}
-#p2{background-image:url("page2.jpg")}
+.page:last-child{page-break-after:auto;}
+
+h1{
+  font-size:16px;
+  margin:0;
+  font-weight:bold;
+}
+h2{
+  font-size:13px;
+  margin:0;
+  font-weight:bold;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+}
 .field{
-  position:absolute;
-  background:transparent;
-  border:0;
-  outline:0;
-  font:18px Arial;
-  color:#000;
+  border-bottom:1px solid #000;
+  min-width:150px;
+  display:inline-block;
 }
-textarea.field{
+
+.section{
+  margin-top:12px;
+  font-size:12px;
+  line-height:1.35;
+}
+
+.line{
+  margin:6px 0;
+}
+
+.checkbox{
+  display:inline-block;
+  width:12px;
+  height:12px;
+  border:1px solid #000;
+  margin-right:5px;
+}
+
+.footer{
+  margin-top:20px;
+  font-size:11px;
+}
+
+textarea{
+  width:100%;
+  height:9in;
+  border:1px solid #000;
   resize:none;
-  overflow:hidden;
-  line-height:1.25;
+  font-family:Arial;
+  font-size:12px;
+  padding:6px;
 }
-.check{
-  position:absolute;
-  width:14px;
-  height:14px;
-}
-@page{size:letter;margin:0}
+
 @media print{
-  .toolbar{display:none}
-  .page{margin:0;width:8.5in;height:11in}
+  body{margin:0}
 }
 </style>
 </head>
 <body>
 
-<div class="toolbar">
-<button onclick="window.print()">Print / Save PDF</button>
-<button onclick="addPage()">Add Page Two</button>
+<!-- PAGE 1 -->
+<div class="page">
+
+<h1>MOTION TO THE COURT AND AFFIDAVIT</h1>
+
+<div class="row">
+  <div>DOCKET NO: <span class="field">2625CV000190</span></div>
+  <div>Massachusetts Trial Court</div>
 </div>
 
-<div id="forms">
-<section class="page" id="p1">
-  <input class="field" style="left:3.55in;top:.68in;width:2.1in;height:.32in" value="2625CV000190">
-  <input class="field" style="left:.72in;top:1.17in;width:2.15in;height:.35in" value="Lisa J. McAdams">
-  <input class="field" style="left:3.05in;top:1.17in;width:2.05in;height:.35in" value="John Stockton">
-  <input class="field" style="left:6.72in;top:1.17in;width:1.45in;height:.35in" value="Barnstable">
-
-  <input type="checkbox" class="check" style="left:.85in;top:5.87in" checked>
-
-  <input class="field" style="left:.98in;top:6.38in;width:1.18in;height:.22in">
-  <input class="field" style="left:.43in;top:7.13in;width:1.55in;height:.22in">
-  <input class="field" style="left:2.06in;top:7.13in;width:2.55in;height:.22in">
-  <input class="field" style="left:4.85in;top:7.13in;width:2.38in;height:.22in">
-  <input class="field" style="left:7.27in;top:7.13in;width:.82in;height:.22in">
-  <input class="field" style="left:.43in;top:7.63in;width:3.12in;height:.22in">
-  <input class="field" style="left:3.62in;top:7.63in;width:4.48in;height:.22in">
-</section>
-
-<section class="page" id="p2">
-  <input class="field" style="left:2.75in;top:.50in;width:1.9in;height:.30in" value="2625CV000190">
-  <textarea class="field" style="left:.60in;top:1.05in;width:7.35in;height:9.2in"></textarea>
-</section>
+<div class="row">
+  <div>PLAINTIFF/COMMONWEALTH: <span class="field">Lisa J. McAdams</span></div>
+  <div>DEFENDANT: <span class="field">John Stockton</span></div>
 </div>
 
-<script>
-function addPage(){
-  const src=document.getElementById('p2');
-  const clone=src.cloneNode(true);
-  clone.querySelectorAll('textarea').forEach(t=>t.value='');
-  document.getElementById('forms').appendChild(clone);
-  clone.scrollIntoView({behavior:'smooth'});
-}
-</script>
+<div class="row">
+  <div>COURT DEPARTMENT: <span class="field">District Court</span></div>
+  <div>DIVISION: <span class="field">Barnstable</span></div>
+</div>
+
+<div class="section">
+
+<div class="line">
+<span class="checkbox"></span> Continuance: to continue this case which is presently scheduled for ______ until ______.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Remove default: to order that the default, default order, or default judgment be set aside.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Remove dismissal: to order dismissal be set aside.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Speedy trial.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> New trial.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Revise or revoke sentence.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Amend or extend abuse prevention order.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> Withdraw from representation.
+</div>
+
+<div class="line">
+<span class="checkbox"></span> <b>Other:</b> (Specify relief and reasons on page two)
+</div>
+
+</div>
+
+<div class="section">
+
+<b>PROOF OF SERVICE - NOTICE OF MOTION</b>
+
+<div class="line">
+On ______ (date) I gave notice to all other parties by:
+</div>
+
+<div class="line">
+<span class="checkbox"></span> mail
+<span class="checkbox"></span> e-mail
+<span class="checkbox"></span> personal delivery
+</div>
+
+<div class="line">
+Any statements of fact made are under penalties of perjury.
+</div>
+
+</div>
+
+<div class="footer">
+DATE ______ &nbsp;&nbsp; PRINT NAME ______ &nbsp;&nbsp; SIGNATURE ______ &nbsp;&nbsp; PHONE ______
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+
+<h2>ATTACHED AFFIDAVIT / REASONS FOR MOTION</h2>
+
+<textarea>
+Paste or write your affidavit here exactly as needed.
+</textarea>
+
+</div>
 
 </body>
 </html>
