@@ -12,11 +12,14 @@ html,body{
   color:#00eaff;
   font-family:Arial,sans-serif;
 }
+
 body{
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:18px;
 }
+
 .panel{
   width:min(92vw,720px);
   min-height:520px;
@@ -27,45 +30,99 @@ body{
   padding:34px;
   text-align:center;
 }
+
 .flag{
   font-size:44px;
 }
+
 h1{
   margin:12px 0 4px;
   font-family:Orbitron,Arial,sans-serif;
   letter-spacing:2px;
   color:#fff;
 }
+
 .sub{
   color:#7ff7ff;
   margin-bottom:34px;
 }
-.gauge{
-  width:300px;
-  height:300px;
+
+.gauge-wrap{
+  width:320px;
+  height:320px;
   margin:0 auto;
   border-radius:50%;
-  border:18px solid rgba(0,234,255,.22);
-  box-shadow:0 0 35px rgba(0,234,255,.65), inset 0 0 35px rgba(0,234,255,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    conic-gradient(
+      from -90deg,
+      #00eaff 0deg,
+      #00eaff var(--gpuArc, 0deg),
+      rgba(0,234,255,.14) var(--gpuArc, 0deg),
+      rgba(0,234,255,.14) 360deg
+    );
+  box-shadow:
+    0 0 var(--glowSize, 35px) rgba(0,234,255,var(--glowAlpha,.55)),
+    0 0 calc(var(--glowSize, 35px) * 1.7) rgba(0,53,128,.38);
+  transition:background .45s ease, box-shadow .45s ease;
+}
+
+.gauge{
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle,#071629 0%,#02040a 70%);
+  border:10px solid rgba(0,234,255,.22);
+  box-shadow:inset 0 0 35px rgba(0,234,255,.35);
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
 .num{
   font-size:72px;
   font-weight:900;
   color:#fff;
   text-shadow:0 0 18px #00eaff;
 }
+
 .stats{
   margin-top:32px;
   font-size:22px;
   color:#fff;
 }
+
 .note{
   margin-top:16px;
   font-size:14px;
   color:#8cecff;
+}
+
+@media (max-width:520px){
+  .panel{
+    min-height:430px;
+    padding:22px;
+  }
+
+  .gauge-wrap{
+    width:245px;
+    height:245px;
+  }
+
+  .gauge{
+    width:215px;
+    height:215px;
+  }
+
+  .num{
+    font-size:50px;
+  }
+
+  .stats{
+    font-size:16px;
+  }
 }
 </style>
 </head>
@@ -75,27 +132,47 @@ h1{
   <h1>HELSINKI GPU NODE</h1>
   <div class="sub">NVIDIA GTX 1080 · LAiSON Training Telemetry</div>
 
-  <div class="gauge">
-    <div class="num" id="gpu">LIVE</div>
+  <div class="gauge-wrap" id="gaugeWrap">
+    <div class="gauge">
+      <div class="num" id="gpu">LIVE</div>
+    </div>
   </div>
 
   <div class="stats" id="stats">Waiting for GPU API</div>
-  <div class="note">Endpoint expected: https://api.laison.org/gpu</div>
+  <div class="note" id="note">Endpoint: https://api.laison.org/gpu</div>
 </div>
 
 <script>
 async function loadGPU(){
+  const gauge = document.getElementById("gaugeWrap");
+
   try{
     const r = await fetch("https://api.laison.org/gpu", {cache:"no-store"});
     const j = await r.json();
-    document.getElementById("gpu").textContent = j.gpu_util + "%";
+
+    const util = Math.max(0, Math.min(100, Number(j.gpu_util) || 0));
+    const arc = util * 3.6;
+    const glowSize = 25 + (util * 0.65);
+    const glowAlpha = 0.28 + (util / 100) * 0.55;
+
+    gauge.style.setProperty("--gpuArc", arc + "deg");
+    gauge.style.setProperty("--glowSize", glowSize + "px");
+    gauge.style.setProperty("--glowAlpha", glowAlpha);
+
+    document.getElementById("gpu").textContent = util + "%";
     document.getElementById("stats").textContent =
-      "VRAM " + j.vram_used + " / " + j.vram_total + " MB · " + j.temp + "°C";
+      "VRAM " + j.vram_used + " / " + j.vram_total + " MB · " + j.temp + "°C · " + j.watts + "W";
+    document.getElementById("note").textContent = "Live telemetry active";
   }catch(e){
+    gauge.style.setProperty("--gpuArc", "0deg");
+    gauge.style.setProperty("--glowSize", "28px");
+    gauge.style.setProperty("--glowAlpha", ".32");
     document.getElementById("gpu").textContent = "LIVE";
     document.getElementById("stats").textContent = "Waiting for GPU API";
+    document.getElementById("note").textContent = "Endpoint: https://api.laison.org/gpu";
   }
 }
+
 loadGPU();
 setInterval(loadGPU,1000);
 </script>
