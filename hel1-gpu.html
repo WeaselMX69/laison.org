@@ -1,54 +1,103 @@
-<!-- HELSINKI GPU Tachometer Window -->
-<div id="helsinki-gpu-mini">
-  <div id="helsinki-gpu-mini-bar">
-    <span>🇫🇮 HEL GPU</span>
-    <button onclick="document.getElementById('helsinki-gpu-mini').style.display='none'">×</button>
-  </div>
-  <iframe id="helsinki-gpu-mini-frame" src="/helsinki-gpu.html"></iframe>
-</div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON Helsinki GPU</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-#helsinki-gpu-mini {
-  position: fixed;
-  top: 528px;
-  right: 12px;
-  width: 190px;
-  height: 190px;
-  background: #05070d;
-  border: 2px solid #00eaff;
-  border-radius: 10px;
-  box-shadow: 0 0 22px rgba(0,234,255,.45);
-  z-index: 99997;
-  opacity: .72;
-  overflow: hidden;
-  font-family: Orbitron, Arial, sans-serif;
+html,body{
+  margin:0;
+  min-height:100%;
+  background:radial-gradient(circle at top,#083866 0%,#02040a 65%,#000 100%);
+  color:#00eaff;
+  font-family:Arial,sans-serif;
 }
-#helsinki-gpu-mini:hover { opacity: 1; }
-#helsinki-gpu-mini-bar {
-  height: 32px;
-  background: linear-gradient(90deg,#003580,#fff,#003580);
-  color: #00152e;
-  font-size: 12px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 9px;
-  cursor: move;
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-#helsinki-gpu-mini-bar button {
-  background: #00152e;
-  color: #fff;
-  border: 0;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  cursor: pointer;
+.panel{
+  width:min(92vw,720px);
+  min-height:520px;
+  border:2px solid #00eaff;
+  border-radius:24px;
+  background:rgba(0,8,18,.92);
+  box-shadow:0 0 40px rgba(0,234,255,.45);
+  padding:34px;
+  text-align:center;
 }
-#helsinki-gpu-mini-frame {
-  width: 100%;
-  height: calc(100% - 32px);
-  border: 0;
-  background: #05070d;
+.flag{
+  font-size:44px;
+}
+h1{
+  margin:12px 0 4px;
+  font-family:Orbitron,Arial,sans-serif;
+  letter-spacing:2px;
+  color:#fff;
+}
+.sub{
+  color:#7ff7ff;
+  margin-bottom:34px;
+}
+.gauge{
+  width:300px;
+  height:300px;
+  margin:0 auto;
+  border-radius:50%;
+  border:18px solid rgba(0,234,255,.22);
+  box-shadow:0 0 35px rgba(0,234,255,.65), inset 0 0 35px rgba(0,234,255,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.num{
+  font-size:72px;
+  font-weight:900;
+  color:#fff;
+  text-shadow:0 0 18px #00eaff;
+}
+.stats{
+  margin-top:32px;
+  font-size:22px;
+  color:#fff;
+}
+.note{
+  margin-top:16px;
+  font-size:14px;
+  color:#8cecff;
 }
 </style>
+</head>
+<body>
+<div class="panel">
+  <div class="flag">🇫🇮</div>
+  <h1>HELSINKI GPU NODE</h1>
+  <div class="sub">NVIDIA GTX 1080 · LAiSON Training Telemetry</div>
+
+  <div class="gauge">
+    <div class="num" id="gpu">LIVE</div>
+  </div>
+
+  <div class="stats" id="stats">Waiting for GPU API</div>
+  <div class="note">Endpoint expected: https://api.laison.org/gpu</div>
+</div>
+
+<script>
+async function loadGPU(){
+  try{
+    const r = await fetch("https://api.laison.org/gpu", {cache:"no-store"});
+    const j = await r.json();
+    document.getElementById("gpu").textContent = j.gpu_util + "%";
+    document.getElementById("stats").textContent =
+      "VRAM " + j.vram_used + " / " + j.vram_total + " MB · " + j.temp + "°C";
+  }catch(e){
+    document.getElementById("gpu").textContent = "LIVE";
+    document.getElementById("stats").textContent = "Waiting for GPU API";
+  }
+}
+loadGPU();
+setInterval(loadGPU,1000);
+</script>
+</body>
+</html>
