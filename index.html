@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LAiSON</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white-bg:#ffffff;
+  --white-text:#111111;
+  --blue:#5aa2ff;
+  --blue-soft:#eaf3ff;
+  --yellow:#ffe37a;
+  --yellow-soft:#fff7cf;
+  --white-border:#d8e8ff;
+  --white-shadow:0 14px 40px rgba(55, 95, 160, 0.12);
+
+  --dark-bg:#0b0f14;
+  --dark-bg-2:#020617;
+  --panel:rgba(17, 24, 39, 0.84);
+  --chat-bg:rgba(15, 23, 42, 0.92);
+  --text-light:#e6e6e6;
+  --text-lighter:#cfd8dc;
+  --text-meta:#9ca3af;
+  --border-glow:rgba(31, 162, 255, 0.3);
+  --shadow-glow:rgba(31, 162, 255, 0.15);
+
+  --radius:28px;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  overflow:hidden;
+  background:#fff;
+  min-height:100dvh;
+}
+
+.app{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
+}
+
+.screen{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-height:100dvh;
+  transition:opacity .35s ease, transform .35s ease;
+}
+
+.screen.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(10px);
+}
+
+.landing-screen{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:
+    radial-gradient(circle at top left, #f7fbff 0%, #ffffff 40%),
+    linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+}
+
+.landing-card{
+  width:min(100%, 760px);
+  min-height:calc(100vh - 36px);
+  min-height:calc(100dvh - 36px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+  background:#fff;
+  border:1px solid var(--white-border);
+  border-radius:var(--radius);
+  box-shadow:var(--white-shadow);
+  padding:22px 18px 20px;
+}
+
+.badge{
+  display:inline-block;
+  align-self:flex-start;
+  background:var(--yellow-soft);
+  color:#756100;
+  border:1px solid #f3df8f;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:clamp(14px, 3.6vw, 18px);
+  font-weight:700;
+}
+
+.landing-main{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+  flex:1;
+}
+
+.landing-title{
+  margin:0;
+  font-size:clamp(38px, 10vw, 72px);
+  line-height:.96;
+  letter-spacing:-0.03em;
+  color:var(--blue);
+  font-weight:800;
+}
+
+.landing-text{
+  margin:0;
+  font-size:clamp(24px, 6vw, 40px);
+  line-height:1.18;
+  color:#111;
+  max-width:13ch;
+}
+
+.landing-sub{
+  margin:0;
+  font-size:clamp(18px, 4.8vw, 28px);
+  line-height:1.3;
+  color:#333;
+  max-width:18ch;
+}
+
+.arrow-wrap{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.arrow-btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(180deg, var(--yellow) 0%, #ffd84d 100%);
+  color:#111;
+  width:min(34vw, 120px);
+  height:min(34vw, 120px);
+  min-width:86px;
+  min-height:86px;
+  border-radius:999px;
+  box-shadow:
+    0 10px 24px rgba(255, 210, 54, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  font-size:clamp(40px, 12vw, 58px);
+  font-weight:800;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+.arrow-btn:active{
+  transform:scale(.97);
+}
+
+.chat-screen{
+  background:
+    linear-gradient(180deg, #020617 0%, #0b0f14 55%, #09111c 100%);
+  color:var(--text-light);
+  display:flex;
+  flex-direction:column;
+}
+
+.stage{
+  flex:1;
+  min-height:0;
+  width:100%;
+  padding:12px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+.top-controls{
+  width:min(1100px, 96vw);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:0;
+  flex:0 0 auto;
+}
+
+.control-btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:clamp(14px, 3.6vw, 18px);
+  font-weight:700;
+}
+
+.back-btn{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.replay-btn{
+  background:rgba(31, 162, 255, 0.15);
+  color:#8ec5ff;
+  border:1px solid rgba(31, 162, 255, 0.24);
+}
+
+.brand-wrap{
+  width:100%;
+  text-align:center;
+  margin-bottom:0;
+  flex:0 0 auto;
+}
+
+.brand{
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(2.2rem, 6vw, 4.2rem);
+  font-weight:700;
+  letter-spacing:1px;
+  color:#ffffff;
+  text-shadow:
+    0 0 10px rgba(31, 162, 255, 0.20),
+    0 0 22px rgba(31, 162, 255, 0.10);
+  margin:0;
+}
+
+.sub1{
+  margin-top:2px;
+  margin-bottom:10px;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(0.82rem, 2vw, 1.15rem);
+  color:var(--text-lighter);
+  letter-spacing:0.01em;
+  line-height:1.05;
+  white-space:nowrap;
+}
+
+.sub2{
+  margin-top:0;
+  margin-bottom:0;
+  padding-top:0;
+  font-size:clamp(0.9rem, 2.2vw, 1.2rem);
+  line-height:1.05;
+  color:#ffffff;
+  font-weight:400;
+}
+
+.chat-shell{
+  margin-top:6px;
+  width:min(1100px, 96vw);
+  flex:1;
+  min-height:0;
+  background:var(--panel);
+  border:1px solid var(--border-glow);
+  box-shadow:
+    0 0 28px var(--shadow-glow),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:28px;
+  margin-bottom:6px;
+  flex:0 0 auto;
+}
+
+.chat-top h2{
+  margin:0;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  color:var(--text-meta);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+.chat-window{
+  flex:1;
+  min-height:0;
+  background:var(--chat-bg);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;
+  padding:12px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.msg{
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  max-width:72%;
+  white-space:pre-wrap;
+  font-size:1rem;
+  line-height:1.6;
+  word-break:break-word;
+}
+
+.left{
+  background:rgba(229, 231, 235, 0.94);
+  color:#111827;
+}
+
+.right{
+  background:rgba(31, 41, 55, 0.9);
+  color:#f8fafc;
+  margin-left:auto;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  height:16px;
+  background:#fff;
+  animation:blink 1s infinite;
+  margin-left:4px;
+  vertical-align:middle;
+}
+
+.status-note{
+  width:min(1100px, 96vw);
+  text-align:center;
+  color:#97a6b8;
+  font-size:clamp(13px, 3.2vw, 16px);
+  padding-top:0;
+  min-height:1.4em;
+  flex:0 0 auto;
+}
+
+@keyframes blink{
+  0%,100%{ opacity:0; }
+  50%{ opacity:1; }
+}
+
+.overlay{
+  display:flex;
+  position:fixed;
+  inset:0;
+  background:rgba(0, 0, 0, 0.88);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  padding:18px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.overlay-card{
+  width:min(100%, 560px);
+  background:#0b0f14;
+  border:1px solid rgba(31, 162, 255, 0.4);
+  box-shadow:
+    0 0 28px rgba(31, 162, 255, 0.16),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  border-radius:22px;
+  padding:22px 18px 18px;
+  text-align:center;
+  transform:translateY(12px) scale(.98);
+  transition:transform .45s ease;
+}
+
+.overlay.show .overlay-card{
+  transform:translateY(0) scale(1);
+}
+
+.overlay-title{
+  margin:0 0 10px 0;
+  color:#8ec5ff;
+  font-family:'Orbitron', Arial, sans-serif;
+  font-size:clamp(1.35rem, 5vw, 2rem);
+  line-height:1.1;
+}
+
+.overlay-text{
+  margin:0 0 18px 0;
+  color:#e6e6e6;
+  font-size:clamp(1rem, 4vw, 1.15rem);
+  line-height:1.5;
+}
+
+.overlay-actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.overlay-link,
+.overlay-close{
+  appearance:none;
+  border:none;
+  text-decoration:none;
+  cursor:pointer;
+  width:100%;
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:clamp(1rem, 4vw, 1.08rem);
+  font-weight:700;
+  text-align:center;
+}
+
+.overlay-link{
+  background:linear-gradient(180deg, #5aa2ff 0%, #2e83f7 100%);
+  color:#fff;
+}
+
+.overlay-close{
+  background:transparent;
+  color:#8ec5ff;
+  border:1px solid rgba(31, 162, 255, 0.45);
+}
+
+/* URGENT NOTICE — SCROLLABLE TOP RIGHT */
+.urgent-overlay {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 99999;
+  width: 240px;
+  height: 240px;
+  background: #ffffff;
+  border: 2px solid #b00020;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow:
+    -9px 12px 0 rgba(0,0,0,0.16),
+    0 8px 24px rgba(0,0,0,0.22);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #111;
+  cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  transition: opacity .2s ease, transform .2s ease, width .2s ease, height .2s ease;
+}
+
+.urgent-overlay::-webkit-scrollbar {
+  width: 7px;
+}
+
+.urgent-overlay::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 999px;
+}
+
+.urgent-overlay::-webkit-scrollbar-thumb {
+  background: #b00020;
+  border-radius: 999px;
+}
+
+.urgent-overlay-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+  background:#fff;
+  position: sticky;
+  top: -10px;
+  z-index: 2;
+}
+
+.urgent-overlay-header h3 {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #b00020;
+  font-family: inherit;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.urgent-icon {
+  font-size: 1rem;
+  color: #dc3545;
+  flex: 0 0 auto;
+}
+
+.urgent-overlay-content {
+  margin: 0 0 8px 0;
+  font-size: 0.76rem;
+  color: #222;
+  line-height: 1.28;
+}
+
+.urgent-overlay-content p {
+  margin: 0 0 7px 0;
+}
+
+.urgent-overlay-link {
+  display: inline-block;
+  background: #111;
+  color: #ffffff;
+  padding: 7px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.urgent-overlay-link:hover {
+  background: #222;
+}
+
+.urgent-overlay.compact {
+  width: 120px;
+  height: 120px;
+  padding: 5px;
+  opacity:.52;
+  transform:translateY(-2px);
+}
+
+.urgent-overlay.compact .urgent-overlay-header {
+  gap: 3px;
+  margin-bottom: 4px;
+  padding-bottom: 3px;
+  top: -5px;
+}
+
+.urgent-overlay.compact .urgent-overlay-header h3 {
+  font-size: 0.42rem;
+  letter-spacing: 0.015em;
+}
+
+.urgent-overlay.compact .urgent-icon {
+  font-size: 0.58rem;
+}
+
+.urgent-overlay.compact .urgent-overlay-content {
+  font-size: 0.38rem;
+  line-height: 1.12;
+  margin-bottom: 4px;
+}
+
+.urgent-overlay.compact .urgent-overlay-content p {
+  margin-bottom: 3px;
+}
+
+.urgent-overlay.compact .urgent-overlay-link {
+  font-size: 0.34rem;
+  padding: 4px 5px;
+  border-radius: 3px;
+}
+
+/* LAiSON LIVE Window */
+#laison-live-mini {
+  position: fixed;
+  top: 248px;
+  right: 12px;
+  width: 240px;
+  height: 270px;
+  min-width: 120px;
+  min-height: 150px;
+  background: #ffffff;
+  border: 2px solid #00eaff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow:
+    -9px 12px 0 rgba(0,234,255,0.18),
+    0 8px 24px rgba(0,0,0,0.24),
+    0 0 24px rgba(0,234,255,0.22);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #111;
+  z-index: 99998;
+  opacity: 0.62;
+  transition: opacity 0.2s ease, transform .2s ease;
+  user-select: none;
+  touch-action: none;
+  overflow: hidden;
+}
+
+#laison-live-mini:hover,
+#laison-live-mini.live-active {
+  opacity: 1;
+}
+
+#laison-live-mini.preview-tucked {
+  opacity:.34;
+  transform:translate(-2px, -2px) scale(.985);
+}
+
+#laison-live-mini-bar {
+  height: 34px;
+  background: #000;
+  color: #00eaff;
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(0, 234, 255, 0.3);
+  margin-bottom: 8px;
+  cursor: move;
+  position: relative;
+  z-index: 4;
+}
+
+#laison-live-mini-bar button {
+  background: transparent;
+  color: #00eaff;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+#laison-live-close {
+  position: relative;
+  z-index: 999999;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+#laison-live-mini-frame-wrap {
+  width: 100%;
+  height: calc(100% - 42px);
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+}
+
+#laison-live-mini-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform-origin: 0 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+#laison-live-resize-handle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  background: #00eaff;
+  border-top-right-radius: 8px;
+  cursor: nesw-resize;
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.45);
+}
+
+#laison-live-resize-handle::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid rgba(0,0,0,0.55);
+  border-bottom: 2px solid rgba(0,0,0,0.55);
+}
+
+/* HELSINKI GPU Window */
+#helsinki-gpu-mini {
+  position: fixed;
+  top: 12px;
+  right: 244px;
+  width: 240px;
+  height: 240px;
+  min-width: 120px;
+  min-height: 150px;
+  background: #05070d;
+  border: 2px solid #00eaff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow:
+    -9px 12px 0 rgba(0,53,128,0.22),
+    0 8px 24px rgba(0,0,0,0.28),
+    0 0 24px rgba(0,234,255,0.28);
+  font-family: Orbitron, Arial, sans-serif;
+  color: #00eaff;
+  z-index: 99997;
+  opacity: .68;
+  transition: opacity .2s ease, transform .2s ease;
+  user-select:none;
+  touch-action:none;
+  overflow:hidden;
+}
+
+#helsinki-gpu-mini:hover,
+#helsinki-gpu-mini.gpu-active {
+  opacity:1;
+}
+
+#helsinki-gpu-mini.preview-tucked {
+  opacity:.34;
+  transform:translate(3px, -2px) scale(.985);
+}
+
+#helsinki-gpu-mini-bar {
+  height:34px;
+  background:linear-gradient(90deg,#003580 0%,#ffffff 50%,#003580 100%);
+  color:#00152e;
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:12px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  border-bottom:1px solid rgba(0,234,255,.35);
+  margin-bottom:8px;
+  cursor:move;
+  position:relative;
+  z-index:4;
+  letter-spacing:.03em;
+}
+
+#helsinki-gpu-mini-bar button {
+  background:#00152e;
+  color:#fff;
+  border:0;
+  font-size:18px;
+  cursor:pointer;
+  line-height:1;
+  padding:0;
+  width:22px;
+  height:22px;
+  border-radius:999px;
+}
+
+#helsinki-gpu-frame-wrap {
+  width:100%;
+  height:calc(100% - 42px);
+  overflow:hidden;
+  border-radius:4px;
+  background:#05070d;
+}
+
+#helsinki-gpu-frame {
+  width:100%;
+  height:100%;
+  border:0;
+  background:#05070d;
+  transform-origin:0 0;
+  touch-action:none;
+  cursor:grab;
+}
+
+#helsinki-gpu-resize-handle {
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:18px;
+  height:18px;
+  background:#00eaff;
+  border-top-right-radius:8px;
+  cursor:nesw-resize;
+  z-index:3;
+  box-shadow:0 0 10px rgba(0,234,255,.45);
+}
+
+#helsinki-gpu-resize-handle::after {
+  content:'';
+  position:absolute;
+  left:4px;
+  bottom:4px;
+  width:8px;
+  height:8px;
+  border-left:2px solid rgba(0,0,0,.55);
+  border-bottom:2px solid rgba(0,0,0,.55);
+}
+
+@media (max-width: 768px) {
+  .urgent-overlay {
+    width: 190px;
+    height: 205px;
+    right: 8px;
+    top: 8px;
+    padding: 8px;
+  }
+
+  .urgent-overlay-header {
+    top: -8px;
+  }
+
+  .urgent-overlay-header h3 {
+    font-size: 0.64rem;
+  }
+
+  .urgent-icon {
+    font-size: 0.82rem;
+  }
+
+  .urgent-overlay-content {
+    font-size: 0.64rem;
+    line-height: 1.2;
+  }
+
+  .urgent-overlay-link {
+    font-size: 0.58rem;
+    padding: 6px 7px;
+  }
+
+  .urgent-overlay.compact {
+    width: 95px;
+    height: 103px;
+    right: 8px;
+    top: 8px;
+    padding: 4px;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-header {
+    top: -4px;
+    gap: 2px;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-header h3 {
+    font-size: 0.32rem;
+  }
+
+  .urgent-overlay.compact .urgent-icon {
+    font-size: 0.43rem;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-content {
+    font-size: 0.31rem;
+    line-height: 1.08;
+  }
+
+  .urgent-overlay.compact .urgent-overlay-link {
+    font-size: 0.28rem;
+    padding: 3px 4px;
+  }
+
+  #laison-live-mini {
+    width:190px;
+    height:230px;
+    right:8px;
+    top:214px;
+    padding:8px;
+  }
+
+  #helsinki-gpu-mini {
+    width:190px;
+    height:190px;
+    right:190px;
+    top:8px;
+    padding:8px;
+  }
+
+  #laison-live-mini-bar,
+  #helsinki-gpu-mini-bar {
+    height:30px;
+    font-size:10px;
+    padding:0 8px;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="app">
+    <section class="screen landing-screen" id="landingScreen">
+      <div class="landing-card">
+        <div class="badge">Please tap</div>
+
+        <div class="landing-main">
+          <h1 class="landing-title">LAiSON.</h1>
+          <p class="landing-text">Layering Artificial Intelligence Systems Over Networks</p>
+          <p class="landing-sub">Tap through for a quick live preview.</p>
+        </div>
+
+        <div class="arrow-wrap">
+          <button class="arrow-btn" id="openMessageBtn" aria-label="Open preview">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen chat-screen hidden" id="messageScreen">
+      <div class="stage">
+        <div class="top-controls">
+          <button class="control-btn back-btn" id="backBtn" aria-label="Go back">← Back</button>
+          <button class="control-btn replay-btn" id="replayBtn" aria-label="Replay chat">Replay</button>
+        </div>
+
+        <div class="brand-wrap">
+          <h1 class="brand">LAiSON.</h1>
+          <div class="sub1">Layering Artificial Intelligence Systems Over Networks</div>
+          <div class="sub2">Ai Software &amp; Business Systems</div>
+        </div>
+
+        <div class="chat-shell">
+          <div class="chat-top">
+            <h2>Chat Preview</h2>
+          </div>
+          <div class="chat-window" id="hero-chat"></div>
+        </div>
+
+        <div class="status-note" id="statusNote">Conversation plays automatically.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="urgent-overlay" onclick="window.location.href='urgent-notice.html';">
+    <div class="urgent-overlay-header">
+      <span class="urgent-icon">⚠️</span>
+      <h3>URGENT PUBLIC NOTICE</h3>
+    </div>
+    <div class="urgent-overlay-content">
+      <p><strong>Corruption concerns in Cherryfield, Maine.</strong></p>
+      <p>
+        What began as a town website rebuild escalated into a broader situation involving a meeting with a Cybersecurity Intelligence Agent over a darkweb credit card theft ring.
+      </p>
+      <p>
+        I created a page to help preserve the story, names, records, and digital context tied to two devices connected to the events.
+      </p>
+      <p>
+        Full context is documented.
+      </p>
+    </div>
+    <a href="urgent-notice.html" class="urgent-overlay-link">READ FULL NOTICE →</a>
+  </div>
+
+  <div id="helsinki-gpu-mini" aria-label="Helsinki GPU floating window">
+    <div id="helsinki-gpu-mini-bar">
+      <span>🇫🇮 HELSINKI GPU</span>
+      <button
+        type="button"
+        id="helsinki-gpu-close"
+        aria-label="Close Helsinki GPU"
+        onclick="document.getElementById('helsinki-gpu-mini').style.display='none'; return false;"
+      >×</button>
+    </div>
+    <div id="helsinki-gpu-frame-wrap">
+      <iframe
+        id="helsinki-gpu-frame"
+        src="/helsinki-gpu.html"
+        title="Helsinki GPU"
+      ></iframe>
+    </div>
+    <div id="helsinki-gpu-resize-handle" aria-label="Resize Helsinki GPU from bottom left"></div>
+  </div>
+
+  <div id="laison-live-mini" aria-label="LAiSON Live floating window">
+    <div id="laison-live-mini-bar">
+      <span>LAiSON Live</span>
+      <button
+        type="button"
+        id="laison-live-close"
+        aria-label="Close LAiSON Live"
+        onclick="document.getElementById('laison-live-mini').style.display='none'; return false;"
+      >×</button>
+    </div>
+    <div id="laison-live-mini-frame-wrap">
+      <iframe
+        id="laison-live-mini-frame"
+        src="https://laison.org/live"
+        title="LAiSON Live"
+      ></iframe>
+    </div>
+    <div id="laison-live-resize-handle" aria-label="Resize LAiSON Live from bottom left"></div>
+  </div>
+
+  <div class="overlay" id="healthBotOverlay" aria-hidden="true">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Dog-Gone-Fit AI</h2>
+      <p class="overlay-text">
+        Focused, high-impact AI for real-world use. See the demo or pass for now.
+      </p>
+      <div class="overlay-actions">
+        <a
+          class="overlay-link"
+          href="https://laison.org/k9-health-bot.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open Dog-Gone-Fit AI
+        </a>
+        <button
+          class="overlay-close"
+          id="overlayCloseBtn"
+          type="button"
+        >
+          No Thanks
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const landingScreen = document.getElementById("landingScreen");
+const messageScreen = document.getElementById("messageScreen");
+const openMessageBtn = document.getElementById("openMessageBtn");
+const backBtn = document.getElementById("backBtn");
+const replayBtn = document.getElementById("replayBtn");
+const chat = document.getElementById("hero-chat");
+const statusNote = document.getElementById("statusNote");
+const overlay = document.getElementById("healthBotOverlay");
+const overlayCloseBtn = document.getElementById("overlayCloseBtn");
+
+const chatMsgs = [
+  { side: "right", text: "Are you that guy that can't talk? Are you dumb?" },
+  { side: "left", text: "NO! Well, yes... but NO! I'm the CEO of LAiSON & a non-verbal dog trainer, I can speak, but I chose not to talk because of what I know and what I bring to the table" },
+  { side: "right", text: "Really? What do you bring to the table?" },
+  { side: "left", text: "Commands... all the commands, lol. I also have vision!" },
+  { side: "right", text: "What kinda stuff you working on...for programs?" },
+  { side: "left", text: "Right now? I'm deploying the next level of Ai for businesses! Greatest thing since sliced bread..." },
+  { side: "right", text: "Lies. Greatest thing since sliced bread is toast!" },
+  { side: "left", text: "Exactly. Fewer external dependencies, tighter control, cleaner audit trails. Aligns with NIST and FFIEC expectations without creating new exposure." },
+  { side: "right", text: "WTF Are you talking about dude !?!?!" },
+  { side: "left", text: "Targeted deployments. One high-impact problem at a time. Dog-Gone-Fit AI shows the model—focused system, measurable outcome, no vendor lock-in. It was built by LAiSON outside the traditional SaaS model—because that model is reaching its limits. Organizations are over-integrated, overexposed, and under-controlled. Building correctly from the start costs more upfront, but the long-term savings and control are exponential." },
+  { side: "right", text: "Sounds cool!" },
+  { side: "left", text: "It will! Audio part of the stack is next!?!" },
+  { side: "right", text: "What's a stack?!" },
+  { side: "left", text: "What's a quit claim deed? How do you know I'm not native? Who owns this land?" },
+  { side: "right", text: "EXCUSE ME !?!?! OFFENSIVE! Banks are NOT going to give you money with that attitude!?" },
+  { side: "left", text: "My product will sell itself, LITERALLY AND FIGURATIVELY. Debt comes with interest, the banks will be begging me for integrative Ai solutions and agreements to touch their systems soon. Just takes time, trust, and boldness ;-)" },
+  { side: "right", text: "Where can I see it !?!?! " },
+  { side: "left", text: "Check it out in..." }
+];
+
+let runId = 0;
+let overlayTimer = null;
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function clearOverlayTimer() {
+  if (overlayTimer) {
+    clearTimeout(overlayTimer);
+    overlayTimer = null;
+  }
+}
+
+function hideOverlay() {
+  clearOverlayTimer();
+  overlay.classList.remove("show");
+  overlay.setAttribute("aria-hidden", "true");
+}
+
+function showOverlay() {
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function showLanding() {
+  runId++;
+  landingScreen.classList.remove("hidden");
+  messageScreen.classList.add("hidden");
+  chat.innerHTML = "";
+  statusNote.textContent = "Conversation plays automatically.";
+  hideOverlay();
+  restoreUrgentNotice();
+  restoreFloatingTelemetry();
+}
+
+async function typeMsg(side, text, currentRunId, isLast = false) {
+  if (currentRunId !== runId) return;
+
+  const bubble = document.createElement("div");
+  bubble.className = "msg " + side;
+  chat.appendChild(bubble);
+
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+  bubble.appendChild(cursor);
+
+  for (const ch of text) {
+    if (currentRunId !== runId) return;
+
+    cursor.before(ch);
+    chat.scrollTop = chat.scrollHeight;
+
+    let delay = 43 + Math.floor(Math.random() * 18);
+
+    if (ch === "," || ch === ".") delay += 45;
+    if (ch === "!" || ch === "?") delay += 80;
+    if (Math.random() < 0.04) delay += 110;
+
+    await sleep(delay);
+  }
+
+  cursor.remove();
+
+  if (isLast) {
+    const countdownSpan = document.createElement("span");
+    countdownSpan.style.marginLeft = "6px";
+    countdownSpan.style.fontWeight = "700";
+    countdownSpan.style.color = "#8ec5ff";
+    bubble.appendChild(countdownSpan);
+
+    let seconds = 10;
+
+    while (seconds > 0) {
+      if (currentRunId !== runId) return;
+
+      countdownSpan.textContent = seconds;
+      chat.scrollTop = chat.scrollHeight;
+      await sleep(1000);
+      seconds--;
+    }
+
+    countdownSpan.textContent = "0";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function playConversation() {
+  runId++;
+  const currentRunId = runId;
+
+  hideOverlay();
+  chat.innerHTML = "";
+  statusNote.textContent = "Playing preview...";
+
+  for (let i = 0; i < chatMsgs.length; i++) {
+    const m = chatMsgs[i];
+    const isLast = i === chatMsgs.length - 1;
+
+    if (currentRunId !== runId) return;
+    await typeMsg(m.side, m.text, currentRunId, isLast);
+    await sleep(509);
+  }
+
+  if (currentRunId !== runId) return;
+
+  statusNote.textContent = "Done. Opening next step...";
+  clearOverlayTimer();
+  overlayTimer = setTimeout(() => {
+    if (currentRunId !== runId) return;
+    showOverlay();
+    statusNote.textContent = "Choose an option below.";
+  }, 500);
+}
+
+function showMessage() {
+  landingScreen.classList.add("hidden");
+  messageScreen.classList.remove("hidden");
+  shrinkUrgentNotice();
+  tuckFloatingTelemetry();
+  playConversation();
+}
+
+openMessageBtn.addEventListener("click", showMessage);
+backBtn.addEventListener("click", showLanding);
+replayBtn.addEventListener("click", playConversation);
+overlayCloseBtn.addEventListener("click", hideOverlay);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") hideOverlay();
+});
+
+function shrinkUrgentNotice() {
+  const urgent = document.querySelector(".urgent-overlay");
+  if (urgent) urgent.classList.add("compact");
+}
+
+function restoreUrgentNotice() {
+  const urgent = document.querySelector(".urgent-overlay");
+  if (urgent) urgent.classList.remove("compact");
+}
+
+function tuckFloatingTelemetry() {
+  if (window.resetLaisonLiveMiniToOriginal) window.resetLaisonLiveMiniToOriginal();
+  if (window.resetHelsinkiGpuMiniToOriginal) window.resetHelsinkiGpuMiniToOriginal();
+
+  const live = document.getElementById("laison-live-mini");
+  const gpu = document.getElementById("helsinki-gpu-mini");
+
+  if (live) live.classList.add("preview-tucked");
+  if (gpu) gpu.classList.add("preview-tucked");
+}
+
+function restoreFloatingTelemetry() {
+  const live = document.getElementById("laison-live-mini");
+  const gpu = document.getElementById("helsinki-gpu-mini");
+
+  if (live) live.classList.remove("preview-tucked");
+  if (gpu) gpu.classList.remove("preview-tucked");
+
+  if (window.resetLaisonLiveMiniToOriginal) window.resetLaisonLiveMiniToOriginal();
+  if (window.resetHelsinkiGpuMiniToOriginal) window.resetHelsinkiGpuMiniToOriginal();
+}
+
+// Refresh the live iframe every 3 minutes
+setInterval(() => {
+  const frame = document.getElementById("laison-live-mini-frame");
+  if (frame) frame.src = "https://laison.org/live?refresh=" + Date.now();
+}, 180000);
+
+// Refresh the GPU iframe every 3 minutes
+setInterval(() => {
+  const frame = document.getElementById("helsinki-gpu-frame");
+  if (frame) frame.src = "/helsinki-gpu.html?refresh=" + Date.now();
+}, 180000);
+
+function setupFloatingMini(opts) {
+  const mini = document.getElementById(opts.miniId);
+  const bar = document.getElementById(opts.barId);
+  const frame = document.getElementById(opts.frameId);
+  const close = document.getElementById(opts.closeId);
+  const resizeHandle = document.getElementById(opts.resizeId);
+
+  if (!mini || !bar || !frame || !resizeHandle) return;
+
+  const minWidth = opts.minWidth || 120;
+  const minHeight = opts.minHeight || 150;
+  let userPositioned = false;
+  let isDragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
+  }
+
+  function setActive(active) {
+    mini.classList.toggle(opts.activeClass, active);
+  }
+
+  function closeMini(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+    }
+    mini.style.display = "none";
+    return false;
+  }
+
+  if (close) {
+    close.onclick = closeMini;
+    close.addEventListener("click", closeMini, true);
+    close.addEventListener("mousedown", (e) => e.stopPropagation(), true);
+    close.addEventListener("touchstart", (e) => e.stopPropagation(), true);
+    close.addEventListener("pointerdown", (e) => e.stopPropagation(), true);
+  }
+
+  function keepInsideViewport() {
+    const rect = mini.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const left = clamp(rect.left, 0, Math.max(0, window.innerWidth - width));
+    const top = clamp(rect.top, 0, Math.max(0, window.innerHeight - height));
+    mini.style.left = `${left}px`;
+    mini.style.top = `${top}px`;
+    mini.style.right = "auto";
+  }
+
+  function resetOriginal() {
+    userPositioned = false;
+    mini.style.display = "block";
+    mini.style.width = opts.originalWidth;
+    mini.style.height = opts.originalHeight;
+    mini.style.left = "auto";
+    mini.style.right = opts.originalRight;
+    mini.style.top = opts.originalTop;
+    scale = 1;
+    panX = 0;
+    panY = 0;
+    applyFrameTransform();
+  }
+
+  mini.addEventListener("mouseenter", () => setActive(true));
+  mini.addEventListener("mouseleave", () => setActive(false));
+  mini.addEventListener("touchstart", () => setActive(true), { passive: true });
+
+  function startDrag(clientX, clientY) {
+    const rect = mini.getBoundingClientRect();
+    isDragging = true;
+    userPositioned = true;
+    dragOffsetX = clientX - rect.left;
+    dragOffsetY = clientY - rect.top;
+    bar.style.cursor = "grabbing";
+    setActive(true);
+  }
+
+  function moveDrag(clientX, clientY) {
+    if (!isDragging) return;
+    const width = mini.offsetWidth;
+    const height = mini.offsetHeight;
+    const nextLeft = clamp(clientX - dragOffsetX, 0, Math.max(0, window.innerWidth - width));
+    const nextTop = clamp(clientY - dragOffsetY, 0, Math.max(0, window.innerHeight - height));
+    mini.style.left = `${nextLeft}px`;
+    mini.style.top = `${nextTop}px`;
+    mini.style.right = "auto";
+  }
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    bar.style.cursor = "move";
+  }
+
+  bar.addEventListener("mousedown", (e) => {
+    if (e.target && e.target.id === opts.closeId) return;
+    startDrag(e.clientX, e.clientY);
+    e.preventDefault();
+  });
+
+  bar.addEventListener("touchstart", (e) => {
+    if (e.target && e.target.id === opts.closeId) return;
+    if (!e.touches.length) return;
+    startDrag(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener("mousemove", (e) => moveDrag(e.clientX, e.clientY));
+  document.addEventListener("touchmove", (e) => {
+    if (!isDragging || !e.touches.length) return;
+    moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("mouseup", stopDrag);
+  document.addEventListener("touchend", stopDrag);
+
+  let isResizing = false;
+  let resizeStartX = 0;
+  let resizeStartY = 0;
+  let resizeStartLeft = 0;
+  let resizeStartWidth = 0;
+  let resizeStartHeight = 0;
+
+  function startResize(clientX, clientY) {
+    const rect = mini.getBoundingClientRect();
+    isResizing = true;
+    userPositioned = true;
+    resizeStartX = clientX;
+    resizeStartY = clientY;
+    resizeStartLeft = rect.left;
+    resizeStartWidth = rect.width;
+    resizeStartHeight = rect.height;
+    mini.style.left = `${rect.left}px`;
+    mini.style.top = `${rect.top}px`;
+    mini.style.right = "auto";
+    setActive(true);
+  }
+
+  function moveResize(clientX, clientY) {
+    if (!isResizing) return;
+
+    const deltaX = clientX - resizeStartX;
+    const deltaY = clientY - resizeStartY;
+    const maxWidth = resizeStartLeft + resizeStartWidth;
+    const nextWidth = clamp(resizeStartWidth - deltaX, minWidth, maxWidth);
+    const rightEdge = resizeStartLeft + resizeStartWidth;
+    const nextLeft = rightEdge - nextWidth;
+    const nextHeight = Math.max(minHeight, resizeStartHeight + deltaY);
+
+    mini.style.left = `${nextLeft}px`;
+    mini.style.width = `${nextWidth}px`;
+    mini.style.height = `${nextHeight}px`;
+    mini.style.right = "auto";
+  }
+
+  function stopResize() {
+    isResizing = false;
+  }
+
+  resizeHandle.addEventListener("mousedown", (e) => {
+    startResize(e.clientX, e.clientY);
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  resizeHandle.addEventListener("touchstart", (e) => {
+    if (!e.touches.length) return;
+    startResize(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+    e.stopPropagation();
+  }, { passive: false });
+
+  document.addEventListener("mousemove", (e) => moveResize(e.clientX, e.clientY));
+  document.addEventListener("touchmove", (e) => {
+    if (!isResizing || !e.touches.length) return;
+    moveResize(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener("mouseup", stopResize);
+  document.addEventListener("touchend", stopResize);
+
+  let scale = 1;
+  let panX = 0;
+  let panY = 0;
+  let isPanningFrame = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let isPinchingFrame = false;
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+
+  function applyFrameTransform() {
+    scale = clamp(scale, 0.55, 3.25);
+    frame.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  frame.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    scale *= e.deltaY > 0 ? 0.9 : 1.1;
+    applyFrameTransform();
+  }, { passive: false });
+
+  frame.addEventListener("mousedown", (e) => {
+    isPanningFrame = true;
+    panStartX = e.clientX - panX;
+    panStartY = e.clientY - panY;
+    frame.style.cursor = "grabbing";
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isPanningFrame) return;
+    panX = e.clientX - panStartX;
+    panY = e.clientY - panStartY;
+    applyFrameTransform();
+  });
+
+  document.addEventListener("mouseup", () => {
+    isPanningFrame = false;
+    frame.style.cursor = "grab";
+  });
+
+  frame.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      const a = e.touches[0];
+      const b = e.touches[1];
+      isPinchingFrame = true;
+      pinchStartDistance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      pinchStartScale = scale;
+      e.preventDefault();
+      return;
+    }
+
+    if (e.touches.length === 1) {
+      isPanningFrame = true;
+      panStartX = e.touches[0].clientX - panX;
+      panStartY = e.touches[0].clientY - panY;
+    }
+  }, { passive: false });
+
+  frame.addEventListener("touchmove", (e) => {
+    if (isPinchingFrame && e.touches.length === 2) {
+      const a = e.touches[0];
+      const b = e.touches[1];
+      const distance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      if (pinchStartDistance > 0) scale = pinchStartScale * (distance / pinchStartDistance);
+      applyFrameTransform();
+      e.preventDefault();
+      return;
+    }
+
+    if (isPanningFrame && e.touches.length === 1) {
+      panX = e.touches[0].clientX - panStartX;
+      panY = e.touches[0].clientY - panStartY;
+      applyFrameTransform();
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  frame.addEventListener("touchend", () => {
+    isPinchingFrame = false;
+    isPanningFrame = false;
+  });
+
+  window.addEventListener("resize", () => {
+    if (userPositioned) keepInsideViewport();
+  });
+
+  window[opts.resetName] = resetOriginal;
+  resetOriginal();
+}
+
+setupFloatingMini({
+  miniId:"laison-live-mini",
+  barId:"laison-live-mini-bar",
+  frameId:"laison-live-mini-frame",
+  closeId:"laison-live-close",
+  resizeId:"laison-live-resize-handle",
+  activeClass:"live-active",
+  resetName:"resetLaisonLiveMiniToOriginal",
+  originalWidth:"240px",
+  originalHeight:"270px",
+  originalRight:"12px",
+  originalTop:"248px",
+  minWidth:120,
+  minHeight:150
+});
+
+setupFloatingMini({
+  miniId:"helsinki-gpu-mini",
+  barId:"helsinki-gpu-mini-bar",
+  frameId:"helsinki-gpu-frame",
+  closeId:"helsinki-gpu-close",
+  resizeId:"helsinki-gpu-resize-handle",
+  activeClass:"gpu-active",
+  resetName:"resetHelsinkiGpuMiniToOriginal",
+  originalWidth:"240px",
+  originalHeight:"240px",
+  originalRight:"244px",
+  originalTop:"12px",
+  minWidth:120,
+  minHeight:150
+});
+</script>
+</body>
+</html>
