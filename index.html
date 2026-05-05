@@ -761,6 +761,9 @@ body{
   overflow:hidden;
   border-radius:4px;
   background:#05070d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 #helsinki-gpu-frame {
@@ -768,7 +771,7 @@ body{
   height:100%;
   border:0;
   background:#05070d;
-  transform-origin:0 0;
+  transform-origin:center center;
   touch-action:none;
   cursor:grab;
 }
@@ -1212,13 +1215,11 @@ function restoreFloatingTelemetry() {
   if (window.resetHelsinkiGpuMiniToOriginal) window.resetHelsinkiGpuMiniToOriginal();
 }
 
-// Refresh the live iframe every 3 minutes
 setInterval(() => {
   const frame = document.getElementById("laison-live-mini-frame");
   if (frame) frame.src = "https://laison.org/live?refresh=" + Date.now();
 }, 180000);
 
-// Refresh the GPU iframe every 3 minutes
 setInterval(() => {
   const frame = document.getElementById("helsinki-gpu-frame");
   if (frame) frame.src = "/hel1-gpu.html?refresh=" + Date.now();
@@ -1275,6 +1276,21 @@ function setupFloatingMini(opts) {
     mini.style.left = `${left}px`;
     mini.style.top = `${top}px`;
     mini.style.right = "auto";
+  }
+
+  let scale = 1;
+  let panX = 0;
+  let panY = 0;
+  let isPanningFrame = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let isPinchingFrame = false;
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+
+  function applyFrameTransform() {
+    scale = clamp(scale, 0.55, 3.25);
+    frame.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
   }
 
   function resetOriginal() {
@@ -1408,21 +1424,6 @@ function setupFloatingMini(opts) {
   }, { passive: false });
   document.addEventListener("mouseup", stopResize);
   document.addEventListener("touchend", stopResize);
-
-  let scale = 1;
-  let panX = 0;
-  let panY = 0;
-  let isPanningFrame = false;
-  let panStartX = 0;
-  let panStartY = 0;
-  let isPinchingFrame = false;
-  let pinchStartDistance = 0;
-  let pinchStartScale = 1;
-
-  function applyFrameTransform() {
-    scale = clamp(scale, 0.55, 3.25);
-    frame.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-  }
 
   frame.addEventListener("wheel", (e) => {
     e.preventDefault();
