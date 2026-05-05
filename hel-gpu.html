@@ -1,0 +1,54 @@
+<!-- HELSINKI GPU Tachometer Window -->
+<div id="helsinki-gpu-mini">
+  <div id="helsinki-gpu-mini-bar">
+    <span>🇫🇮 HEL GPU</span>
+    <button onclick="document.getElementById('helsinki-gpu-mini').style.display='none'">×</button>
+  </div>
+  <iframe id="helsinki-gpu-mini-frame" src="/helsinki-gpu.html"></iframe>
+</div>
+
+<style>
+#helsinki-gpu-mini {
+  position: fixed;
+  top: 528px;
+  right: 12px;
+  width: 190px;
+  height: 190px;
+  background: #05070d;
+  border: 2px solid #00eaff;
+  border-radius: 10px;
+  box-shadow: 0 0 22px rgba(0,234,255,.45);
+  z-index: 99997;
+  opacity: .72;
+  overflow: hidden;
+  font-family: Orbitron, Arial, sans-serif;
+}
+#helsinki-gpu-mini:hover { opacity: 1; }
+#helsinki-gpu-mini-bar {
+  height: 32px;
+  background: linear-gradient(90deg,#003580,#fff,#003580);
+  color: #00152e;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 9px;
+  cursor: move;
+}
+#helsinki-gpu-mini-bar button {
+  background: #00152e;
+  color: #fff;
+  border: 0;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+#helsinki-gpu-mini-frame {
+  width: 100%;
+  height: calc(100% - 32px);
+  border: 0;
+  background: #05070d;
+}
+</style>
