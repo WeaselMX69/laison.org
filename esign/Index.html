@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON Electronic Signature</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{
+  --blue:#2563eb;
+  --dark:#0f172a;
+  --soft:#f8fafc;
+  --border:#dbe3ef;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#eef3f9;
+  color:#111827;
+}
+header{
+  background:linear-gradient(135deg,#0f172a,#1d4ed8);
+  color:white;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.18);
+}
+header h1{margin:0;font-size:21px}
+header p{margin:6px 0 0;font-size:13px;opacity:.9}
+.toolbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:white;
+  border-bottom:1px solid var(--border);
+  padding:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px;
+  font-size:15px;
+  font-weight:700;
+  background:#e5e7eb;
+}
+button.primary{background:var(--blue);color:white}
+button.danger{background:#fee2e2;color:#991b1b}
+button.active{outline:3px solid #93c5fd}
+#viewerWrap{
+  padding:14px;
+}
+.pageBox{
+  position:relative;
+  margin:0 auto 18px;
+  background:white;
+  box-shadow:0 8px 30px rgba(15,23,42,.18);
+  width:max-content;
+}
+canvas.pdfPage{
+  display:block;
+  max-width:100%;
+  height:auto;
+}
+.marker{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  border:2px solid var(--blue);
+  background:rgba(37,99,235,.12);
+  color:#1e3a8a;
+  font-size:12px;
+  font-weight:bold;
+  padding:6px 8px;
+  border-radius:8px;
+  pointer-events:none;
+}
+.panel{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:40;
+  background:white;
+  border-top:1px solid var(--border);
+  padding:14px;
+  box-shadow:0 -8px 28px rgba(0,0,0,.2);
+}
+.panel input[type=text]{
+  width:100%;
+  padding:13px;
+  font-size:18px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  margin:8px 0;
+}
+#sigPad{
+  width:100%;
+  height:150px;
+  border:2px solid #94a3b8;
+  border-radius:12px;
+  background:white;
+  touch-action:none;
+}
+.small{
+  font-size:13px;
+  color:#475569;
+}
+.status{
+  padding:10px;
+  border-radius:10px;
+  background:#eff6ff;
+  margin-top:8px;
+  font-size:14px;
+}
+.hidden{display:none}
+.final a{
+  display:block;
+  background:#16a34a;
+  color:white;
+  text-align:center;
+  padding:14px;
+  border-radius:10px;
+  margin-top:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LAiSON Electronic Signature</h1>
+  <p>Review the document, tap where signature and date belong, sign with your finger, then submit.</p>
+</header>
+
+<div class="toolbar">
+  <button id="placeSigBtn" class="primary">Place Signature</button>
+  <button id="placeDateBtn">Place Date</button>
+  <button id="zoomInBtn">Zoom In</button>
+  <button id="zoomOutBtn">Zoom Out</button>
+</div>
+
+<div id="viewerWrap"></div>
+
+<div class="panel">
+  <div class="small">
+    Required: place signature and date on the document before submitting.
+  </div>
+
+  <input id="name" type="text" placeholder="Full legal name">
+
+  <canvas id="sigPad"></canvas>
+
+  <p>
+    <label>
+      <input id="consent" type="checkbox">
+      I consent to sign this document electronically. I understand this electronic signature is intended to have the same effect as my handwritten signature.
+    </label>
+  </p>
+
+  <button class="danger" id="clearSig">Clear Signature</button>
+  <button class="primary" id="submitBtn">Submit Signature</button>
+
+  <div id="status" class="status">Loading document...</div>
+  <div id="final" class="final"></div>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const API="https://api.laison.org:8443";
+
+let pdfDoc=null;
+let scale=1.25;
+let mode="signature";
+let signatureSpot=null;
+let dateSpot=null;
+let renderedPages={};
+
+const viewer=document.getElementById("viewerWrap");
+const statusBox=document.getElementById("status");
+
+function status(msg){ statusBox.textContent=msg; }
+
+document.getElementById("placeSigBtn").onclick=()=>{
+  mode="signature";
+  document.getElementById("placeSigBtn").classList.add("active");
+  document.getElementById("placeDateBtn").classList.remove("active");
+  status("Tap the PDF where the signature should go.");
+};
+
+document.getElementById("placeDateBtn").onclick=()=>{
+  mode="date";
+  document.getElementById("placeDateBtn").classList.add("active");
+  document.getElementById("placeSigBtn").classList.remove("active");
+  status("Tap the PDF where the date should go.");
+};
+
+document.getElementById("zoomInBtn").onclick=()=>{scale+=.15; renderAll();}
+document.getElementById("zoomOutBtn").onclick=()=>{scale=Math.max(.7,scale-.15); renderAll();}
+
+async function loadPdf(){
+  const url=API+"/esign/document.pdf?cache="+Date.now();
+  pdfDoc=await pdfjsLib.getDocument(url).promise;
+  await renderAll();
+  status("Document loaded. Tap where the signature should go.");
+  document.getElementById("placeSigBtn").classList.add("active");
+}
+
+async function renderAll(){
+  viewer.innerHTML="";
+  renderedPages={};
+
+  for(let n=1;n<=pdfDoc.numPages;n++){
+    const page=await pdfDoc.getPage(n);
+    const viewport=page.getViewport({scale});
+
+    const box=document.createElement("div");
+    box.className="pageBox";
+    box.dataset.page=n;
+
+    const canvas=document.createElement("canvas");
+    canvas.className="pdfPage";
+    const ctx=canvas.getContext("2d");
+
+    canvas.width=viewport.width;
+    canvas.height=viewport.height;
+    canvas.style.width=viewport.width+"px";
+    canvas.style.height=viewport.height+"px";
+
+    box.style.width=viewport.width+"px";
+
+    box.appendChild(canvas);
+    viewer.appendChild(box);
+
+    await page.render({canvasContext:ctx,viewport}).promise;
+
+    renderedPages[n]={
+      box,
+      canvas,
+      width:viewport.width,
+      height:viewport.height
+    };
+
+    box.onclick=(e)=>placeMark(e, n);
+  }
+
+  redrawMarkers();
+}
+
+function placeMark(e,pageNum){
+  const data=renderedPages[pageNum];
+  const rect=data.box.getBoundingClientRect();
+
+  const x=e.clientX-rect.left;
+  const y=e.clientY-rect.top;
+
+  if(mode==="signature"){
+    signatureSpot={page:pageNum,x,y,view_w:data.width,view_h:data.height};
+    status("Signature location placed. Now tap Place Date, then tap the date location.");
+  }else{
+    dateSpot={page:pageNum,x,y,view_w:data.width,view_h:data.height};
+    status("Date location placed. Draw signature below and submit.");
+  }
+  redrawMarkers();
+}
+
+function redrawMarkers(){
+  document.querySelectorAll(".marker").forEach(m=>m.remove());
+
+  if(signatureSpot && renderedPages[signatureSpot.page]){
+    const m=document.createElement("div");
+    m.className="marker";
+    m.textContent="SIGN";
+    m.style.left=signatureSpot.x+"px";
+    m.style.top=signatureSpot.y+"px";
+    renderedPages[signatureSpot.page].box.appendChild(m);
+  }
+
+  if(dateSpot && renderedPages[dateSpot.page]){
+    const m=document.createElement("div");
+    m.className="marker";
+    m.textContent="DATE";
+    m.style.left=dateSpot.x+"px";
+    m.style.top=dateSpot.y+"px";
+    renderedPages[dateSpot.page].box.appendChild(m);
+  }
+}
+
+/* signature pad */
+const sigCanvas=document.getElementById("sigPad");
+const sigCtx=sigCanvas.getContext("2d");
+let drawing=false;
+
+function resizeSig(){
+  const r=sigCanvas.getBoundingClientRect();
+  sigCanvas.width=r.width*devicePixelRatio;
+  sigCanvas.height=r.height*devicePixelRatio;
+  sigCtx.scale(devicePixelRatio,devicePixelRatio);
+  sigCtx.lineWidth=2.4;
+  sigCtx.lineCap="round";
+}
+setTimeout(resizeSig,100);
+window.addEventListener("resize",resizeSig);
+
+function pos(e){
+  const r=sigCanvas.getBoundingClientRect();
+  const t=e.touches?e.touches[0]:e;
+  return {x:t.clientX-r.left,y:t.clientY-r.top};
+}
+function start(e){drawing=true;const p=pos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);e.preventDefault();}
+function move(e){if(!drawing)return;const p=pos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();e.preventDefault();}
+function end(e){drawing=false;e.preventDefault();}
+
+sigCanvas.addEventListener("mousedown",start);
+sigCanvas.addEventListener("mousemove",move);
+sigCanvas.addEventListener("mouseup",end);
+sigCanvas.addEventListener("mouseleave",end);
+sigCanvas.addEventListener("touchstart",start,{passive:false});
+sigCanvas.addEventListener("touchmove",move,{passive:false});
+sigCanvas.addEventListener("touchend",end,{passive:false});
+
+document.getElementById("clearSig").onclick=()=>{
+  sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);
+};
+
+document.getElementById("submitBtn").onclick=async()=>{
+  const name=document.getElementById("name").value.trim();
+  const consent=document.getElementById("consent").checked;
+
+  if(!name){status("Enter full legal name.");return;}
+  if(!signatureSpot){status("Tap where the signature should go.");return;}
+  if(!dateSpot){status("Tap where the date should go.");return;}
+  if(!consent){status("Consent checkbox is required.");return;}
+
+  status("Submitting signature...");
+
+  const payload={
+    name,
+    consent:"yes",
+    signature:{
+      ...signatureSpot,
+      image:sigCanvas.toDataURL("image/png")
+    },
+    date:dateSpot
+  };
+
+  const res=await fetch(API+"/esign/submit",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+
+  const out=await res.json();
+
+  if(!out.ok){
+    status("Error: "+out.error);
+    return;
+  }
+
+  status("Signed successfully. Reloading signed PDF...");
+  document.getElementById("final").innerHTML =
+    '<a href="'+API+'/esign/final.pdf" target="_blank">Open Signed PDF</a>';
+
+  signatureSpot=null;
+  dateSpot=null;
+  await loadPdf();
+};
+
+loadPdf().catch(e=>status("Could not load PDF: "+e.message));
+</script>
+
+</body>
+</html>
