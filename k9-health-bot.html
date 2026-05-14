@@ -207,10 +207,10 @@ button:hover {
   </div>
 </section>
 <script>
-const API = "https://dgf-api.laison.org/ingest";
-const REGISTER_URL = "https://dgf-api.laison.org/#register";
-const LOGIN_URL = "https://dgf-api.laison.org/#login";
-const PAYMENT_API = "https://dgf-api.laison.org/fiserv/payment";
+const API = `${API_ROOT}/ingest`;
+const REGISTER_URL = `${API_ROOT}/static/register.html`;
+const LOGIN_URL = `${API_ROOT}/static/login.html`;
+const PAYMENT_API = `${API_ROOT}/fiserv/payment`;
 
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
