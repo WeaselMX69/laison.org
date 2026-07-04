@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dog-Gone-Fit AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --primary:#1fa2ff;
+  --primary-dark:#0e8fe6;
+  --bg-dark:#0b0f14;
+  --bg-darker:#020617;
+  --text-light:#e6e6e6;
+  --text-lighter:#cfd8dc;
+  --text-meta:#9ca3af;
+  --border-glow:rgba(31,162,255,.3);
+  --shadow-glow:rgba(31,162,255,.15);
+  --bubble-bg:#e9edf1;
+  --bubble-text:#0b0f14;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh;
+  background:linear-gradient(180deg,var(--bg-dark),var(--bg-darker));
+  color:var(--text-light);
+  font-family:Segoe UI,Arial,sans-serif;
+  padding:24px;
+}
+.wrap{ width:min(760px,100%); margin:0 auto; }
+.panel{
+  background:rgba(17,24,39,.88);
+  border:1px solid var(--border-glow);
+  box-shadow:0 0 28px var(--shadow-glow);
+  border-radius:18px;
+  padding:24px;
+}
+h1{
+  font-family:Arial Black,Segoe UI,Arial,sans-serif;
+  letter-spacing:1px;
+  text-align:center;
+  margin:0 0 6px;
+  color:var(--primary);
+}
+.sub{ text-align:center; color:var(--text-lighter); margin:0 0 20px; }
+#chatlog{ display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+.bubble{
+  background:var(--bubble-bg);
+  color:var(--bubble-text);
+  border-radius:12px;
+  padding:14px 16px;
+  line-height:1.4;
+  white-space:pre-wrap;
+}
+.bubble.error{ background:#f4d3d3; }
+.bubble.user{ background:var(--primary); color:#fff; align-self:flex-end; }
+.inputrow{ display:flex; gap:10px; }
+#chatInput{
+  flex:1;
+  border:1px solid var(--border-glow);
+  background:rgba(2,6,23,.9);
+  color:#fff;
+  border-radius:10px;
+  padding:13px 14px;
+  font-size:1rem;
+}
+.iconbtn{
+  width:46px; flex:none;
+  border:1px solid var(--border-glow);
+  background:rgba(31,41,55,.85);
+  color:#fff;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:1.1rem;
+}
+#sendBtn{
+  border:none;
+  background:var(--primary);
+  color:#fff;
+  font-weight:700;
+  border-radius:10px;
+  padding:13px 22px;
+  cursor:pointer;
+}
+#sendBtn:hover{ background:var(--primary-dark); }
+.hint{ text-align:center; color:var(--text-meta); font-size:.85rem; margin:12px 0 20px; }
+hr{ border:none; border-top:1px solid var(--border-glow); margin:0 0 18px; }
+.audiorow{ display:flex; justify-content:center; gap:14px; margin-bottom:10px; }
+.audiobtn{
+  width:52px; height:52px;
+  border-radius:10px;
+  border:1px solid var(--border-glow);
+  background:rgba(31,41,55,.85);
+  color:#fff;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+.audiobtn:hover{ background:rgba(31,41,55,1); }
+.audiobtn.recording{ background:#c0392b; }
+.audiocaption{ text-align:center; color:var(--text-meta); font-size:.9rem; }
+#fileInput{ display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <h1>Dog-Gone-Fit AI</h1>
+    <p class="sub">Deterministic Intelligence Machine &bull; Adventure Hikes &bull; Agility Training</p>
+
+    <div id="chatlog">
+      <div class="bubble">Welcome to Dog-Gone-Fit AI, a deterministic intelligence machine. Ask about adventure hikes, agility training, or your 4-paw family members.</div>
+    </div>
+
+    <div class="inputrow">
+      <input id="chatInput" placeholder="Ask about your 4-paw family members..." autocomplete="off">
+      <button class="iconbtn" id="attachBtn" title="Attach a file">+</button>
+      <button id="sendBtn">Send</button>
+    </div>
+    <input type="file" id="fileInput" multiple>
+    <p class="hint">Tell us about your adventures with your dogs.</p>
+
+    <hr>
+    <div class="audiorow">
+      <button class="audiobtn" id="micBtn" title="Record a note">&#127908;</button>
+      <button class="audiobtn" id="playBtn" title="Play">&#9654;</button>
+      <button class="audiobtn" id="stopBtn" title="Stop">&#9632;</button>
+    </div>
+    <p class="audiocaption">Listen to Nana 'em while you're here</p>
+  </div>
+</div>
+
+<script>
+const chatlog   = document.getElementById("chatlog");
+const chatInput = document.getElementById("chatInput");
+const sendBtn   = document.getElementById("sendBtn");
+const attachBtn = document.getElementById("attachBtn");
+const fileInput = document.getElementById("fileInput");
+const micBtn    = document.getElementById("micBtn");
+const playBtn   = document.getElementById("playBtn");
+const stopBtn   = document.getElementById("stopBtn");
+
+function addBubble(text, cls) {
+  const div = document.createElement("div");
+  div.className = "bubble" + (cls ? " " + cls : "");
+  div.textContent = text;
+  chatlog.appendChild(div);
+  div.scrollIntoView({behavior:"smooth", block:"end"});
+}
+
+// Matches POST /ingest -> { message } / returns { response }
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  addBubble(text, "user");
+  chatInput.value = "";
+  try {
+    const res = await fetch("/ingest", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: text})
+    });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch (e) { throw new Error("JSON.parse: " + e.message); }
+    addBubble(data.response || "No response from model.");
+  } catch (err) {
+    addBubble("Upload error: " + err.message, "error");
+  }
+}
+
+// Matches POST /upload -> multipart field name files[]
+async function uploadFiles(fileList) {
+  const names = Array.from(fileList).map(f => f.name).join(", ");
+  addBubble("Uploading " + names + "...");
+  const form = new FormData();
+  for (const f of fileList) form.append("files[]", f);
+  try {
+    const res = await fetch("/upload", { method: "POST", body: form });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch (e) { throw new Error("JSON.parse: " + e.message); }
+    addBubble(data.message || "Upload complete.");
+  } catch (err) {
+    addBubble("Upload error: " + err.message, "error");
+  }
+}
+
+sendBtn.addEventListener("click", sendMessage);
+chatInput.addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
+attachBtn.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => {
+  if (fileInput.files.length) uploadFiles(fileInput.files);
+  fileInput.value = "";
+});
+
+// Mic records a voice note and sends it through the same /upload route
+let mediaRecorder, chunks = [];
+micBtn.addEventListener("click", async () => {
+  if (mediaRecorder && mediaRecorder.state === "recording") {
+    mediaRecorder.stop();
+    micBtn.classList.remove("recording");
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, {type:"audio/webm"});
+      const file = new File([blob], "voice-note-" + Date.now() + ".webm", {type:"audio/webm"});
+      uploadFiles([file]);
+    };
+    mediaRecorder.start();
+    micBtn.classList.add("recording");
+  } catch (err) {
+    addBubble("Mic error: " + err.message, "error");
+  }
+});
+
+// Play/Stop hit the existing GET /play_audio?file=... route
+let audioEl = null;
+playBtn.addEventListener("click", () => {
+  if (!audioEl) audioEl = new Audio("/play_audio?file=Nana.mp3");
+  audioEl.play().catch(err => addBubble("Playback error: " + err.message, "error"));
+});
+stopBtn.addEventListener("click", () => {
+  if (audioEl) { audioEl.pause(); audioEl.currentTime = 0; }
+});
+</script>
+</body>
+</html>
