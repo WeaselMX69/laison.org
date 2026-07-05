@@ -222,7 +222,7 @@ micBtn.addEventListener("click", async () => {
 // Play/Stop hit the existing GET /play_audio?file=... route
 let audioEl = null;
 playBtn.addEventListener("click", () => {
-  if (!audioEl) audioEl = new Audio("/play_audio?file=Shep.mp3");
+  if (!audioEl) audioEl = new Audio("/Shep.mp3");
   audioEl.play().catch(err => addBubble("Playback error: " + err.message, "error"));
 });
 stopBtn.addEventListener("click", () => {
