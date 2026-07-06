@@ -910,9 +910,20 @@ body{
     <section class="screen chat-screen hidden" id="messageScreen">
       <div class="stage">
         <div class="top-controls">
-          <button class="control-btn back-btn" id="backBtn" aria-label="Go back">← Back</button>
-          <button class="control-btn replay-btn" id="replayBtn" aria-label="Replay chat">Replay</button>
-        </div>
+  <button class="control-btn back-btn" id="backBtn" aria-label="Go back">← Back</button>
+
+  <button class="control-btn replay-btn" id="replayBtn" aria-label="Replay chat">Replay</button>
+
+  <label style="display:flex;align-items:center;gap:8px;color:#fff;font-weight:bold;">
+    Speed
+    <input id="speedSlider"
+           type="range"
+           min="0.25"
+           max="3"
+           step="0.05"
+           value="1">
+  </label>
+</div>
 
         <div class="brand-wrap">
           <h1 class="brand">LAiSON.</h1>
