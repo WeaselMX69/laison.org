@@ -1127,7 +1127,7 @@ async function typeMsg(side, text, currentRunId, isLast = false) {
     if (ch === "!" || ch === "?") delay += 80;
     if (Math.random() < 0.04) delay += 110;
 
-    await sleep(delay);
+    await sleep(delay / playbackSpeed);
   }
 
   cursor.remove();
