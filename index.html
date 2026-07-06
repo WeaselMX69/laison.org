@@ -1147,7 +1147,7 @@ async function typeMsg(side, text, currentRunId, isLast = false) {
 
       countdownSpan.textContent = seconds;
       chat.scrollTop = chat.scrollHeight;
-      await sleep(1000);
+      await sleep(delay / playbackSpeed);
       seconds--;
     }
 
@@ -1171,7 +1171,7 @@ async function playConversation() {
 
     if (currentRunId !== runId) return;
     await typeMsg(m.side, m.text, currentRunId, isLast);
-    await sleep(509);
+    await sleep(509 / playbackSpeed);
   }
 
   if (currentRunId !== runId) return;
