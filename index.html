@@ -1035,6 +1035,13 @@ const messageScreen = document.getElementById("messageScreen");
 const openMessageBtn = document.getElementById("openMessageBtn");
 const backBtn = document.getElementById("backBtn");
 const replayBtn = document.getElementById("replayBtn");
+const speedSlider = document.getElementById("speedSlider");
+
+let playbackSpeed = 1;
+
+speedSlider.addEventListener("input", () => {
+  playbackSpeed = parseFloat(speedSlider.value);
+});
 const chat = document.getElementById("hero-chat");
 const statusNote = document.getElementById("statusNote");
 const overlay = document.getElementById("healthBotOverlay");
