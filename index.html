@@ -1146,18 +1146,20 @@ async function typeMsg(side, text, currentRunId, isLast = false) {
     countdownSpan.style.color = "#ff4d4d";
     bubble.appendChild(countdownSpan);
 
-    let seconds = 3;
+  let seconds = 3;
 
-    while (seconds > 0) {
-      if (currentRunId !== runId) return;
+  while (seconds > 0) {
+    if (currentRunId !== runId) return;
 
-      countdownSpan.textContent = seconds;
-      chat.scrollTop = chat.scrollHeight;
-      await sleep(delay / playbackSpeed);
-      seconds--;
-    }
+    countdownSpan.textContent = seconds;
+    chat.scrollTop = chat.scrollHeight;
 
-    countdownSpan.textContent = "0";
+    await sleep(1000 / playbackSpeed);
+
+    seconds--;
+  }
+
+  countdownSpan.textContent = "";
   }
 
   chat.scrollTop = chat.scrollHeight;
