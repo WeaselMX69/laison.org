@@ -1027,7 +1027,7 @@ body{
         <button
           class="overlay-close"
           id="overlayCloseBtn"
-          type="button"
+          href="https://chatgpt.com/"
         >
           No Thanks
         </button>
@@ -1204,7 +1204,6 @@ function showMessage() {
 openMessageBtn.addEventListener("click", showMessage);
 backBtn.addEventListener("click", showLanding);
 replayBtn.addEventListener("click", playConversation);
-overlayCloseBtn.addEventListener("click", hideOverlay);
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") hideOverlay();
