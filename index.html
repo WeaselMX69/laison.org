@@ -1142,7 +1142,9 @@ async function typeMsg(side, text, currentRunId, isLast = false) {
     const countdownSpan = document.createElement("span");
     countdownSpan.style.marginLeft = "6px";
     countdownSpan.style.fontWeight = "700";
-    countdownSpan.style.fontSize = "2rem";      // bigger — adjust to taste (e.g. "48px")
+    countdownSpan.style.display = "block";
+    countdownSpan.style.marginTop = "10px";
+    countdownSpan.style.fontSize = "3rem";      // bigger — adjust to taste (e.g. "48px")
     countdownSpan.style.color = "#ff4d4d";
     bubble.appendChild(countdownSpan);
 
