@@ -19,6 +19,7 @@
             background: white;
             padding: 20px;
             border-radius: 12px;
+            border-top: 6px solid #f5c518;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
@@ -38,13 +39,19 @@
             border: 1px solid #d8e8ff;
             border-radius: 8px;
             font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #f5c518;
+            box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.3);
         }
         textarea {
             min-height: 100px;
         }
         button {
-            background: #5aa2ff;
-            color: white;
+            background: #f5c518;
+            color: #2e2a10;
             border: none;
             padding: 12px;
             width: 100%;
@@ -54,20 +61,27 @@
             cursor: pointer;
         }
         button:hover {
-            background: #2e83f7;
-        }
-        .success-message {
-            display: none;
-            background: #eaf3ff;
-            color: #5aa2ff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
+            background: #e0b200;
         }
         .required {
             color: red;
+        }
+        .notice {
+            background: #fff9e6;
+            border-left: 3px solid #f5c518;
+            color: #6b5900;
+            padding: 12px 14px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .error-text {
+            color: red;
+            font-size: 13px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
         }
     </style>
 </head>
@@ -76,10 +90,13 @@
         <h1 style="color: #5aa2ff; text-align: center;">LAiSON Job Application</h1>
         <p style="text-align: center; color: #666;">Criminal Justice Roles</p>
 
-        <form id="jobForm" action="https://formspree.io/f/mqkvnvlo" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="_to" value="creator@laison.org">
-            <input type="hidden" name="_subject" value="New Job Application - Criminal Justice">
+        <div class="notice">
+            Submitting opens your email app with your answers filled in, addressed to
+            <strong>creator@laison.org</strong>. Paste a link to your resume below (Google Drive,
+            Dropbox, etc.) — this page can't attach a file directly.
+        </div>
 
+        <form id="jobForm" onsubmit="return false;">
             <div class="form-group">
                 <label for="fullName">Full Name <span class="required">*</span></label>
                 <input type="text" id="fullName" name="fullName" required>
@@ -118,51 +135,50 @@
             </div>
 
             <div class="form-group">
-                <label for="resume">Upload Resume (PDF only)</label>
-                <input type="file" id="resume" name="resume" accept=".pdf">
+                <label for="resumeLink">Resume Link (Google Drive, Dropbox, etc.)</label>
+                <input type="url" id="resumeLink" name="resumeLink" placeholder="https://drive.google.com/...">
             </div>
 
-            <button type="submit">Submit Application</button>
-            <div id="successMessage" class="success-message">
-                Thank you! Your application has been sent to creator@laison.org.
-            </div>
+            <div id="formError" class="error-text">Please fill in all required fields.</div>
+
+            <button type="button" onclick="sendApplication()">Submit Application</button>
         </form>
     </div>
 
     <script>
-        document.getElementById('jobForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const submitBtn = form.querySelector('button[type="submit"]');
+        function sendApplication() {
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const role = document.getElementById('role').value;
+            const exp = document.getElementById('experience').value.trim();
+            const certs = document.getElementById('certifications').value.trim();
+            const resumeLink = document.getElementById('resumeLink').value.trim();
+            const errorEl = document.getElementById('formError');
 
-            submitBtn.textContent = "Sending...";
-            submitBtn.disabled = true;
+            if (!name || !email || !role || !exp) {
+                errorEl.style.display = 'block';
+                return;
+            }
+            errorEl.style.display = 'none';
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('successMessage').style.display = 'block';
-                    form.reset();
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                        submitBtn.textContent = "Submit Application";
-                        submitBtn.disabled = false;
-                    }, 5000);
-                } else {
-                    throw new Error('Submission failed');
-                }
-            })
-            .catch(() => {
-                alert('Error submitting form. Please try again.');
-                submitBtn.textContent = "Submit Application";
-                submitBtn.disabled = false;
-            });
-        });
+            const lines = [
+                `Name: ${name}`,
+                `Email: ${email}`,
+                `Phone: ${phone || 'N/A'}`,
+                `Role: ${role}`,
+                `Certifications: ${certs || 'N/A'}`,
+                `Resume link: ${resumeLink || 'N/A - not provided'}`,
+                ``,
+                `Experience:`,
+                exp
+            ];
+
+            const subject = encodeURIComponent(`Job Application - ${role} - ${name}`);
+            const body = encodeURIComponent(lines.join('\n'));
+
+            window.location.href = `mailto:creator@laison.org?subject=${subject}&body=${body}`;
+        }
     </script>
 </body>
 </html>
