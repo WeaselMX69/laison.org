@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAiSON - Criminal Justice Job Intake</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white-bg: #ffffff;
+            --white-text: #111111;
+            --blue: #5aa2ff;
+            --blue-soft: #eaf3ff;
+            --yellow: #ffe37a;
+            --yellow-soft: #fff7cf;
+            --white-border: #d8e8ff;
+            --white-shadow: 0 14px 40px rgba(55, 95, 160, 0.12);
+            --dark-bg: #0b0f14;
+            --dark-bg-2: #020617;
+            --panel: rgba(17, 24, 39, 0.84);
+            --chat-bg: rgba(15, 23, 42, 0.92);
+            --text-light: #e6e6e6;
+            --text-lighter: #cfd8dc;
+            --text-meta: #9ca3af;
+            --border-glow: rgba(31, 162, 255, 0.3);
+            --shadow-glow: rgba(31, 162, 255, 0.15);
+            --radius: 28px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+            color: var(--white-text);
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100dvh;
+            padding: 18px;
+            background:
+                radial-gradient(circle at top left, #f7fbff 0%, #ffffff 40%),
+                linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+        }
+
+        .form-card {
+            width: min(100%, 760px);
+            min-height: calc(100vh - 36px);
+            min-height: calc(100dvh - 36px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 18px;
+            background: #fff;
+            border: 1px solid var(--white-border);
+            border-radius: var(--radius);
+            box-shadow: var(--white-shadow);
+            padding: 22px 18px 20px;
+            overflow-y: auto;
+        }
+
+        .form-title {
+            margin: 0;
+            font-size: clamp(28px, 8vw, 48px);
+            line-height: 1.1;
+            color: var(--blue);
+            font-weight: 800;
+        }
+
+        .form-subtitle {
+            margin: 0 0 20px 0;
+            font-size: clamp(16px, 4vw, 20px);
+            color: #333;
+            max-width: 20ch;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: clamp(14px, 3.6vw, 16px);
+            font-weight: 700;
+            color: var(--white-text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--white-border);
+            border-radius: 12px;
+            font-size: clamp(14px, 3.6vw, 16px);
+            background: var(--white-bg);
+            color: var(--white-text);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px var(--blue-soft);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(180deg, var(--blue) 0%, #2e83f7 100%);
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 700;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease;
+            box-shadow: 0 4px 12px rgba(31, 162, 255, 0.28);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(180deg, #4a91e8 0%, #1e70e8 100%);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .success-message {
+            display: none;
+            background: var(--blue-soft);
+            color: var(--blue);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: clamp(14px, 3.6vw, 16px);
+            font-weight: 700;
+            text-align: center;
+            margin-top: 16px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .required {
+            color: #ff4d4d;
+        }
+
+        /* Badge for consistency with your template */
+        .badge {
+            display: inline-block;
+            align-self: flex-start;
+            background: var(--yellow-soft);
+            color: #756100;
+            border: 1px solid #f3df8f;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: clamp(14px, 3.6vw, 18px);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <div class="badge">Job Intake</div>
+        <h1 class="form-title">LAiSON.</h1>
+        <p class="form-subtitle">Criminal Justice Job Application</p>
+        
+        <form id="jobIntakeForm" action="https://formspree.io/f/mqkvnvlo" method="POST">
+            <input type="hidden" name="_to" value="creator@laison.org">
+            <input type="hidden" name="_subject" value="New Job Application - Criminal Justice">
+            
+            <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Desired Role <span class="required">*</span></label>
+                <select id="role" name="role" required>
+                    <option value="">Select a role...</option>
+                    <option value="Penetration Tester">Penetration Tester</option>
+                    <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                    <option value="Legal Consultant">Legal Consultant (Criminal Justice)</option>
+                    <option value="Forensic Analyst">Forensic Analyst</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Relevant Experience <span class="required">*</span></label>
+                <textarea id="experience" name="experience" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="certifications">Certifications</label>
+                <input type="text" id="certifications" name="certifications">
+            </div>
+            
+            <div class="form-group">
+                <label for="resume">Upload Resume (PDF only)</label>
+                <input type="file" id="resume" name="resume" accept=".pdf">
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Application</button>
+            <div id="successMessage" class="success-message">
+                Thank you! Your application has been submitted to creator@laison.org.
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('jobIntakeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    form.reset();
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 5000);
+                } else {
+                    alert('Error submitting form. Please try again.');
+                }
+            })
+            .catch(() => alert('Error submitting form. Please try again.'));
+        });
+    </script>
+</body>
+</html>
