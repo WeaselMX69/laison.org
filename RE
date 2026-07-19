@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAiSON Master Real Estate Referral Agreement</title>
+
+<style>
+@page {
+    size: Letter;
+    margin: .75in;
+}
+
+body {
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+    line-height: 1.35;
+    color: #000;
+    max-width: 8.5in;
+    margin:auto;
+}
+
+h1,h2 {
+    text-align:center;
+}
+
+h1 {
+    font-size:20pt;
+}
+
+h2 {
+    font-size:15pt;
+}
+
+h3 {
+    margin-top:25px;
+    border-bottom:1px solid black;
+    padding-bottom:3px;
+}
+
+input {
+    border:0;
+    border-bottom:1px solid black;
+    font-family:inherit;
+    font-size:12pt;
+    width:100%;
+    background:white;
+}
+
+.field {
+    display:inline-block;
+    border-bottom:1px solid black;
+    min-width:200px;
+}
+
+.row {
+    display:flex;
+    gap:20px;
+    margin:10px 0;
+}
+
+.col {
+    flex:1;
+}
+
+.pagebreak {
+    page-break-before:always;
+}
+
+@media print {
+    .printbutton {
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="printbutton" onclick="window.print()">
+Print Agreement
+</button>
+
+<h1>MASTER REAL ESTATE REFERRAL AGREEMENT</h1>
+<h2>Commonwealth of Massachusetts / State of Maine</h2>
+
+<p>
+Agreement Date:
+<input type="date">
+</p>
+
+<p>
+This Master Real Estate Referral Agreement ("Agreement") is entered into by and
+between the following parties:
+</p>
+
+<h3>REFERRING PARTY</h3>
+
+<p>
+<strong>Kevin Goodwin</strong><br>
+62 Wilson Hill Rd.<br>
+Cherryfield, Maine
+</p>
+
+<p>
+Massachusetts Real Estate Salesperson License No.: 
+<strong>9523596-RE-S</strong>
+</p>
+
+<p>
+License Status:<br>
+Inactive Massachusetts Real Estate Salesperson License in good standing,
+maintaining eligibility to receive lawful referral compensation through a
+licensed Massachusetts broker or brokerage as permitted by applicable
+Massachusetts real estate licensing laws and regulations.
+</p>
+
+<p>
+Referral Email:
+<strong>creator@laison.org</strong>
+</p>
+
+<p>
+Business Entity / Payee:
+</p>
+
+<p>
+<strong>LAiSON</strong><br>
+Maine Charter No. 202600427 D<br>
+24 Church St.<br>
+Ellsworth, Maine
+</p>
+
+
+<h3>RECEIVING BROKER / BROKERAGE</h3>
+
+<div class="row">
+<div class="col">
+Broker Name:<br>
+<input type="text">
+</div>
+
+<div class="col">
+Broker License No.:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Brokerage Name:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Address:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Email:<br>
+<input type="text">
+</div>
+</div>
+
+
+<h3>1. PURPOSE OF AGREEMENT</h3>
+
+<p>
+The purpose of this Agreement is to establish an ongoing real estate referral
+relationship whereby the Referring Party may provide prospective clients,
+customers, leads, introductions, and business opportunities to the Receiving
+Broker.
+</p>
+
+<p>
+This Agreement applies to all real estate leads originating from the Referring
+Party, including but not limited to leads transmitted through:
+</p>
+
+<p>
+<strong>
+creator@laison.org
+</strong>
+</p>
+
+<p>
+or any other written, electronic, digital, telephone, web-based, API, social
+media, or future communication method controlled by the Referring Party or
+LAiSON.
+</p>
+
+<h3>2. DEFINITION OF LAiSON REFERRAL</h3>
+
+<p>
+A "LAiSON Referral" means any prospective buyer, seller, landlord, tenant,
+investor, household, or other real estate client whose information,
+introduction, inquiry, or business opportunity originates directly or indirectly
+from Kevin Goodwin or LAiSON.
+</p>
+
+<p>
+Each referral may be identified by a unique referral identifier, electronic
+record, email transmission, or other documentation method.
+</p>
+
+<h3>3. REFERRAL COMPENSATION</h3>
+
+<p>
+For every completed real estate transaction resulting from a LAiSON Referral,
+the Receiving Broker agrees to pay:
+</p>
+
+<h2>
+Twenty-Five Percent (25%) of Gross Commission Income
+</h2>
+
+<p>
+actually received by the Receiving Broker or Brokerage.
+</p>
+
+<p>
+Gross Commission Income means total commission compensation received before
+deductions including brokerage splits, expenses, fees, marketing costs, taxes,
+or overhead.
+</p>
+<div class="pagebreak"></div>
+
+<h3>4. PAYMENT TERMS</h3>
+
+<p>
+The referral fee shall become due and payable after:
+</p>
+
+<ol>
+<li>The transaction has successfully closed;</li>
+<li>The Receiving Broker or Brokerage has received commission proceeds;</li>
+<li>Any required brokerage accounting procedures have been completed.</li>
+</ol>
+
+<p>
+Payment shall be made by wire transfer according to payment instructions
+provided by the Referring Party.
+</p>
+
+<p>
+<strong>Payee:</strong><br>
+LAiSON<br>
+Maine Charter No. 202600427 D
+</p>
+
+<p>
+<strong>Financial Institution:</strong><br>
+Santander Bank
+</p>
+
+<p>
+Wire instructions shall be supplied separately through secure written
+communication.
+</p>
+
+
+<h3>5. NON-CIRCUMVENTION AND REFERRAL PROTECTION</h3>
+
+<p>
+The Receiving Broker agrees that it shall not directly or indirectly avoid,
+bypass, or circumvent the Referring Party's referral rights.
+</p>
+
+<p>
+Circumvention includes, but is not limited to:
+</p>
+
+<ul>
+<li>Failing to identify a client as a LAiSON Referral;</li>
+<li>Transferring the client to another agent or brokerage to avoid payment;</li>
+<li>Restructuring compensation arrangements to avoid referral obligations;</li>
+<li>Using an affiliated person, company, spouse, partner, or third party to avoid payment.</li>
+</ul>
+
+<p>
+The referral compensation obligation survives any reassignment, transfer,
+continuation, or future transaction involving the referred client.
+</p>
+
+
+<h3>6. REFERRAL PROTECTION PERIOD</h3>
+
+<p>
+The referral fee obligation applies to any transaction involving a LAiSON
+Referral occurring during the term of this Agreement and for:
+</p>
+
+<h2>
+Twenty-Four (24) Months
+</h2>
+
+<p>
+following the initial referral date.
+</p>
+
+
+<h3>7. LICENSING COMPLIANCE</h3>
+
+<p>
+The Parties acknowledge that Massachusetts real estate licensing laws regulate
+the payment of real estate-related compensation.
+</p>
+
+<p>
+The Parties intend that all compensation under this Agreement shall be paid in
+a manner consistent with applicable Massachusetts law, including any requirement
+that referral compensation be paid through or approved by a licensed
+Massachusetts broker.
+</p>
+
+<p>
+The Referring Party represents that they hold an inactive Massachusetts Real
+Estate Salesperson License in good standing and that this Agreement is intended
+solely for lawful referral compensation arrangements.
+</p>
+
+
+<h3>8. NO AGENCY RELATIONSHIP</h3>
+
+<p>
+Nothing in this Agreement creates an employment relationship, partnership,
+joint venture, or agency relationship between the Parties.
+</p>
+
+<p>
+The Receiving Broker retains sole responsibility for licensed real estate
+activities, client representation, disclosures, negotiations, and compliance
+obligations.
+</p>
+
+
+<h3>9. RECORDS AND VERIFICATION</h3>
+
+<p>
+Upon reasonable request, the Receiving Broker shall provide documentation
+sufficient to verify:
+</p>
+
+<ul>
+<li>Closing date;</li>
+<li>Commission received;</li>
+<li>Calculation of referral compensation owed.</li>
+</ul>
+
+
+<h3>10. TERM AND TERMINATION</h3>
+
+<p>
+This Agreement shall remain effective until terminated by either Party through
+written notice.
+</p>
+
+<p>
+Termination shall not affect referral fees earned or obligations relating to
+LAiSON Referrals submitted before termination.
+</p>
+
+
+<h3>11. GOVERNING LAW</h3>
+
+<p>
+This Agreement shall be interpreted under the applicable laws of the
+Commonwealth of Massachusetts and, where appropriate, the State of Maine.
+</p>
+
+
+<div class="pagebreak"></div>
+
+<h1>SIGNATURES</h1>
+
+
+<h3>REFERRING PARTY</h3>
+
+<p>
+<strong>Kevin Goodwin</strong>
+</p>
+
+<p>
+Signature:
+</p>
+
+<input type="text">
+
+<div class="row">
+<div class="col">
+Date:<br>
+<input type="date">
+</div>
+</div>
+
+<p>
+Massachusetts Salesperson License No.:<br>
+<strong>9523596-RE-S</strong>
+</p>
+
+<p>
+On behalf of:
+</p>
+
+<p>
+<strong>LAiSON</strong><br>
+Maine Charter No. 202600427 D<br>
+24 Church St.<br>
+Ellsworth, Maine
+</p>
+
+
+
+<h3>RECEIVING BROKER / BROKERAGE</h3>
+
+<div class="row">
+<div class="col">
+Broker Name:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Broker License Number:<br>
+<input type="text">
+</div>
+
+<div class="col">
+Brokerage Name:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Broker Signature:<br>
+<input type="text">
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+Date:<br>
+<input type="date">
+</div>
+</div>
+
+
+<hr>
+
+<p style="text-align:center;font-size:10pt;">
+LAiSON™ Master Real Estate Referral Agreement<br>
+Version 1.0 • July 19, 2026
+</p>
+
+</body>
+</html>
