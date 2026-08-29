@@ -1055,56 +1055,238 @@ const statusNote = document.getElementById("statusNote");
 const overlay = document.getElementById("healthBotOverlay");
 const overlayCloseBtn = document.getElementById("overlayCloseBtn");
 
+```js
 const chatMsgs = [
   {
     side: "right",
-    text: "So, what’s your vision? Another app? Another platform? Or something that actually changes the game?"
+    text: "So what are you actually building?"
   },
   {
     side: "left",
-    text: "Game? No. A revolution. Imagine a social platform where entry isn’t just an invite—it’s a *pilgrimage*. A QR code hidden along the Falmouth bike path. No bots, no trolls, just people who *choose* to be there. And that’s just the surface."
+    text: "At first? Something much smaller than all of this. Dog-Gone-Fit AI. An AI that doesn't just answer questions—it learns how your business works. It helps you think, plan, book, communicate, create, and actually get things done."
   },
   {
     side: "right",
-    text: "A pilgrimage? That’s… poetic. But how does that protect my kids? How does that end a war?"
+    text: "So... ChatGPT?"
   },
   {
     side: "left",
-    text: "Your kids? By giving them a network that *they* control. Ad-hoc mesh, peer-to-peer, no corporate middlemen. No data mining. No algorithms manipulating their minds. And the war? We open-source the global carrier exchange. Transparent, decentralized. Let the LLMs mediate—GitHub as the neutral ground. Code doesn’t lie, and neither do the dogs."
+    text: "Like ChatGPT, but pointed at your business instead of the entire internet. It knows what you're trying to accomplish. It can help a dog trainer book a client, a videographer plan a shoot, a kennel manage appointments, or a small business turn an idea into something real."
   },
   {
     side: "right",
-    text: "Dogs? Now you’re losing me."
+    text: "And that's the revolution?"
   },
   {
     side: "left",
-    text: "Dogs understand loyalty, hierarchy, and *trust*. The Church of Dog isn’t a joke—it’s a metaphor. We’re building systems with the same principles: clear rules, no ambiguity, and absolute devotion to the pack. Microsoft? They’ll partner with us because they *have* to. We’re the missing link between their cloud and the real world."
+    text: "That's the doorway."
   },
   {
     side: "right",
-    text: "And the philanthropy? Where do I fit in?"
+    text: "Into what?"
   },
   {
     side: "left",
-    text: "You’re the bridge. Your influence, your resources—they turn this from a project into a *movement*. We’re not just coding; we’re rewiring society. And yes, we’ll monetize it. But the profit isn’t the point. The point is *ownership*. Your kids own their data. The world owns its networks. And Israel? We give them a tool to communicate without bullets."
+    text: "A different idea about technology. Technology should make a small business feel bigger—not make a big corporation feel smaller."
   },
   {
     side: "right",
-    text: "You make it sound so simple."
+    text: "You really think software can do that?"
   },
   {
     side: "left",
-    text: "It’s not simple. It’s *inevitable*. The tech is ready. The world is ready. The only question is: Are *you*?"
+    text: "I've watched people with incredible skills spend their lives drowning in phones, paperwork, scheduling, advertising, and systems that were never designed for them. Meanwhile, the actual work they love gets pushed into the corners."
   },
   {
     side: "right",
-    text: "Show me."
+    text: "So Dog-Gone-Fit AI gives them their time back?"
   },
   {
     side: "left",
-    text: "Check the bike path. The first code goes live at dawn."
+    text: "That's the idea. Let the machine handle the machinery. Let the human being do the human work."
+  },
+  {
+    side: "right",
+    text: "Like training dogs."
+  },
+  {
+    side: "left",
+    text: "Exactly. A dog doesn't care about your CRM. A client doesn't care about your database schema. They care whether you show up, whether you know what you're doing, and whether you actually give a damn."
+  },
+  {
+    side: "right",
+    text: "And the videography?"
+  },
+  {
+    side: "left",
+    text: "Same philosophy. Don't just sell someone a video. Tell their story. Capture the work they're proud of. Give a small business something they can actually use to show the world who they are."
+  },
+  {
+    side: "right",
+    text: "So someone could come here and book you?"
+  },
+  {
+    side: "left",
+    text: "That's what I want this conversation to become. You tell Dog-Gone-Fit AI what you need. Training. Videography. A promotional shoot. Help with your business. And instead of throwing you into a stupid form and making you figure everything out yourself, the AI actually talks to you."
+  },
+  {
+    side: "right",
+    text: "And eventually it does more than book appointments?"
+  },
+  {
+    side: "left",
+    text: "Much more. But I'm not interested in building another machine that makes people dependent on a corporation."
+  },
+  {
+    side: "right",
+    text: "Then what are you interested in?"
+  },
+  {
+    side: "left",
+    text: "People. Communities. Local businesses. Actual places where humans still know each other's names."
+  },
+  {
+    side: "right",
+    text: "You mean like Maine?"
+  },
+  {
+    side: "left",
+    text: "Especially Maine. Because Maine makes you remember that resources are real. Water is real. Land is real. Food is real. A community isn't an abstract number on a quarterly report."
+  },
+  {
+    side: "right",
+    text: "You're talking about the water?"
+  },
+  {
+    side: "left",
+    text: "I'm talking about what happens when the things that belong to everybody start being treated like somebody else's inventory. Maine has some of the cleanest, most valuable natural resources in the country. We should be asking what those resources can do for the people who live there."
+  },
+  {
+    side: "right",
+    text: "And somehow Facebook's data centers enter the picture?"
+  },
+  {
+    side: "left",
+    text: "That's the contrast that keeps bothering me. Imagine enormous data centers consuming enormous amounts of electricity, infrastructure, cooling, and water to feed machines somewhere far away—while local people are told that their own resources are just another commodity."
+  },
+  {
+    side: "right",
+    text: "So what's the alternative?"
+  },
+  {
+    side: "left",
+    text: "A tribe."
+  },
+  {
+    side: "right",
+    text: "A tribe?"
+  },
+  {
+    side: "left",
+    text: "Not a corporation pretending to be a community. An actual community. People making things together. Growing things. Brewing kombucha. Sharing knowledge. Building businesses. Using every lawful tool available—including Maine's home restaurant exemption—to create legitimate economic leverage for ordinary people."
+  },
+  {
+    side: "right",
+    text: "Kombucha as economic resistance?"
+  },
+  {
+    side: "left",
+    text: "Kombucha as proof that you don't need a billion-dollar factory to create value."
+  },
+  {
+    side: "right",
+    text: "That's a surprisingly beautiful way to put it."
+  },
+  {
+    side: "left",
+    text: "Because that's what I keep coming back to. The future doesn't have to look like another giant machine. It can look like people who know how to use the machines without becoming machines themselves."
+  },
+  {
+    side: "right",
+    text: "And AI belongs in that future?"
+  },
+  {
+    side: "left",
+    text: "Absolutely. But AI should be the tool in the hands of the person—not the person in the hands of the AI."
+  },
+  {
+    side: "right",
+    text: "So Dog-Gone-Fit AI is your first piece of that future."
+  },
+  {
+    side: "left",
+    text: "Yes. And maybe that's why I care so much about getting this first piece right. Because if I can make an AI that helps one small business survive, one dog get properly trained, one photographer get paid for their work, one family keep their doors open..."
+  },
+  {
+    side: "right",
+    text: "Then it's not really about software."
+  },
+  {
+    side: "left",
+    text: "No. It's about giving somebody a fighting chance."
+  },
+  {
+    side: "right",
+    text: "And if I need you?"
+  },
+  {
+    side: "left",
+    text: "Then don't navigate a website. Don't read twenty pages. Just talk to me."
+  },
+  {
+    side: "right",
+    text: "What if I need dog training?"
+  },
+  {
+    side: "left",
+    text: "We'll figure out what your dog needs."
+  },
+  {
+    side: "right",
+    text: "What if I need a video?"
+  },
+  {
+    side: "left",
+    text: "We'll tell your story."
+  },
+  {
+    side: "right",
+    text: "What if I don't even know what my business needs yet?"
+  },
+  {
+    side: "left",
+    text: "That's okay."
+  },
+  {
+    side: "right",
+    text: "Why?"
+  },
+  {
+    side: "left",
+    text: "Because you don't need to understand the technology. You just need to know what you're trying to build."
+  },
+  {
+    side: "right",
+    text: "And Dog-Gone-Fit AI will help with the rest?"
+  },
+  {
+    side: "left",
+    text: "That's what it's here for."
+  },
+  {
+    side: "right",
+    text: "Then let's see what it can do."
+  },
+  {
+    side: "left",
+    text: "Good."
+  },
+  {
+    side: "left",
+    text: "Tell it what you need."
   }
 ];
+
 
 let runId = 0;
 let overlayTimer = null;
