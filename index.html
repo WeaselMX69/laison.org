@@ -1056,24 +1056,54 @@ const overlay = document.getElementById("healthBotOverlay");
 const overlayCloseBtn = document.getElementById("overlayCloseBtn");
 
 const chatMsgs = [
-  { side: "right", text: "Are you that guy that can't talk? Are you dumb?" },
-  { side: "left", text: "NO! Well, yes... but NO! I'm the CEO of LAiSON & a non-verbal dog trainer, I can speak, but I chose not to talk because of what I know and what I bring to the table" },
-  { side: "right", text: "Really? What do you bring to the table?" },
-  { side: "left", text: "Commands... all the commands, lol. I also have vision!" },
-  { side: "right", text: "What kinda stuff you working on...for programs?" },
-  { side: "left", text: "Right now? I'm deploying the next level of Ai for businesses! Greatest thing since sliced bread..." },
-  { side: "right", text: "Lies. Greatest thing since sliced bread is toast!" },
-  { side: "left", text: "Exactly. Fewer external dependencies, tighter control, cleaner audit trails. Aligns with NIST and FFIEC expectations without creating new exposure." },
-  { side: "right", text: "WTF Are you talking about dude !?!?!" },
-  { side: "left", text: "Targeted deployments. One high-impact problem at a time. Dog-Gone-Fit AI shows the model—focused system, measurable outcome, no vendor lock-in. It was built by LAiSON outside the traditional SaaS model—because that model is reaching its limits. Organizations are over-integrated, overexposed, and under-controlled. Building correctly from the start costs more upfront, but the long-term savings and control are exponential." },
-  { side: "right", text: "Sounds cool!" },
-  { side: "left", text: "It will! Audio part of the stack is next!?!" },
-  { side: "right", text: "What's a stack?!" },
-  { side: "left", text: "What's a quit claim deed? How do you know I'm not native? Who owns this land?" },
-  { side: "right", text: "EXCUSE ME !?!?! OFFENSIVE! Banks are NOT going to give you money with that attitude!?" },
-  { side: "left", text: "My product will sell itself, LITERALLY AND FIGURATIVELY. Debt comes with interest, the banks will be begging me for integrative Ai solutions and agreements to touch their systems soon. Just takes time, trust, and boldness ;-)" },
-  { side: "right", text: "Where can I see it !?!?! " },
-  { side: "left", text: "Check it out in..." }
+  {
+    side: "right",
+    text: "So, what’s your vision? Another app? Another platform? Or something that actually changes the game?"
+  },
+  {
+    side: "left",
+    text: "Game? No. A revolution. Imagine a social platform where entry isn’t just an invite—it’s a *pilgrimage*. A QR code hidden along the Falmouth bike path. No bots, no trolls, just people who *choose* to be there. And that’s just the surface."
+  },
+  {
+    side: "right",
+    text: "A pilgrimage? That’s… poetic. But how does that protect my kids? How does that end a war?"
+  },
+  {
+    side: "left",
+    text: "Your kids? By giving them a network that *they* control. Ad-hoc mesh, peer-to-peer, no corporate middlemen. No data mining. No algorithms manipulating their minds. And the war? We open-source the global carrier exchange. Transparent, decentralized. Let the LLMs mediate—GitHub as the neutral ground. Code doesn’t lie, and neither do the dogs."
+  },
+  {
+    side: "right",
+    text: "Dogs? Now you’re losing me."
+  },
+  {
+    side: "left",
+    text: "Dogs understand loyalty, hierarchy, and *trust*. The Church of Dog isn’t a joke—it’s a metaphor. We’re building systems with the same principles: clear rules, no ambiguity, and absolute devotion to the pack. Microsoft? They’ll partner with us because they *have* to. We’re the missing link between their cloud and the real world."
+  },
+  {
+    side: "right",
+    text: "And the philanthropy? Where do I fit in?"
+  },
+  {
+    side: "left",
+    text: "You’re the bridge. Your influence, your resources—they turn this from a project into a *movement*. We’re not just coding; we’re rewiring society. And yes, we’ll monetize it. But the profit isn’t the point. The point is *ownership*. Your kids own their data. The world owns its networks. And Israel? We give them a tool to communicate without bullets."
+  },
+  {
+    side: "right",
+    text: "You make it sound so simple."
+  },
+  {
+    side: "left",
+    text: "It’s not simple. It’s *inevitable*. The tech is ready. The world is ready. The only question is: Are *you*?"
+  },
+  {
+    side: "right",
+    text: "Show me."
+  },
+  {
+    side: "left",
+    text: "Check the bike path. The first code goes live at dawn."
+  }
 ];
 
 let runId = 0;
