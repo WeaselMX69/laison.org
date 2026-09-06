@@ -1,10 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Dog-Gone-Fit AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 :root{
   --primary:#1fa2ff;
@@ -16,82 +16,132 @@
   --text-meta:#9ca3af;
   --border-glow:rgba(31,162,255,.3);
   --shadow-glow:rgba(31,162,255,.15);
-  --bubble-bg:#e9edf1;
+  --bubble-bg:rgba(233,237,241,.94);
   --bubble-text:#0b0f14;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  min-height:100vh;
-  background:linear-gradient(180deg,var(--bg-dark),var(--bg-darker));
-  color:var(--text-light);
-  font-family:Segoe UI,Arial,sans-serif;
-  padding:24px;
+*{
+  box-sizing:border-box;
 }
 
+html,
+body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  min-height:100vh;
+  background:#000;
+  color:var(--text-light);
+  font-family:Segoe UI,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+/* =========================================================
+   CAMERA BACKGROUND
+   ========================================================= */
+
+#cameraBackground{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  object-position:center;
+  z-index:0;
+  background:#000;
+}
+
+/*
+ * Dark veil keeps the foreground readable without completely
+ * destroying visibility of the camera image.
+ */
+#cameraVeil{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.20);
+  z-index:1;
+  pointer-events:none;
+}
+
+/* =========================================================
+   SCREEN SHARE
+   ========================================================= */
+
+#screenSharePreview{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+
+  width:min(30vw,420px);
+  max-width:calc(100vw - 40px);
+
+  aspect-ratio:16 / 9;
+
+  object-fit:contain;
+
+  background:#020617;
+
+  border:1px solid rgba(31,162,255,.65);
+  border-radius:14px;
+
+  box-shadow:
+    0 0 25px rgba(31,162,255,.30),
+    0 10px 35px rgba(0,0,0,.55);
+
+  z-index:20;
+
+  opacity:.92;
+
+  display:none;
+}
+
+/* =========================================================
+   CENTER UI
+   ========================================================= */
+
 .wrap{
-  width:min(760px,100%);
+  position:relative;
+  z-index:10;
+
+  width:min(760px,calc(100% - 32px));
+
   margin:0 auto;
+
+  padding:24px 0;
+
+  min-height:100vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .panel{
   position:relative;
-  background:rgba(17,24,39,.88);
+
+  width:100%;
+
+  background:rgba(17,24,39,.67);
+
   border:1px solid var(--border-glow);
-  box-shadow:0 0 28px var(--shadow-glow);
+
+  box-shadow:
+    0 0 28px var(--shadow-glow),
+    0 12px 50px rgba(0,0,0,.35);
+
   border-radius:18px;
+
   padding:24px;
-}
 
-#playlist{
-  position:absolute;
-  left:20px;
-  bottom:20px;
-  width:150px;
-  max-height:110px;
-  overflow-y:auto;
-  list-style:none;
-  margin:0;
-  padding:0;
-  font-size:.72rem;
-  color:var(--text-meta);
-}
-
-#mediaLibrary{
-  position:absolute;
-  right:20px;
-  bottom:20px;
-  width:150px;
-  max-height:110px;
-  overflow-y:auto;
-  list-style:none;
-  margin:0;
-  padding:0;
-  font-size:.72rem;
-  color:var(--text-meta);
-}
-
-#playlist li,
-#mediaLibrary li{
-  padding:4px 6px;
-  border-radius:6px;
-  cursor:pointer;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-#playlist li:hover,
-#mediaLibrary li:hover{
-  background:rgba(31,162,255,.15);
-  color:var(--text-lighter);
-}
-
-#playlist li.active{
-  color:var(--primary);
-  font-weight:600;
+  /*
+   * The panel is deliberately translucent.
+   * The camera remains visible through it.
+   */
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
 }
 
 h1{
@@ -107,6 +157,10 @@ h1{
   color:var(--text-lighter);
   margin:0 0 20px;
 }
+
+/* =========================================================
+   CHAT
+   ========================================================= */
 
 #chatlog{
   display:flex;
@@ -129,7 +183,7 @@ h1{
 }
 
 .bubble.user{
-  background:var(--primary);
+  background:rgba(31,162,255,.94);
   color:#fff;
   align-self:flex-end;
 }
@@ -141,41 +195,69 @@ h1{
 
 #chatInput{
   flex:1;
+
   border:1px solid var(--border-glow);
-  background:rgba(2,6,23,.9);
+
+  background:rgba(2,6,23,.88);
+
   color:#fff;
+
   border-radius:10px;
+
   padding:13px 14px;
+
   font-size:1rem;
 }
 
 .iconbtn{
   width:46px;
   flex:none;
+
   border:1px solid var(--border-glow);
+
   background:rgba(31,41,55,.85);
+
   color:#fff;
+
   border-radius:10px;
+
   cursor:pointer;
+
   font-size:1.1rem;
 }
 
 #sendBtn{
   border:none;
+
   background:var(--primary);
+
   color:#fff;
+
   font-weight:700;
+
   border-radius:10px;
-  box-shadow:0 4px 0 var(--primary-dark),0 6px 10px rgba(0,0,0,.25);
+
+  box-shadow:
+    0 4px 0 var(--primary-dark),
+    0 6px 10px rgba(0,0,0,.25);
+
   transform:translateY(0);
-  transition:transform .08s ease,box-shadow .08s ease;
+
+  transition:
+    transform .08s ease,
+    box-shadow .08s ease;
+
   padding:13px 22px;
+
   cursor:pointer;
 }
 
 #sendBtn:active{
   transform:translateY(3px);
-  box-shadow:0 1px 0 var(--primary-dark),0 2px 4px rgba(0,0,0,.2);
+
+  box-shadow:
+    0 1px 0 var(--primary-dark),
+    0 2px 4px rgba(0,0,0,.2);
 }
 
 #sendBtn:hover{
@@ -195,34 +277,71 @@ hr{
   margin:0 0 18px;
 }
 
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
 .audiorow{
   display:flex;
   justify-content:center;
   gap:14px;
   margin-bottom:10px;
+  flex-wrap:wrap;
 }
 
 .audiobtn{
   width:52px;
   height:52px;
+
   border-radius:10px;
-  box-shadow:0 4px 0 rgba(0,0,0,.35),0 6px 10px rgba(0,0,0,.25);
-  transform:translateY(0);
-  transition:transform .08s ease,box-shadow .08s ease;
-  border:1px solid var(--border-glow);
-  background:rgba(31,41,55,.85);
+
+  border:1px solid #000;
+
+  background:
+    linear-gradient(180deg,#3a3f47,#1c1f24);
+
   color:#fff;
+
   font-size:1.2rem;
+
   cursor:pointer;
+
+  box-shadow:
+    0 5px 0 #0a0b0d,
+    0 8px 12px rgba(0,0,0,.5),
+    inset 0 1px 1px rgba(255,255,255,.15);
+
+  transform:translateY(0);
+
+  transition:
+    transform .07s ease,
+    box-shadow .07s ease;
 }
 
 .audiobtn:active{
-  transform:translateY(3px);
-  box-shadow:0 1px 0 rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.2);
+  transform:translateY(4px);
+
+  box-shadow:
+    0 1px 0 #0a0b0d,
+    0 2px 4px rgba(0,0,0,.4),
+    inset 0 2px 4px rgba(0,0,0,.6);
 }
 
-.audiobtn:hover{
-  background:rgba(31,41,55,1);
+.audiobtn.pressed{
+  transform:translateY(4px);
+
+  box-shadow:
+    0 1px 0 #0a0b0d,
+    0 2px 4px rgba(0,0,0,.4),
+    inset 0 2px 4px rgba(0,0,0,.7);
+
+  background:
+    linear-gradient(180deg,#2a2d33,#141619);
+}
+
+.audiobtn.pressed#playBtn{
+  color:#ff5252;
+  text-shadow:0 0 6px rgba(255,82,82,.6);
 }
 
 .audiobtn.recording{
@@ -239,48 +358,215 @@ hr{
   font-size:.9rem;
 }
 
+/* =========================================================
+   CAMERA / SCREEN SHARE CONTROLS
+   ========================================================= */
+
+.visualrow{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+
+.visualbtn{
+  border:1px solid rgba(31,162,255,.45);
+
+  background:rgba(2,6,23,.78);
+
+  color:#fff;
+
+  border-radius:10px;
+
+  padding:10px 15px;
+
+  cursor:pointer;
+
+  font-size:.9rem;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.3);
+
+  transition:
+    background .12s ease,
+    transform .08s ease;
+}
+
+.visualbtn:hover{
+  background:rgba(31,162,255,.25);
+}
+
+.visualbtn:active{
+  transform:translateY(2px);
+}
+
+.visualbtn.active{
+  background:rgba(31,162,255,.35);
+  border-color:rgba(31,162,255,.8);
+}
+
+/* =========================================================
+   LIBRARIES
+   ========================================================= */
+
+#playlist{
+  position:absolute;
+
+  left:20px;
+  bottom:20px;
+
+  width:150px;
+
+  max-height:110px;
+
+  overflow-y:auto;
+
+  list-style:none;
+
+  margin:0;
+  padding:0;
+
+  font-size:.72rem;
+
+  color:var(--text-meta);
+}
+
+#mediaLibrary{
+  position:absolute;
+
+  right:20px;
+  bottom:20px;
+
+  width:150px;
+
+  max-height:110px;
+
+  overflow-y:auto;
+
+  list-style:none;
+
+  margin:0;
+  padding:0;
+
+  font-size:.72rem;
+
+  color:var(--text-meta);
+}
+
+#playlist li,
+#mediaLibrary li{
+  padding:4px 6px;
+
+  border-radius:6px;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+#playlist li:hover,
+#mediaLibrary li:hover{
+  background:rgba(31,162,255,.15);
+  color:var(--text-lighter);
+}
+
+#playlist li.active{
+  color:var(--primary);
+  font-weight:600;
+}
+
 #fileInput{
   display:none;
 }
 
-.audiobtn{
-  background:linear-gradient(180deg,#3a3f47,#1c1f24);
-  border:1px solid #000;
-  box-shadow:
-    0 5px 0 #0a0b0d,
-    0 8px 12px rgba(0,0,0,.5),
-    inset 0 1px 1px rgba(255,255,255,.15);
-  transform:translateY(0);
-  transition:transform .07s ease,box-shadow .07s ease;
-}
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-.audiobtn:active{
-  transform:translateY(4px);
-  box-shadow:
-    0 1px 0 #0a0b0d,
-    0 2px 4px rgba(0,0,0,.4),
-    inset 0 1px 2px rgba(0,0,0,.6);
-}
+@media(max-width:700px){
 
-.audiobtn.pressed{
-  transform:translateY(4px);
-  box-shadow:
-    0 1px 0 #0a0b0d,
-    0 2px 4px rgba(0,0,0,.4),
-    inset 0 2px 4px rgba(0,0,0,.7);
-  background:linear-gradient(180deg,#2a2d33,#141619);
-}
+  .wrap{
+    width:calc(100% - 20px);
+    padding:12px 0;
+  }
 
-.audiobtn.pressed#playBtn{
-  color:#ff5252;
-  text-shadow:0 0 6px rgba(255,82,82,.6);
+  .panel{
+    padding:18px;
+  }
+
+  #screenSharePreview{
+    right:10px;
+    bottom:10px;
+
+    width:min(42vw,300px);
+
+    border-radius:10px;
+  }
+
+  #playlist,
+  #mediaLibrary{
+    position:static;
+
+    width:100%;
+
+    max-height:80px;
+
+    margin-top:10px;
+  }
+
+  .inputrow{
+    flex-wrap:wrap;
+  }
+
+  #chatInput{
+    min-width:0;
+  }
+
+  #sendBtn{
+    flex:none;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =======================================================
+     FULL-SCREEN CAMERA
+     ======================================================= -->
+
+<video
+  id="cameraBackground"
+  autoplay
+  muted
+  playsinline
+></video>
+
+<div id="cameraVeil"></div>
+
+<!-- =======================================================
+     SCREEN SHARE PREVIEW
+     ======================================================= -->
+
+<video
+  id="screenSharePreview"
+  autoplay
+  muted
+  playsinline
+></video>
+
+<!-- =======================================================
+     MAIN UI
+     ======================================================= -->
+
 <div class="wrap">
+
   <div class="panel">
 
     <h1>Dog-Gone-Fit AI</h1>
@@ -292,13 +578,16 @@ hr{
     </p>
 
     <div id="chatlog">
+
       <div class="bubble">
         Welcome to Dog-Gone-Fit AI, a deterministic intelligence machine.
         Ask about adventure hikes, agility training, or your 4-paw family members.
       </div>
+
     </div>
 
     <div class="inputrow">
+
       <input
         id="chatInput"
         placeholder="Ask about your 4-paw family members..."
@@ -312,6 +601,7 @@ hr{
       >+</button>
 
       <button id="sendBtn">Send</button>
+
     </div>
 
     <input type="file" id="fileInput" multiple>
@@ -322,31 +612,60 @@ hr{
 
     <hr>
 
+    <!-- AUDIO CONTROLS -->
+
     <div class="audiorow">
+
       <button
         class="audiobtn"
         id="micBtn"
         title="Record a note"
-      >&#127908;</button>
+      >🎤</button>
 
       <button
         class="audiobtn"
         id="playBtn"
         title="Play"
-      >&#9654;</button>
+      >▶</button>
 
       <button
         class="audiobtn"
         id="stopBtn"
         title="Stop"
-      >&#9632;</button>
+      >■</button>
+
     </div>
 
     <p class="audiocaption">
       Listen to Nana 'em while you're here
     </p>
 
+    <!-- CAMERA / SCREEN SHARE -->
+
+    <div class="visualrow">
+
+      <button
+        class="visualbtn"
+        id="cameraBtn"
+        type="button"
+      >📷 Camera</button>
+
+      <button
+        class="visualbtn"
+        id="screenShareBtn"
+        type="button"
+      >🖥️ Screen Share</button>
+
+      <button
+        class="visualbtn"
+        id="stopVisualBtn"
+        type="button"
+      >✕ Stop Visuals</button>
+
+    </div>
+
     <ul id="playlist"></ul>
+
     <ul id="mediaLibrary"></ul>
 
   </div>
@@ -354,33 +673,39 @@ hr{
 
 <script>
 
-const chatlog = document.getElementById("chatlog");
+/* =========================================================
+   EXISTING CHAT
+   ========================================================= */
+
+const chatlog   = document.getElementById("chatlog");
 const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
+const sendBtn   = document.getElementById("sendBtn");
 const attachBtn = document.getElementById("attachBtn");
 const fileInput = document.getElementById("fileInput");
-const micBtn = document.getElementById("micBtn");
-const playBtn = document.getElementById("playBtn");
-const stopBtn = document.getElementById("stopBtn");
-const playlistEl = document.getElementById("playlist");
+
+const micBtn     = document.getElementById("micBtn");
+const playBtn    = document.getElementById("playBtn");
+const stopBtn    = document.getElementById("stopBtn");
+
+const playlistEl     = document.getElementById("playlist");
 const mediaLibraryEl = document.getElementById("mediaLibrary");
 
-
 function addBubble(text, cls) {
+
   const div = document.createElement("div");
-  div.className = "bubble" + (cls ? " " + cls : "");
+
+  div.className =
+    "bubble" + (cls ? " " + cls : "");
+
   div.textContent = text;
+
   chatlog.appendChild(div);
+
   div.scrollIntoView({
     behavior:"smooth",
     block:"end"
   });
 }
-
-
-/* =========================================================
-   CHAT
-   ========================================================= */
 
 async function sendMessage() {
 
@@ -408,74 +733,68 @@ async function sendMessage() {
 
     let data;
 
-    try {
+    try{
       data = JSON.parse(raw);
-    }
-    catch(e) {
-      throw new Error("JSON.parse: " + e.message);
+    }catch(e){
+      throw new Error(
+        "JSON.parse: " + e.message
+      );
     }
 
     addBubble(
-      data.response || "No response from model."
+      data.response ||
+      "No response from model."
     );
 
-  }
-  catch(err) {
+  }catch(err){
 
     addBubble(
       "Upload error: " + err.message,
       "error"
     );
-
   }
 }
 
-
 /* =========================================================
-   FILE ICONS
+   FILE UPLOAD
    ========================================================= */
 
-function getIconForFile(name,mime) {
+function getIconForFile(name,mime){
 
   const ext =
-    (name.split(".").pop() || "").toLowerCase();
+    (name.split(".").pop() || "")
+    .toLowerCase();
 
-  if (
+  if(
     (mime && mime.startsWith("audio/")) ||
     ext === "mp3"
   ) return "🎵";
 
-  if (ext === "webm") return "🎙";
+  if(ext === "webm") return "🎙";
 
-  if (
+  if(
     (mime && mime.startsWith("image/")) ||
     ["jpg","jpeg","png","gif"].includes(ext)
   ) return "📷";
 
-  if (
+  if(
     (mime && mime.startsWith("video/")) ||
     ["mp4","mov"].includes(ext)
   ) return "🎥";
 
-  if (
+  if(
     ["pdf","doc","docx"].includes(ext)
   ) return "📄";
 
   return "🗂";
 }
 
-
-/* =========================================================
-   STORAGE
-   ========================================================= */
-
 const MAX_STORAGE_BYTES =
   32 * 1024 * 1024 * 1024;
 
+async function checkStorageBeforeUpload(fileList){
 
-async function checkStorageBeforeUpload(fileList) {
-
-  try {
+  try{
 
     const res =
       await fetch("/storage_usage");
@@ -485,15 +804,16 @@ async function checkStorageBeforeUpload(fileList) {
 
     const incoming =
       Array.from(fileList)
-        .reduce(
-          (sum,f) => sum + f.size,
-          0
-        );
+      .reduce(
+        (sum,f) => sum + f.size,
+        0
+      );
 
-    if (
-      usage.used_bytes + incoming >
+    if(
+      usage.used_bytes +
+      incoming >
       MAX_STORAGE_BYTES
-    ) {
+    ){
 
       addBubble(
         "Upload blocked: this would put you over your 32GB storage limit.",
@@ -503,34 +823,27 @@ async function checkStorageBeforeUpload(fileList) {
       return false;
     }
 
-  }
-  catch(err) {
+  }catch(err){
 
     console.error(
       "Storage check failed, deferring to server-side enforcement:",
       err
     );
-
   }
 
   return true;
 }
 
+async function uploadFiles(fileList){
 
-/* =========================================================
-   FILE UPLOAD
-   ========================================================= */
-
-async function uploadFiles(fileList) {
-
-  if (
+  if(
     !(await checkStorageBeforeUpload(fileList))
   ) return;
 
   const names =
     Array.from(fileList)
-      .map(f => f.name)
-      .join(", ");
+    .map(f => f.name)
+    .join(", ");
 
   addBubble(
     "Uploading " + names + "..."
@@ -539,30 +852,28 @@ async function uploadFiles(fileList) {
   const form =
     new FormData();
 
-  for (const f of fileList) {
+  for(
+    const f of fileList
+  ){
     form.append("files[]",f);
   }
 
-  try {
+  try{
 
     const res =
-      await fetch(
-        "/upload",
-        {
-          method:"POST",
-          body:form
-        }
-      );
+      await fetch("/upload",{
+        method:"POST",
+        body:form
+      });
 
     const raw =
       await res.text();
 
     let data;
 
-    try {
+    try{
       data = JSON.parse(raw);
-    }
-    catch(e) {
+    }catch(e){
       throw new Error(
         "JSON.parse: " + e.message
       );
@@ -573,83 +884,83 @@ async function uploadFiles(fileList) {
       "Upload complete."
     );
 
-    Array.from(fileList).forEach(f => {
+    Array.from(fileList)
+      .forEach(f => {
 
-      const li =
-        document.createElement("li");
+        const li =
+          document.createElement("li");
 
-      li.textContent =
-        getIconForFile(f.name,f.type)
-        + " "
-        + f.name;
+        li.textContent =
+          getIconForFile(
+            f.name,
+            f.type
+          ) +
+          " " +
+          f.name;
 
-      li.dataset.file =
-        f.name;
+        li.dataset.file =
+          f.name;
 
-      mediaLibraryEl.appendChild(li);
+        mediaLibraryEl
+          .appendChild(li);
+      });
 
-    });
-
-  }
-  catch(err) {
+  }catch(err){
 
     addBubble(
-      "Upload error: " + err.message,
+      "Upload error: " +
+      err.message,
       "error"
     );
-
   }
 }
-
 
 sendBtn.addEventListener(
   "click",
   sendMessage
 );
 
-
 chatInput.addEventListener(
   "keydown",
   e => {
-    if (e.key === "Enter")
+
+    if(e.key === "Enter"){
       sendMessage();
+    }
+
   }
 );
-
 
 attachBtn.addEventListener(
   "click",
   () => fileInput.click()
 );
 
-
 fileInput.addEventListener(
   "change",
   () => {
 
-    if (fileInput.files.length)
+    if(fileInput.files.length){
       uploadFiles(fileInput.files);
+    }
 
     fileInput.value = "";
-
   }
 );
 
-
 /* =========================================================
-   MICROPHONE
+   MICROPHONE / STT
    ========================================================= */
 
 let selectedMicDeviceId = null;
 
+async function refreshMicDevices(){
 
-async function refreshMicDevices() {
-
-  try {
+  try{
 
     const devices =
       await navigator.mediaDevices
-        .enumerateDevices();
+      .enumerateDevices();
 
     const mics =
       devices.filter(
@@ -660,64 +971,58 @@ async function refreshMicDevices() {
       mics.find(
         d =>
           /bluetooth|airpods|headset|earbuds/i
-            .test(d.label)
+          .test(d.label)
       );
 
-    if (bluetoothMic) {
+    if(bluetoothMic){
 
       selectedMicDeviceId =
         bluetoothMic.deviceId;
 
-    }
-    else if (
+    }else if(
       !selectedMicDeviceId &&
       mics.length
-    ) {
+    ){
 
       selectedMicDeviceId =
         mics[0].deviceId;
-
     }
 
-  }
-  catch(err) {
+  }catch(err){
 
     console.error(
       "Could not enumerate mic devices:",
       err
     );
-
   }
 }
 
-
-if (navigator.mediaDevices) {
-
+if(
+  navigator.mediaDevices &&
+  navigator.mediaDevices.addEventListener
+){
   navigator.mediaDevices.addEventListener(
     "devicechange",
     refreshMicDevices
   );
-
-  refreshMicDevices();
-
 }
 
+refreshMicDevices();
 
 let mediaRecorder;
 let chunks = [];
 
 let micMode = null;
+
 let micClickTimer = null;
 
 const MIC_DBLCLICK_WINDOW = 300;
 
+async function startMicRecording(mode){
 
-async function startMicRecording(mode) {
-
-  try {
+  try{
 
     const constraints = {
-
       audio:
         selectedMicDeviceId
         ? {
@@ -726,12 +1031,11 @@ async function startMicRecording(mode) {
             }
           }
         : true
-
     };
 
     const stream =
       await navigator.mediaDevices
-        .getUserMedia(constraints);
+      .getUserMedia(constraints);
 
     refreshMicDevices();
 
@@ -744,6 +1048,12 @@ async function startMicRecording(mode) {
       e => chunks.push(e.data);
 
     mediaRecorder.onstop = () => {
+
+      stream
+        .getTracks()
+        .forEach(
+          track => track.stop()
+        );
 
       const blob =
         new Blob(
@@ -759,7 +1069,9 @@ async function startMicRecording(mode) {
       const file =
         new File(
           [blob],
-          prefix + Date.now() + ".webm",
+          prefix +
+          Date.now() +
+          ".webm",
           {type:"audio/webm"}
         );
 
@@ -770,21 +1082,11 @@ async function startMicRecording(mode) {
 
       micMode = null;
 
-      if (mode === "library") {
-
+      if(mode === "library"){
         uploadFiles([file]);
-
-      }
-      else {
-
+      }else{
         transcribeAudio(file);
-
       }
-
-      stream.getTracks().forEach(
-        track => track.stop()
-      );
-
     };
 
     mediaRecorder.start();
@@ -797,104 +1099,96 @@ async function startMicRecording(mode) {
       : "recording"
     );
 
-  }
-  catch(err) {
+  }catch(err){
 
     micMode = null;
 
     addBubble(
-      "Mic error: " + err.message,
+      "Mic error: " +
+      err.message,
       "error"
     );
-
   }
 }
 
-
-async function transcribeAudio(file) {
+async function transcribeAudio(file){
 
   addBubble("Transcribing...");
 
   const form =
     new FormData();
 
-  form.append("audio",file);
+  form.append(
+    "audio",
+    file
+  );
 
-  try {
+  try{
 
     const res =
-      await fetch(
-        "/stt",
-        {
-          method:"POST",
-          body:form
-        }
-      );
+      await fetch("/stt",{
+        method:"POST",
+        body:form
+      });
 
     const raw =
       await res.text();
 
     let data;
 
-    try {
+    try{
       data = JSON.parse(raw);
-    }
-    catch(e) {
+    }catch(e){
       throw new Error(
         "JSON.parse: " + e.message
       );
     }
 
-    if (data.text) {
+    if(data.text){
 
       chatInput.value =
         (
           chatInput.value
           ? chatInput.value + " "
           : ""
-        )
-        + data.text;
+        ) +
+        data.text;
 
       chatInput.focus();
 
-    }
-    else {
+    }else{
 
       addBubble(
         "No transcription returned.",
         "error"
       );
-
     }
 
-  }
-  catch(err) {
+  }catch(err){
 
     addBubble(
-      "Transcription error: " + err.message,
+      "Transcription error: " +
+      err.message,
       "error"
     );
-
   }
 }
-
 
 micBtn.addEventListener(
   "click",
   () => {
 
-    if (
+    if(
       mediaRecorder &&
       mediaRecorder.state === "recording"
-    ) {
+    ){
 
       mediaRecorder.stop();
 
       return;
     }
 
-    if (micClickTimer)
-      return;
+    if(micClickTimer) return;
 
     micClickTimer =
       setTimeout(
@@ -907,10 +1201,8 @@ micBtn.addEventListener(
         },
         MIC_DBLCLICK_WINDOW
       );
-
   }
 );
-
 
 micBtn.addEventListener(
   "dblclick",
@@ -920,106 +1212,47 @@ micBtn.addEventListener(
 
     micClickTimer = null;
 
-    if (
+    if(
       mediaRecorder &&
       mediaRecorder.state === "recording"
-    )
+    ){
       return;
+    }
 
     startMicRecording("library");
-
   }
 );
 
-
 /* =========================================================
-   GITHUB PAGES AUDIO PLAYER
-   =========================================================
-
-   GitHub Pages is static.
-
-   Therefore:
-       /play_audio?file=Shep.mp3   <-- WRONG
-
-   Instead:
-       ./Shep.mp3                  <-- CORRECT
-
-   Shep.mp3 is in the root of the
-   laison.org repository.
+   AUDIO PLAYER
    ========================================================= */
 
 let audioEl = null;
 
 let currentTrack = "Shep.mp3";
 
-let playlistTracks = [
-  {
-    file:"Shep.mp3",
-    name:"Shep"
-  }
-];
+let playlistTracks = [];
 
 let currentTrackIndex = 0;
 
+function playTrackAtIndex(i){
 
-/* Build the playlist without needing /playlist */
-
-function loadPlaylist() {
-
-  playlistEl.innerHTML = "";
-
-  playlistTracks.forEach(
-    (t,i) => {
-
-      const li =
-        document.createElement("li");
-
-      li.textContent =
-        getIconForFile(
-          t.file,
-          "audio/"
-        )
-        + " "
-        + t.name;
-
-      li.dataset.file =
-        t.file;
-
-      li.addEventListener(
-        "click",
-        () => playTrackAtIndex(i)
-      );
-
-      playlistEl.appendChild(li);
-
-    }
-  );
-
-}
-
-
-/* Play a track directly from GitHub Pages */
-
-function playTrackAtIndex(i) {
-
-  if (
+  if(
     i < 0 ||
     i >= playlistTracks.length
-  )
+  ){
     return;
+  }
 
   currentTrackIndex = i;
 
   const t =
     playlistTracks[i];
 
-  currentTrack =
-    t.file;
+  currentTrack = t.file;
 
   document
-    .querySelectorAll(
-      "#playlist li"
-    )
+    .querySelectorAll("#playlist li")
     .forEach(
       el =>
         el.classList.remove("active")
@@ -1028,86 +1261,47 @@ function playTrackAtIndex(i) {
   const li =
     playlistEl.children[i];
 
-  if (li)
+  if(li){
     li.classList.add("active");
-
-
-  if (audioEl) {
-
-    audioEl.pause();
-
-    audioEl.removeAttribute("src");
-
   }
 
-
-  /*
-   * IMPORTANT:
-   *
-   * "./Shep.mp3" resolves relative to
-   * the GitHub Pages document.
-   *
-   * No /play_audio endpoint.
-   */
+  if(audioEl){
+    audioEl.pause();
+  }
 
   audioEl =
     new Audio(
-      "./" +
-      encodeURIComponent(currentTrack)
+      "/play_audio?file=" +
+      encodeURIComponent(
+        currentTrack
+      )
     );
-
 
   audioEl.addEventListener(
     "ended",
     handleTrackEnded
   );
 
-
-  audioEl.addEventListener(
-    "error",
-    () => {
-
-      addBubble(
-        "Playback error: Could not load "
-        + currentTrack
-        + ".",
-        "error"
-      );
-
-    }
-  );
-
-
   audioEl.play()
-    .then(
-      () => {
-
-        playBtn.classList.add(
-          "pressed"
-        );
-
-        stopBtn.classList.remove(
-          "pressed"
-        );
-
-      }
-    )
     .catch(
-      err => {
-
+      err =>
         addBubble(
-          "Playback error: "
-          + err.message,
+          "Playback error: " +
+          err.message,
           "error"
-        );
-
-      }
+        )
     );
 
+  playBtn.classList.add(
+    "pressed"
+  );
+
+  stopBtn.classList.remove(
+    "pressed"
+  );
 }
 
-
-function handleTrackEnded() {
+function handleTrackEnded(){
 
   playBtn.classList.remove(
     "pressed"
@@ -1116,22 +1310,65 @@ function handleTrackEnded() {
   playTrackAtIndex(
     currentTrackIndex + 1
   );
-
 }
 
+async function loadPlaylist(){
 
-/* Load static GitHub playlist */
+  try{
+
+    const res =
+      await fetch("/playlist");
+
+    const tracks =
+      await res.json();
+
+    playlistTracks = tracks;
+
+    playlistEl.innerHTML = "";
+
+    tracks.forEach(
+      (t,i) => {
+
+        const li =
+          document.createElement("li");
+
+        li.textContent =
+          getIconForFile(
+            t.file,
+            "audio/"
+          ) +
+          " " +
+          t.name;
+
+        li.dataset.file =
+          t.file;
+
+        li.addEventListener(
+          "click",
+          () =>
+            playTrackAtIndex(i)
+        );
+
+        playlistEl.appendChild(li);
+      }
+    );
+
+  }catch(err){
+
+    console.error(
+      "Playlist load failed:",
+      err
+    );
+  }
+}
 
 loadPlaylist();
-
-
-/* Play button */
 
 playBtn.addEventListener(
   "click",
   () => {
 
-    if (!audioEl) {
+    if(!audioEl){
 
       playTrackAtIndex(
         currentTrackIndex
@@ -1141,54 +1378,338 @@ playBtn.addEventListener(
     }
 
     audioEl.play()
-      .then(
-        () => {
-
-          playBtn.classList.add(
-            "pressed"
-          );
-
-        }
-      )
       .catch(
-        err => {
-
+        err =>
           addBubble(
-            "Playback error: "
-            + err.message,
+            "Playback error: " +
+            err.message,
             "error"
-          );
-
-        }
+          )
       );
 
+    playBtn.classList.add(
+      "pressed"
+    );
   }
 );
-
-
-/* Stop button */
 
 stopBtn.addEventListener(
   "click",
   () => {
 
-    if (audioEl) {
+    if(audioEl){
 
       audioEl.pause();
 
       audioEl.currentTime = 0;
-
     }
 
     playBtn.classList.remove(
       "pressed"
     );
-
   }
+);
+
+/* =========================================================
+   CAMERA + SCREEN SHARE
+   ========================================================= */
+
+const cameraBackground =
+  document.getElementById(
+    "cameraBackground"
+  );
+
+const screenSharePreview =
+  document.getElementById(
+    "screenSharePreview"
+  );
+
+const cameraBtn =
+  document.getElementById(
+    "cameraBtn"
+  );
+
+const screenShareBtn =
+  document.getElementById(
+    "screenShareBtn"
+  );
+
+const stopVisualBtn =
+  document.getElementById(
+    "stopVisualBtn"
+  );
+
+let cameraStream = null;
+let screenShareStream = null;
+
+/* ---------------------------------------------------------
+   CAMERA
+   --------------------------------------------------------- */
+
+async function startCamera(){
+
+  try{
+
+    if(cameraStream){
+
+      cameraStream
+        .getTracks()
+        .forEach(
+          track => track.stop()
+        );
+    }
+
+    cameraStream =
+      await navigator.mediaDevices
+      .getUserMedia({
+        video:{
+          facingMode:"user"
+        },
+        audio:false
+      });
+
+    cameraBackground.srcObject =
+      cameraStream;
+
+    cameraBackground.style.display =
+      "block";
+
+    cameraBtn.classList.add(
+      "active"
+    );
+
+    /*
+     * Some browsers need play() even with
+     * autoplay + playsinline.
+     */
+    await cameraBackground.play();
+
+  }catch(err){
+
+    addBubble(
+      "Camera error: " +
+      err.message,
+      "error"
+    );
+  }
+}
+
+/* ---------------------------------------------------------
+   SCREEN SHARE
+   --------------------------------------------------------- */
+
+async function startScreenShare(){
+
+  /*
+   * THIS IS THE IMPORTANT PART.
+   *
+   * The preview is hidden BEFORE getDisplayMedia().
+   *
+   * Otherwise, if the user shares the monitor containing
+   * this page, the preview captures itself, which produces
+   * the infinite recursion we just encountered.
+   */
+
+  const previousDisplay =
+    screenSharePreview.style.display;
+
+  screenSharePreview.style.display =
+    "none";
+
+  try{
+
+    screenShareStream =
+      await navigator.mediaDevices
+      .getDisplayMedia({
+        video:{
+          cursor:"always"
+        },
+        audio:false
+      });
+
+    screenSharePreview.srcObject =
+      screenShareStream;
+
+    /*
+     * Restore the preview only AFTER the capture
+     * stream exists.
+     */
+    screenSharePreview.style.display =
+      "block";
+
+    screenShareBtn.classList.add(
+      "active"
+    );
+
+    await screenSharePreview.play();
+
+    /*
+     * If the user presses "Stop sharing" in the
+     * browser's own screen-share UI, this fires.
+     */
+    const videoTrack =
+      screenShareStream
+      .getVideoTracks()[0];
+
+    if(videoTrack){
+
+      videoTrack.addEventListener(
+        "ended",
+        () => {
+
+          stopScreenShare();
+
+        }
+      );
+    }
+
+  }catch(err){
+
+    /*
+     * User cancelling the picker is not really
+     * an application error.
+     */
+    if(
+      err.name !==
+      "NotAllowedError"
+    ){
+
+      addBubble(
+        "Screen-share error: " +
+        err.message,
+        "error"
+      );
+    }
+
+    screenSharePreview.style.display =
+      previousDisplay || "none";
+  }
+}
+
+/* ---------------------------------------------------------
+   STOP CAMERA
+   --------------------------------------------------------- */
+
+function stopCamera(){
+
+  if(cameraStream){
+
+    cameraStream
+      .getTracks()
+      .forEach(
+        track => track.stop()
+      );
+
+    cameraStream = null;
+  }
+
+  cameraBackground.srcObject =
+    null;
+
+  cameraBackground.style.display =
+    "none";
+
+  cameraBtn.classList.remove(
+    "active"
+  );
+}
+
+/* ---------------------------------------------------------
+   STOP SCREEN SHARE
+   --------------------------------------------------------- */
+
+function stopScreenShare(){
+
+  if(screenShareStream){
+
+    screenShareStream
+      .getTracks()
+      .forEach(
+        track => track.stop()
+      );
+
+    screenShareStream = null;
+  }
+
+  screenSharePreview.srcObject =
+    null;
+
+  screenSharePreview.style.display =
+    "none";
+
+  screenShareBtn.classList.remove(
+    "active"
+  );
+}
+
+/* ---------------------------------------------------------
+   STOP EVERYTHING VISUAL
+   --------------------------------------------------------- */
+
+function stopVisuals(){
+
+  stopCamera();
+
+  stopScreenShare();
+}
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+cameraBtn.addEventListener(
+  "click",
+  () => {
+
+    if(cameraStream){
+
+      stopCamera();
+
+    }else{
+
+      startCamera();
+    }
+  }
+);
+
+screenShareBtn.addEventListener(
+  "click",
+  () => {
+
+    if(screenShareStream){
+
+      stopScreenShare();
+
+    }else{
+
+      startScreenShare();
+    }
+  }
+);
+
+stopVisualBtn.addEventListener(
+  "click",
+  stopVisuals
+);
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+/*
+ * Nothing automatically requests camera or screen capture.
+ *
+ * Both APIs require a user gesture in normal browsers.
+ *
+ * Click Camera first.
+ * Then click Screen Share and select Primary Monitor.
+ */
+
+console.log(
+  "Dog-Gone-Fit visual layer ready."
 );
 
 </script>
 
 </body>
 </html>
-```
